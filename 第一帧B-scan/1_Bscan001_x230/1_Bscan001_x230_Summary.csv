@@ -1,2 +1,0 @@
-source_file,bscan_index,x_vessel,z_top,z_bottom,x_background_center,vessel_diameter_mm,axial_spacing_um,lateral_spacing_um,bscan_axial_extent_mm,bscan_lateral_extent_mm,vessel_axial_span_px,S_peak,z_peak,S_median,qc_status
-C:\Users\zby\Desktop\2026血管三维重建项目\手动在拖尾的OCTA数据上进行标注\原始数据\1.oct,1,230,215,230,316,0.1,6.7,12.7,2.3517,6.35,15,268204517.159011,226,193859377.754715,PASS
