@@ -1,0 +1,3 @@
+scan_id,invalid_reason,frames
+flow01,no_reliable_z_geometry,1
+flow07,no_reliable_z_geometry,1

@@ -1,0 +1,16 @@
+scan_id,frame_index_0based,bscan_index_matlab_1based,seed_z_upper_px,z_upper_px,z_candidate_accepted,z_short_gap_filled,z_continuity_status,z_valid_segment_id,new_tracking_class,vessel_presence_prediction,x4_centroid_isolated_jump_corrected_px,x1_local_geometry_px,local_body_run_width_px,x_center_px,z_relock_start,z_relock_confirmation_frame,x_left_edge_px,x_right_edge_px,z_top_edge_px,diameter_um,dx_um,dz_um
+flow01,0,1,214.0,214.0,True,False,accepted_initial,0,high_confidence,assessable,229.87922012319203,230.5,12.0,231.0,False,,223.87922012319203,235.87922012319203,213.5,128.0,12.7,6.7
+flow01,249,250,199.0,199.0,True,False,accepted,0,high_confidence,assessable,238.358028233871,239.0,13.0,239.0,False,,231.858028233871,244.858028233871,198.5,128.0,12.7,6.7
+flow01,499,500,192.0,,False,False,rejected_continuity,-1,failed,not_assessable,,,,247.1205648533383,False,,,,,,,
+flow03,0,1,210.0,210.0,True,False,accepted_initial,0,high_confidence,assessable,234.143405172141,233.5,12.0,232.3077097472643,False,,228.143405172141,240.143405172141,209.5,128.0,12.7,6.7
+flow03,249,250,187.0,190.0,False,True,rejected_continuity,2,model_assisted,assessable,243.59138331776035,244.5,14.0,244.0021515271501,False,,236.59138331776035,250.59138331776035,189.5,128.0,12.7,6.7
+flow03,499,500,196.0,196.0,True,False,accepted,2,high_confidence,assessable,245.10703861307277,245.5,14.0,245.00000000000003,False,,238.10703861307277,252.10703861307277,195.5,128.0,12.7,6.7
+flow05,0,1,211.0,211.0,True,False,accepted_initial,0,high_confidence,assessable,233.30743484044365,233.5,14.0,233.0,False,,226.30743484044365,240.30743484044365,210.5,128.0,12.7,6.7
+flow05,249,250,198.0,197.0,True,False,accepted,1,high_confidence,assessable,240.57377110776048,239.5,16.0,240.63473178396168,False,,232.57377110776048,248.57377110776048,196.5,128.0,12.7,6.7
+flow05,499,500,194.0,194.0,True,False,accepted,1,high_confidence,assessable,247.83388660785567,248.0,15.0,248.00000000000003,False,,240.33388660785567,255.33388660785567,193.5,128.0,12.7,6.7
+flow07,0,1,214.0,214.0,True,False,accepted_initial,0,high_confidence,assessable,230.0408017264596,231.0,15.0,230.5664922692754,False,,222.5408017264596,237.5408017264596,213.5,128.0,12.7,6.7
+flow07,249,250,196.0,200.0,False,True,rejected_continuity,0,model_assisted,assessable,238.10019069311917,237.5,10.0,238.4135388141217,False,,233.10019069311917,243.10019069311917,199.5,128.0,12.7,6.7
+flow07,499,500,191.0,,False,False,rejected_continuity,-1,failed,not_assessable,,,,246.6922902527357,False,,,,,,,
+flow10,0,1,212.0,212.0,True,False,accepted_initial,0,high_confidence,assessable,234.8598267453137,236.5,14.0,235.79877594676293,False,,227.8598267453137,241.8598267453137,211.5,128.0,12.7,6.7
+flow10,249,250,196.0,194.0,True,False,accepted,0,high_confidence,assessable,242.752825882074,242.5,16.0,243.0,False,,234.752825882074,250.752825882074,193.5,128.0,12.7,6.7
+flow10,499,500,192.0,192.0,True,False,accepted,1,high_confidence,assessable,248.59405146316251,249.5,12.0,249.20122405323704,False,,242.59405146316251,254.59405146316251,191.5,128.0,12.7,6.7

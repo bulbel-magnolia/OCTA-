@@ -1,0 +1,83 @@
+{
+  "run_id": "formal_sv_d128_v21_bridge15_run001",
+  "stage": "bridge",
+  "baseline_commit": "ee3012c04be0d02289520a34409d0855a3e5ca58",
+  "algorithm_frozen": {
+    "config/run_config.mentor_tracking.continuity_first_v2_1.pilot.json": {
+      "executed_sha256": "0f5feeb84f8ed93cfa1883037c8a48bcd83ce1b57458102417059164ce13bc3c",
+      "git_lf_sha256": "f90a7a81924ba1dd747240de9116da4871a1286c910d5da18d55803c0f8bde3a"
+    },
+    "config/tracking_config.continuity_first_v2_1.a020_n4.json": {
+      "executed_sha256": "6ec1622a118ce3863a43726eafe328da773597f3a31b54d01179c260898f114e",
+      "git_lf_sha256": "65246b2c543d2fa909577bf446617917b233232ed224558ab630d38464aab83b"
+    },
+    "src/svrecttail/mentor/tracking_core.py": {
+      "executed_sha256": "bf5a336f68f100ccac759dee89b736a29d33cb87f8323e3bb7e19bbdff361f6c",
+      "git_lf_sha256": "f1722c010e4f1d341d461b709f198fef845d1f443a20b0049bae1815a70bfac7"
+    },
+    "src/svrecttail/mentor_tracking.py": {
+      "executed_sha256": "3bc6fa03f2c48e5ee05de8066f29ef3cb15103af88547bf0a541ac5670b1994d",
+      "git_lf_sha256": "7405b8d10f35cb5cef213ef2879417eccf0a5474c77cd9568a5756f4dade6671"
+    },
+    "src/svrecttail/quantification.py": {
+      "executed_sha256": "ffcd6904fcef434d77c6da9a3e013f0cd03a4199590b8b61c428e9d6b3659795",
+      "git_lf_sha256": "ffcd6904fcef434d77c6da9a3e013f0cd03a4199590b8b61c428e9d6b3659795"
+    },
+    "src/svrecttail/geometry.py": {
+      "executed_sha256": "b480bc0a909f3b7f9b0946c7d6a6cb0a6d1dc96a6dccfbc7bad62a5ffc7b1f3a",
+      "git_lf_sha256": "b480bc0a909f3b7f9b0946c7d6a6cb0a6d1dc96a6dccfbc7bad62a5ffc7b1f3a"
+    },
+    "src/svrecttail/background.py": {
+      "executed_sha256": "4bad2a572fce8d537711f8e7bf1d0da7bc4de0901ed54d4cf90aa41f3e08682a",
+      "git_lf_sha256": "4bad2a572fce8d537711f8e7bf1d0da7bc4de0901ed54d4cf90aa41f3e08682a"
+    },
+    "src/svrecttail/pipeline.py": {
+      "executed_sha256": "87cc51e5bb4d094cb91141eee6394bcd36f1eef7f5e70088d3196284c9e86ca8",
+      "git_lf_sha256": "87cc51e5bb4d094cb91141eee6394bcd36f1eef7f5e70088d3196284c9e86ca8"
+    },
+    "src/svrecttail/localization.py": {
+      "executed_sha256": "079f99786b5a0b35f7f014a0604cfc8ab2d04606c7b686ce483cc4fcc1967d4d",
+      "git_lf_sha256": "079f99786b5a0b35f7f014a0604cfc8ab2d04606c7b686ce483cc4fcc1967d4d"
+    },
+    "matlab/compute_sv_maps.m": {
+      "executed_sha256": "7365eaf8a5f4c922022c6275b04c57b154652872b01a33a05ab569783113e875",
+      "git_lf_sha256": "7365eaf8a5f4c922022c6275b04c57b154652872b01a33a05ab569783113e875"
+    },
+    "matlab/config.ini": {
+      "executed_sha256": "d4741f3bfe984b15a8373be8c0f66a126e9bb31c3e92d6abb9a1b0fd41230e4e",
+      "git_lf_sha256": "d4741f3bfe984b15a8373be8c0f66a126e9bb31c3e92d6abb9a1b0fd41230e4e"
+    },
+    "matlab/export_sv_omag_frame.m": {
+      "executed_sha256": "20ad0125e52a558ea967a2ece326f0d893ccd55bef73208d3ec1b41deaf29374",
+      "git_lf_sha256": "20ad0125e52a558ea967a2ece326f0d893ccd55bef73208d3ec1b41deaf29374"
+    },
+    "matlab/ini2struct.m": {
+      "executed_sha256": "68559b6f9404e1b629c4e8a39998a9d412e937da42b8feec32f635c54feae8ff",
+      "git_lf_sha256": "68559b6f9404e1b629c4e8a39998a9d412e937da42b8feec32f635c54feae8ff"
+    },
+    "matlab/iniset.m": {
+      "executed_sha256": "23ddb3166eb6357f390ea51617c0db2b0251db909ca5e20de503e9f72c599957",
+      "git_lf_sha256": "23ddb3166eb6357f390ea51617c0db2b0251db909ca5e20de503e9f72c599957"
+    },
+    "matlab/load_and_reconstruct_common_oct.m": {
+      "executed_sha256": "85581e762e109b04e43d563283debea40138c142258323f50b1de3ead83c3a01",
+      "git_lf_sha256": "85581e762e109b04e43d563283debea40138c142258323f50b1de3ead83c3a01"
+    },
+    "matlab/OCTA_F_ED_Clutter_EigFeed.m": {
+      "executed_sha256": "1fbbbe2bdcf68e8193cd4eb56b9446375d49d050ad481938a5bb9326e3060598",
+      "git_lf_sha256": "1fbbbe2bdcf68e8193cd4eb56b9446375d49d050ad481938a5bb9326e3060598"
+    },
+    "matlab/OCTA_F_SubPixReg.m": {
+      "executed_sha256": "f0b6337e0f3b3923954f24223a6821a897098badfc56d2e1dec3a0ae4c3aaaa8",
+      "git_lf_sha256": "f0b6337e0f3b3923954f24223a6821a897098badfc56d2e1dec3a0ae4c3aaaa8"
+    },
+    "matlab/SSOCT_F_PhCompV3.m": {
+      "executed_sha256": "b23f58a06f6dba02edd1811a28a4b642f8a4ac37fe8bc92a3963b3ef980b7c41",
+      "git_lf_sha256": "b23f58a06f6dba02edd1811a28a4b642f8a4ac37fe8bc92a3963b3ef980b7c41"
+    }
+  },
+  "planned_frames": 15,
+  "status": "prepared",
+  "blank_profiles": "not_available",
+  "identity_note": "Spatial B-scans are not independent vessels; within-position repeats are not independent acquisitions."
+}

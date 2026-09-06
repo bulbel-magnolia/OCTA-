@@ -1,0 +1,9 @@
+{
+  "planned": 15,
+  "processed": 15,
+  "inputs_archived": 15,
+  "quantification_valid": 13,
+  "status": "numerical_extraction_complete",
+  "coordinate_mapping_review": "passed_all_15_images",
+  "detection": "not_evaluated_no_matched_blank"
+}
