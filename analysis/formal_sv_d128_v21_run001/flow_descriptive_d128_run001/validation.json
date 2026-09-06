@@ -1,0 +1,45 @@
+{
+  "primary_valid_frames": 2422,
+  "scan_valid_counts": {
+    "flow01": 486,
+    "flow03": 468,
+    "flow05": 491,
+    "flow07": 493,
+    "flow10": 484
+  },
+  "scans": [
+    "flow01",
+    "flow03",
+    "flow05",
+    "flow07",
+    "flow10"
+  ],
+  "flow_mm_s": [
+    1,
+    3,
+    5,
+    7,
+    10
+  ],
+  "primary_geometry": "frozen run001 X4 center + X1 apparent width",
+  "fixed128_role": "geometry QC only",
+  "p_values_computed": false,
+  "inferential_test_performed": false,
+  "bscan_independent_replicate_claim": false,
+  "zero_fill_or_invalid_frame_interpolation": false,
+  "detection_depth": "not_evaluated / NA",
+  "profile_chunks": 25,
+  "task1_profile_rows_read": 850122,
+  "task1_tail_support_rows": 181650,
+  "depth_targets_count": 51,
+  "depth_target_min_um": 0.0,
+  "depth_target_max_um": 500.0,
+  "depth_target_step_um": 10.0,
+  "depth_anchor_records": 123522,
+  "depth_anchor_unique_frames": 2422,
+  "depth_anchor_max_abs_error_um": 3.3499999999999943,
+  "depth_anchor_median_abs_error_um": 1.6499999999999773,
+  "depth_interpolation_performed": false,
+  "depth_curve_fitting_performed": false,
+  "negative_ri_anchor_records": 30387
+}

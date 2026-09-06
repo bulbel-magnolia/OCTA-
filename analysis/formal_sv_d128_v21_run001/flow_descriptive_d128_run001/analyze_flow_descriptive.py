@@ -205,7 +205,7 @@ def nearest_depth_records(task1_dir: Path, framewise: pd.DataFrame) -> tuple[pd.
                     "abs_depth_error_um": abs(error),
                     "tail_z_fraction": float(selected.tail_z_fraction),
                     "source_mean": float(selected.source_mean),
-                    "T": float(selected.T),
+                    "T": float(selected["T"]),
                     "ri_r": float(selected.ri_r),
                 })
 
