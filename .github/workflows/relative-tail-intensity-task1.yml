@@ -1,0 +1,55 @@
+name: Relative Tail Intensity Task 1
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - feature/sv-rectangle-v1
+    paths:
+      - analysis/formal_sv_d128_v21_run001/relative_tail_intensity_full2422/derive_relative_tail_intensity.py
+      - analysis/formal_sv_d128_v21_run001/relative_tail_intensity_full2422/_trigger.txt
+      - .github/workflows/relative-tail-intensity-task1.yml
+
+permissions:
+  contents: write
+
+jobs:
+  derive:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Checkout branch
+        uses: actions/checkout@v4
+        with:
+          ref: feature/sv-rectangle-v1
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install analysis dependencies
+        run: python -m pip install --upgrade pip numpy pandas
+
+      - name: Derive Relative Tail Intensity for all valid frames
+        run: |
+          python analysis/formal_sv_d128_v21_run001/relative_tail_intensity_full2422/derive_relative_tail_intensity.py \
+            --root . \
+            --formal-dir results/formal_sv_d128_v21_full2500_run001 \
+            --output-dir analysis/formal_sv_d128_v21_run001/relative_tail_intensity_full2422 \
+            --frozen-source-sha acef5eb9d5ac356f1acf11aee885895da79a22e3 \
+            --workflow-source-sha "${{ github.sha }}"
+
+      - name: Commit generated Task 1 outputs
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add analysis/formal_sv_d128_v21_run001/relative_tail_intensity_full2422/
+          if git diff --cached --quiet; then
+            echo 'No generated changes to commit.'
+            exit 0
+          fi
+          git commit -m 'analysis: add relative tail intensity full-volume results'
+          git push origin HEAD:feature/sv-rectangle-v1
