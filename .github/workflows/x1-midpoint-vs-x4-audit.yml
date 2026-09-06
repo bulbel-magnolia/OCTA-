@@ -1,0 +1,44 @@
+name: X1 midpoint vs X4 full-volume audit
+
+on:
+  push:
+    branches:
+      - feature/sv-rectangle-v1
+    paths:
+      - analysis/formal_sv_d128_v21_run001/x1_midpoint_vs_x4_full2500/audit_x1_midpoint_vs_x4.py
+      - analysis/formal_sv_d128_v21_run001/x1_midpoint_vs_x4_full2500/_trigger.txt
+
+permissions:
+  contents: write
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout analysis branch
+        uses: actions/checkout@v4
+        with:
+          ref: feature/sv-rectangle-v1
+          fetch-depth: 0
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Run X1 vs X4 audit
+        run: python analysis/formal_sv_d128_v21_run001/x1_midpoint_vs_x4_full2500/audit_x1_midpoint_vs_x4.py
+      - name: Commit generated audit results
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add analysis/formal_sv_d128_v21_run001/x1_midpoint_vs_x4_full2500/README.md \
+                  analysis/formal_sv_d128_v21_run001/x1_midpoint_vs_x4_full2500/x1_x4_framewise.csv \
+                  analysis/formal_sv_d128_v21_run001/x1_midpoint_vs_x4_full2500/x1_x4_summary.csv \
+                  analysis/formal_sv_d128_v21_run001/x1_midpoint_vs_x4_full2500/x1_x4_smoothness.csv \
+                  analysis/formal_sv_d128_v21_run001/x1_midpoint_vs_x4_full2500/x1_x4_extremes_top50.csv \
+                  analysis/formal_sv_d128_v21_run001/x1_midpoint_vs_x4_full2500/audit_metadata.csv
+          if git diff --cached --quiet; then
+            echo "No generated changes to commit"
+            exit 0
+          fi
+          git commit -m "analysis: add X1 midpoint vs X4 full-volume audit results"
+          git push origin HEAD:feature/sv-rectangle-v1
