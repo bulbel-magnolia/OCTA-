@@ -13,3 +13,10 @@ Thumbs.db
 # Local run products should be copied into data/processed only after QC.
 outputs/
 scratch/
+
+# Raw acquisitions and machine-local staging stay outside Git history.
+*.oct
+*.dcm
+data/raw/
+data/interim/
+data/local/

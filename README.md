@@ -70,8 +70,18 @@ export_sv_omag_frame('scan.oct', 1, 'data/interim/scan_b000.mat', 2);
 - `run_config.json`、`manifest.csv`、`run_complete.json`：冻结输入、哈希和软件版本。
 
 输出先写入被 Git 忽略的 `outputs/`。完成 QC 后，将冻结运行复制到
-`data/processed/<run_id>/` 并提交。`.oct`、`.mat`、HDF5 和 NumPy 二进制
-文件由 Git LFS 管理。
+`data/processed/<run_id>/` 并提交。大型 MAT、HDF5 和 NumPy 二进制文件由
+Git LFS 管理。
+
+## 原始数据管理
+
+原始 `.oct`/`.dcm` 保存在仓库外的本地数据目录，不进入 Git 历史；仓库用
+`data/raw_inventory.csv` 保存文件名、大小、实验条件和 SHA-256，从而精确确认
+每次分析使用的原始文件。机器相关的绝对路径只写入被忽略的
+`outputs/local_run_inputs/manifest.csv`，不提交到公开仓库。
+
+如果需要通过 GitHub 分发完整原始数据，应把冻结数据集作为 GitHub Release
+附件上传，不要作为普通 Git 文件提交。详细规则见 `data/README.md`。
 
 ## 验证
 
