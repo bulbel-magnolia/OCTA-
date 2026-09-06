@@ -1,0 +1,8 @@
+key,value
+baseline_background_skip_alines,3
+variant_background_skip_alines,5
+strip_width_alines,5
+outward_shift_alines,2
+outward_shift_um,25.4
+baseline_valid_frames,2422
+variant_valid_frames,2422
