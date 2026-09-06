@@ -1,0 +1,27 @@
+{
+  "analysis": "Task 2: fixed-128-um lateral geometry sensitivity",
+  "status": "geometry_QC_not_scientific_endpoint",
+  "frozen_input_directory": "results/formal_sv_d128_v21_full2500_run001",
+  "task1_input_directory": "analysis/formal_sv_d128_v21_run001/relative_tail_intensity_full2422",
+  "output_directory": "analysis/formal_sv_d128_v21_run001/fixed128_width_sensitivity_full2422",
+  "formal_release_tag": "formal-sv-d128-v21-run001",
+  "frozen_formal_source_sha": "acef5eb9d5ac356f1acf11aee885895da79a22e3",
+  "task1_result_sha": "f71e8df806ffca56eacb2df5167310108536a026",
+  "workflow_source_sha": "598383ce873c4d250b7d99b8d6f74411a1e71867",
+  "baseline_geometry": "X4-centered + X1 apparent lateral width + frozen v2.1 z_top",
+  "variant_geometry": "X4-centered + fixed 128 um lateral width + frozen v2.1 z_top",
+  "unchanged": {
+    "vertical_source_diameter_um": 128.0,
+    "tail_length_um": 500.0,
+    "tail_gap_um": 0.0,
+    "background_skip_alines": 3,
+    "background_take_alines_each_side": 5,
+    "ellipse_supersample": 16,
+    "sv_signal": "linear sv_raw = Var_t(|E|), N denominator",
+    "negative_background_residuals": "retained"
+  },
+  "background_edge_semantics": "same rule applied to each geometry; fixed128 background columns are selected relative to fixed128 vessel edges",
+  "formal_selection": "only baseline valid == True frames enter paired sensitivity",
+  "invalid_variant_handling": "variant-invalid frames are retained with validity/reason and excluded from numeric delta summaries; no zero fill",
+  "statistical_note": "descriptive spatial sensitivity only; B-scans are not independent biological replicates"
+}

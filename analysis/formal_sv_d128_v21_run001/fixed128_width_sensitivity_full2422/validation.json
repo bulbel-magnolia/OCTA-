@@ -1,0 +1,25 @@
+{
+  "baseline_valid_frames": 2422,
+  "fixed128_valid_frames": 2422,
+  "fixed128_invalid_frames": 0,
+  "fixed128_invalid_examples": [],
+  "release_packages_expected": 25,
+  "release_packages_verified": 25,
+  "valid_frame_npz_sha256_verified": 2422,
+  "baseline_replay_max_relative_error": 1.7498600978873804e-14,
+  "baseline_replay_max_relative_error_by_metric": {
+    "q_vessel": 4.3524381663178856e-16,
+    "q_tail": 1.7498600978873804e-14,
+    "ratio_tail_to_vessel": 9.43689570931383e-15,
+    "source_area_um2": 2.0353219266153012e-16,
+    "tail_area_um2": 2.1388641805473553e-15,
+    "source_mean": 3.302552847478657e-16
+  },
+  "x4_vs_baseline_geometry_center_max_abs_px": 2.842170943040401e-14,
+  "fixed_width_um": 128.0,
+  "background_rule": "recomputed from fixed geometry edges; skip 3, take 5 each side",
+  "negative_residual_clipping": false,
+  "parameter_selection_by_flow_pattern": false,
+  "p_values_computed": false,
+  "biological_replicate_claim": false
+}
