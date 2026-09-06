@@ -1,0 +1,2 @@
+scan_id,data_status,status,detected,detectable_length_um,right_censored
+synthetic_demo,synthetic_non_experimental,right_censored,True,469.0,True

@@ -1,0 +1,15 @@
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.coverage
+htmlcov/
+.venv/
+venv/
+*.asv
+*.m~
+.DS_Store
+Thumbs.db
+
+# Local run products should be copied into data/processed only after QC.
+outputs/
+scratch/
