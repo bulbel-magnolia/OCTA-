@@ -1,0 +1,4 @@
+frame_index,v1_z_upper_px,v2_model_z_upper_px,v2_local_seed_z_upper_px,v2_peak_z_px,z_candidate_present,z_candidate_accepted,new_tracking_class,assessability_score,vessel_presence_prediction,upper_top_contrast_snr,upper_bottom_contrast_snr,upper_support_difference,upper_balance_fraction
+420,188.0,191.0,190.0,202.0,True,True,high_confidence,0.6263911976281707,assessable,4.199408621683753,0.2223747527207325,0.2487835362553596,0.0452260799593264
+436,190.0,233.0,236.0,242.0,True,True,high_confidence,0.759735619290922,assessable,1.7766205039116751,-1.4752244171204876,0.2325106114149093,0.192849518328432
+447,187.0,233.0,,255.0,False,False,model_assisted,0.2175976164347929,not_assessable,,,,

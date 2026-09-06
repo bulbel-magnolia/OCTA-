@@ -42,6 +42,16 @@ v1 顶缘，红线为 v2 顶缘，橙线为 v2 的 128 μm 下边界，青色为
 这段不包含本次抽取的 0、249、499 帧，所以不影响上表 15 帧是否成功运行；
 它说明 v2 目前只能作为候选供目测复核，不能宣称 2500 帧均已精确定位。
 
+[420/436/447 三帧诊断图](flow03_gap_diagnostic_frames_420_436_447.png)
+进一步确认了机制：420 帧仍在真实血管附近，局部种子为 z=190；436 帧的
+轴向核心路径被强拖尾吸到 z=242，使受路径限制的边界搜索只能在深处产生
+z=236 的假种子，并被轨迹规则接受；447 帧的核心路径已到 z=255，局部
+边界判据没有通过，但补全轨迹仍给出 z=233。图中黄色虚线是 v1，红线是
+v2 补全结果，青色点线是 v2 局部种子，蓝色三角是所选峰值。对应数值见
+`flow03_gap_diagnostic_frames_420_436_447.csv`。这说明主因是核心路径先被拖尾
+吸走、局部搜索窗口随之错位，再叠加缺失段补全；单独继续提高强度阈值不
+足以解决。
+
 ## 参数选择与复现
 
 `legacy_threshold_matrix_15.csv` 与 `persistent_threshold_matrix_15.csv` 保存
@@ -57,6 +67,7 @@ DICOM 与大体积数组仍保存在仓库外；本目录只保存可审计的�
 主要文件包括：`frame_results.csv`（15 帧指标）、`localization.csv`（最终
 边界）、`comparison_vs_legacy_upper_edge.csv`（逐帧新旧差异）、
 `full_volume_tracking_audit.csv`（5 卷轨迹审计）、`tracking/`（2500 帧主
-定位表）、`qc/`（15 张定量 QC 图）和 `arrays_sha256.csv`（未上传 MAT 的
-大小与 SHA-256）。`run_complete.json` 记录提交 `df67f67`、配置/清单哈希、
-15/15 有效和 0 次人工调整。
+定位表）、`flow03_gap_diagnostic_frames_420_436_447.png`（异常三帧诊断）、
+`qc/`（15 张定量 QC 图）和 `arrays_sha256.csv`（未上传 MAT 的大小与
+SHA-256）。`run_complete.json` 记录提交 `df67f67`、配置/清单哈希、15/15
+有效和 0 次人工调整。
