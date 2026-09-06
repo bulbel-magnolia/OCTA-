@@ -1,10 +1,9 @@
 #!/usr/bin/env python3
-"""Audit sensitivity to shifting bilateral SV background strips 2 A-lines outward.
+"""Full-volume sensitivity audit for moving bilateral SV background +2 A-lines.
 
-Frozen run001 remains unchanged. Baseline is skip=3, width=5; the existing
-sensitivity variant background_skip_plus_2px is skip=5, width=5. Only the
-background location changes. Spatial B-scans are descriptive samples, so this
-script reports robust descriptive sensitivity and no inferential p-values.
+Frozen run001 is not modified. Baseline: skip=3, width=5 each side. Variant:
+skip=5, width=5. Only background location changes. Results are descriptive
+because B-scans within one volume are spatial samples, not independent experiments.
 """
 from __future__ import annotations
 
@@ -12,7 +11,6 @@ import csv
 import math
 import re
 from pathlib import Path
-from statistics import median
 
 ROOT = Path(__file__).resolve().parents[3]
 RUN = ROOT / "results" / "formal_sv_d128_v21_full2500_run001"
@@ -20,16 +18,15 @@ OUT = Path(__file__).resolve().parent
 BASE = RUN / "frame_results.csv"
 SENS = RUN / "sensitivity_results.csv"
 VARIANT = "background_skip_plus_2px"
-DX_UM = 12.7
 SHIFT_ALINES = 2
-SHIFT_UM = DX_UM * SHIFT_ALINES
+SHIFT_UM = 25.4
 
 
-def b(v: str) -> bool:
+def as_bool(v):
     return str(v).strip().lower() in {"true", "1", "yes"}
 
 
-def f(v: str):
+def num(v):
     try:
         x = float(v)
         return x if math.isfinite(x) else None
@@ -37,31 +34,32 @@ def f(v: str):
         return None
 
 
-def frame_index(row: dict[str, str]):
+def get_frame_index(row):
     for key in ("frame_index_0based", "bscan_index"):
         if row.get(key, "") != "":
-            x = f(row[key])
+            x = num(row[key])
             if x is not None:
                 return int(round(x))
     m = re.search(r"Bscan(\d+)", row.get("frame_id", ""), re.I)
     if m:
         return int(m.group(1))
-    raise ValueError(f"Cannot recover frame index: {row}")
+    raise ValueError(f"cannot recover frame index from row: {row}")
 
 
-def pct(new, old):
-    if new is None or old is None or old == 0:
-        return None
-    return 100.0 * (new - old) / old
+def read_csv(path):
+    with path.open(newline="", encoding="utf-8-sig") as h:
+        return list(csv.DictReader(h))
 
 
 def delta(new, old):
-    if new is None or old is None:
-        return None
-    return new - old
+    return None if new is None or old is None else new - old
 
 
-def q(values, p):
+def pct(new, old):
+    return None if new is None or old is None or old == 0 else 100.0 * (new - old) / old
+
+
+def quantile(values, p):
     a = sorted(x for x in values if x is not None and math.isfinite(x))
     if not a:
         return None
@@ -74,94 +72,89 @@ def q(values, p):
     return a[lo] * (hi - h) + a[hi] * (h - lo)
 
 
-def fmt(x, nd=3):
-    return "NA" if x is None else f"{x:.{nd}f}"
-
-
-def metric_stats(values, thresholds=(5.0, 10.0, 20.0)):
+def metric_stats(values, unit):
     a = [x for x in values if x is not None and math.isfinite(x)]
     aa = [abs(x) for x in a]
     out = {
         "n_metric": len(a),
-        "signed_median": q(a, .50),
-        "signed_q25": q(a, .25),
-        "signed_q75": q(a, .75),
-        "abs_median": q(aa, .50),
-        "abs_p90": q(aa, .90),
-        "abs_p95": q(aa, .95),
+        "signed_median": quantile(a, .50),
+        "signed_q25": quantile(a, .25),
+        "signed_q75": quantile(a, .75),
+        "abs_median": quantile(aa, .50),
+        "abs_p90": quantile(aa, .90),
+        "abs_p95": quantile(aa, .95),
         "abs_max": max(aa) if aa else None,
         "positive_n": sum(x > 0 for x in a),
         "negative_n": sum(x < 0 for x in a),
         "zero_n": sum(x == 0 for x in a),
+        "abs_gt_5_n": None, "abs_gt_5_pct": None,
+        "abs_gt_10_n": None, "abs_gt_10_pct": None,
+        "abs_gt_20_n": None, "abs_gt_20_pct": None,
+        "abs_gt_0p02_n": None, "abs_gt_0p02_pct": None,
+        "abs_gt_0p05_n": None, "abs_gt_0p05_pct": None,
+        "abs_gt_0p10_n": None, "abs_gt_0p10_pct": None,
     }
-    for t in thresholds:
-        out[f"abs_gt_{int(t)}_n"] = sum(x > t for x in aa)
-        out[f"abs_gt_{int(t)}_pct"] = 100.0 * out[f"abs_gt_{int(t)}_n"] / len(aa) if aa else None
+    thresholds = ((5, "5"), (10, "10"), (20, "20")) if unit == "percent" else ((.02, "0p02"), (.05, "0p05"), (.10, "0p10"))
+    for t, tag in thresholds:
+        n = sum(x > t for x in aa)
+        out[f"abs_gt_{tag}_n"] = n
+        out[f"abs_gt_{tag}_pct"] = 100.0 * n / len(aa) if aa else None
     return out
 
 
-def read_csv(path):
-    with path.open(newline="", encoding="utf-8-sig") as h:
-        return list(csv.DictReader(h))
+def fmt(x, digits=3):
+    return "NA" if x is None else f"{x:.{digits}f}"
 
 
 base_rows = read_csv(BASE)
-sens_rows = [r for r in read_csv(SENS) if r.get("variant") == VARIANT]
+all_sens = read_csv(SENS)
+sens_rows = [r for r in all_sens if r.get("variant") == VARIANT]
 if len(base_rows) != 2500:
-    raise RuntimeError(f"Expected 2500 baseline rows, found {len(base_rows)}")
+    raise RuntimeError(f"expected 2500 baseline rows, got {len(base_rows)}")
 
 sens_by_key = {}
-for r in sens_rows:
-    k = (r["scan_id"], frame_index(r))
-    if k in sens_by_key:
-        raise RuntimeError(f"Duplicate sensitivity row: {k}")
-    sens_by_key[k] = r
+for row in sens_rows:
+    key = (row["scan_id"], get_frame_index(row))
+    if key in sens_by_key:
+        raise RuntimeError(f"duplicate +2 row: {key}")
+    sens_by_key[key] = row
 
 framewise = []
 for br in base_rows:
-    k = (br["scan_id"], frame_index(br))
-    sr = sens_by_key.get(k)
-    baseline_valid = b(br.get("valid", ""))
-    variant_valid = bool(sr) and b(sr.get("valid", ""))
-    if not baseline_valid:
+    if not as_bool(br.get("valid", "")):
         continue
+    key = (br["scan_id"], get_frame_index(br))
+    sr = sens_by_key.get(key)
     if sr is None:
-        raise RuntimeError(f"Missing +2 sensitivity row for baseline-valid frame {k}")
-
-    qv0, qt0, r0 = f(br.get("q_vessel")), f(br.get("q_tail")), f(br.get("ratio_tail_to_vessel"))
-    qv1, qt1, r1 = f(sr.get("q_vessel")), f(sr.get("q_tail")), f(sr.get("ratio_tail_to_vessel"))
+        raise RuntimeError(f"missing +2 row for baseline-valid frame {key}")
+    variant_valid = as_bool(sr.get("valid", ""))
+    qv0, qt0, r0 = num(br.get("q_vessel")), num(br.get("q_tail")), num(br.get("ratio_tail_to_vessel"))
+    qv1, qt1, r1 = num(sr.get("q_vessel")), num(sr.get("q_tail")), num(sr.get("ratio_tail_to_vessel"))
     if not variant_valid:
         qv1 = qt1 = r1 = None
-    rec = {
+    framewise.append({
         "scan_id": br["scan_id"],
-        "frame_index_0based": frame_index(br),
+        "frame_index_0based": get_frame_index(br),
         "flow_speed_mm_s": br.get("flow_speed_mm_s", ""),
         "localization_source": br.get("localization_source", ""),
-        "baseline_valid": baseline_valid,
+        "baseline_valid": True,
         "variant_valid": variant_valid,
         "variant_invalid_reason": "" if variant_valid else sr.get("invalid_reason", ""),
-        "q_vessel_base": qv0,
-        "q_vessel_plus2": qv1,
-        "q_vessel_delta": delta(qv1, qv0),
-        "q_vessel_delta_pct": pct(qv1, qv0),
-        "q_tail_base": qt0,
-        "q_tail_plus2": qt1,
-        "q_tail_delta": delta(qt1, qt0),
-        "q_tail_delta_pct": pct(qt1, qt0),
-        "ratio_base": r0,
-        "ratio_plus2": r1,
-        "ratio_delta": delta(r1, r0),
-        "ratio_delta_pct": pct(r1, r0),
-    }
-    framewise.append(rec)
+        "q_vessel_base": qv0, "q_vessel_plus2": qv1,
+        "q_vessel_delta": delta(qv1, qv0), "q_vessel_delta_pct": pct(qv1, qv0),
+        "q_tail_base": qt0, "q_tail_plus2": qt1,
+        "q_tail_delta": delta(qt1, qt0), "q_tail_delta_pct": pct(qt1, qt0),
+        "ratio_base": r0, "ratio_plus2": r1,
+        "ratio_delta": delta(r1, r0), "ratio_delta_pct": pct(r1, r0),
+    })
 
-if len(framewise) != sum(b(r.get("valid", "")) for r in base_rows):
-    raise RuntimeError("Framewise audit row count does not match baseline-valid count")
+expected_valid = sum(as_bool(r.get("valid", "")) for r in base_rows)
+if len(framewise) != expected_valid:
+    raise RuntimeError(f"baseline-valid mismatch: {len(framewise)} vs {expected_valid}")
 
-fields = list(framewise[0].keys())
+frame_fields = list(framewise[0])
 with (OUT / "background_plus2_framewise.csv").open("w", newline="", encoding="utf-8") as h:
-    w = csv.DictWriter(h, fieldnames=fields)
-    w.writeheader(); w.writerows(framewise)
+    w = csv.DictWriter(h, fieldnames=frame_fields); w.writeheader(); w.writerows(framewise)
 
 scopes = [("overall", "all", framewise)]
 for scan in sorted({r["scan_id"] for r in framewise}):
@@ -169,7 +162,7 @@ for scan in sorted({r["scan_id"] for r in framewise}):
 for src in sorted({r["localization_source"] for r in framewise}):
     scopes.append(("localization_source", src, [r for r in framewise if r["localization_source"] == src]))
 
-metric_cols = [
+metric_specs = [
     ("q_vessel_delta_pct", "percent"),
     ("q_tail_delta_pct", "percent"),
     ("ratio_delta", "absolute_ratio"),
@@ -179,48 +172,77 @@ summary = []
 for scope_type, scope_value, rows in scopes:
     n_base = len(rows)
     n_var = sum(r["variant_valid"] for r in rows)
-    for col, unit in metric_cols:
-        st = metric_stats([r[col] for r in rows if r["variant_valid"]], thresholds=(5, 10, 20) if unit == "percent" else (.02, .05, .10))
+    for metric, unit in metric_specs:
         rec = {
             "scope_type": scope_type, "scope_value": scope_value,
             "baseline_valid_n": n_base, "variant_valid_n": n_var,
             "variant_invalid_n": n_base - n_var,
             "variant_valid_pct": 100.0 * n_var / n_base if n_base else None,
-            "metric": col, "unit": unit,
+            "metric": metric, "unit": unit,
         }
-        rec.update(st)
+        rec.update(metric_stats([r[metric] for r in rows if r["variant_valid"]], unit))
         summary.append(rec)
 
-sfields = list(summary[0].keys())
+summary_fields = list(summary[0])
 with (OUT / "background_plus2_summary.csv").open("w", newline="", encoding="utf-8") as h:
-    w = csv.DictWriter(h, fieldnames=sfields)
-    w.writeheader(); w.writerows(summary)
+    w = csv.DictWriter(h, fieldnames=summary_fields); w.writeheader(); w.writerows(summary)
 
-extreme_pool = [r for r in framewise if r["variant_valid"] and r["q_tail_delta_pct"] is not None]
-extremes = sorted(extreme_pool, key=lambda r: abs(r["q_tail_delta_pct"]), reverse=True)[:50]
+extremes = sorted(
+    [r for r in framewise if r["variant_valid"] and r["q_tail_delta_pct"] is not None],
+    key=lambda r: abs(r["q_tail_delta_pct"]), reverse=True,
+)[:50]
 with (OUT / "background_plus2_extremes.csv").open("w", newline="", encoding="utf-8") as h:
-    w = csv.DictWriter(h, fieldnames=fields)
-    w.writeheader(); w.writerows(extremes)
+    w = csv.DictWriter(h, fieldnames=frame_fields); w.writeheader(); w.writerows(extremes)
 
-# Compact machine-readable metadata.
 with (OUT / "audit_metadata.csv").open("w", newline="", encoding="utf-8") as h:
-    w = csv.writer(h)
-    w.writerow(["key", "value"])
-    w.writerow(["baseline_background_skip_alines", 3])
-    w.writerow(["variant_background_skip_alines", 5])
-    w.writerow(["strip_width_alines", 5])
-    w.writerow(["outward_shift_alines", SHIFT_ALINES])
-    w.writerow(["outward_shift_um", SHIFT_UM])
-    w.writerow(["baseline_valid_frames", len(framewise)])
-    w.writerow(["variant_valid_frames", sum(r["variant_valid"] for r in framewise)])
+    w = csv.writer(h); w.writerow(["key", "value"])
+    for k, v in [
+        ("baseline_background_skip_alines", 3), ("variant_background_skip_alines", 5),
+        ("strip_width_alines", 5), ("outward_shift_alines", SHIFT_ALINES),
+        ("outward_shift_um", SHIFT_UM), ("baseline_valid_frames", len(framewise)),
+        ("variant_valid_frames", sum(r["variant_valid"] for r in framewise)),
+    ]:
+        w.writerow([k, v])
 
-by_metric = {(r["scope_type"], r["scope_value"], r["metric"]): r for r in summary}
-ov_qt = by_metric[("overall", "all", "q_tail_delta_pct")]
-ov_qv = by_metric[("overall", "all", "q_vessel_delta_pct")]
-ov_rd = by_metric[("overall", "all", "ratio_delta")]
-flow_qt = [by_metric[("flow", s, "q_tail_delta_pct")] for s in sorted({r["scan_id"] for r in framewise})]
+by = {(r["scope_type"], r["scope_value"], r["metric"]): r for r in summary}
+ov_qt = by[("overall", "all", "q_tail_delta_pct")]
+ov_qv = by[("overall", "all", "q_vessel_delta_pct")]
+ov_rd = by[("overall", "all", "ratio_delta")]
+flow_qt = [by[("flow", s, "q_tail_delta_pct")] for s in sorted({r["scan_id"] for r in framewise})]
 worst_flow = max(flow_qt, key=lambda r: r["abs_median"] if r["abs_median"] is not None else -1)
+variant_n = sum(r["variant_valid"] for r in framewise)
 
-readme = f"""# Background +2 A-line full-volume sensitivity audit\n\n## Purpose\n\nThis is a **QC sensitivity audit**, not a replacement of the frozen run001 background. Baseline uses bilateral background strips after skipping 3 A-lines from each vessel edge; the variant skips 5 A-lines while keeping the strip width at 5 A-lines. Thus the sampled background moves {SHIFT_ALINES} A-lines = {SHIFT_UM:.1f} μm farther from the vessel. All source/tail geometry, SV definition, 500 μm tail window, signed residual handling and inclusion rules remain unchanged.\n\nSpatial B-scans within one scan volume are not independent experiments. This audit is descriptive only; no p-values are produced.\n\n## Headline results\n\n- Baseline-valid frames audited: **{len(framewise)}**.\n- +2 background variant valid: **{sum(r['variant_valid'] for r in framewise)} / {len(framewise)} ({100*sum(r['variant_valid'] for r in framewise)/len(framewise):.2f}%)**.\n- |ΔQ_tail| median: **{fmt(ov_qt['abs_median'])}%**; P95: **{fmt(ov_qt['abs_p95'])}%**; maximum: **{fmt(ov_qt['abs_max'])}%**.\n- |ΔQ_vessel| median: **{fmt(ov_qv['abs_median'])}%**; P95: **{fmt(ov_qv['abs_p95'])}%**.\n- |ΔR| median: **{fmt(ov_rd['abs_median'],4)}**; P95: **{fmt(ov_rd['abs_p95'],4)}**.\n- Flow with largest median |ΔQ_tail|: **{worst_flow['scope_value']}**, {fmt(worst_flow['abs_median'])}%.\n- Frames with |ΔQ_tail| > 5% / 10% / 20%: **{ov_qt['abs_gt_5_n']} / {ov_qt['abs_gt_10_n']} / {ov_qt['abs_gt_20_n']}**.\n\nA large relative ΔQ_tail can occur when baseline signed Q_tail is close to zero. For that reason `background_plus2_framewise.csv` retains the absolute Q_tail values and deltas, and `background_plus2_extremes.csv` is a diagnostic list rather than an exclusion list.\n\n## Files\n\n- `background_plus2_framewise.csv`: one row per baseline-valid frame.\n- `background_plus2_summary.csv`: overall, per-flow, and localization-source robust summaries.\n- `background_plus2_extremes.csv`: top 50 frames by absolute relative Q_tail change.\n- `audit_metadata.csv`: frozen perturbation definition and row counts.\n- `audit_background_plus2.py`: reproducible audit script.\n\n## Interpretation rule fixed before reading results\n\nThis audit asks whether moving a reasonable local background farther from the vessel materially changes Q_vessel, Q_tail or R. It must **not** be used to choose whichever background gives a more monotonic or statistically favorable flow pattern. The frozen run001 files under `results/formal_sv_d128_v21_full2500_run001/` are not modified.\n"""
+readme = f"""# Background +2 A-line full-volume sensitivity audit
+
+## What was changed
+
+This is a **QC sensitivity audit**, not a replacement of frozen run001. Baseline background skips 3 A-lines from each vessel edge and then takes 5 A-lines per side. The variant skips 5 A-lines and still takes 5 per side, so both background strips move **{SHIFT_ALINES} A-lines = {SHIFT_UM:.1f} μm outward**. Source/tail geometry, SV definition, 500 μm tail window, signed residual handling and inclusion rules are unchanged.
+
+Spatial B-scans in one volume are not independent experiments; this audit is descriptive and reports no p-values.
+
+## Headline results
+
+- Baseline-valid frames audited: **{len(framewise)}**.
+- +2 variant valid: **{variant_n}/{len(framewise)} ({100*variant_n/len(framewise):.2f}%)**.
+- |ΔQ_tail|: median **{fmt(ov_qt['abs_median'])}%**, P95 **{fmt(ov_qt['abs_p95'])}%**, max **{fmt(ov_qt['abs_max'])}%**.
+- |ΔQ_vessel|: median **{fmt(ov_qv['abs_median'])}%**, P95 **{fmt(ov_qv['abs_p95'])}%**.
+- |ΔR|: median **{fmt(ov_rd['abs_median'],4)}**, P95 **{fmt(ov_rd['abs_p95'],4)}**.
+- Largest per-flow median |ΔQ_tail|: **{worst_flow['scope_value']} = {fmt(worst_flow['abs_median'])}%**.
+- Frames with |ΔQ_tail| >5% / >10% / >20%: **{ov_qt['abs_gt_5_n']} / {ov_qt['abs_gt_10_n']} / {ov_qt['abs_gt_20_n']}**.
+
+Large relative ΔQ_tail can occur when signed baseline Q_tail is close to zero. Therefore the framewise file retains absolute values/deltas, and the extremes file is diagnostic rather than an exclusion list.
+
+## Files
+
+- `background_plus2_framewise.csv`: all baseline-valid frames.
+- `background_plus2_summary.csv`: overall, per-flow and localization-source robust summaries.
+- `background_plus2_extremes.csv`: top 50 by |relative ΔQ_tail|.
+- `audit_metadata.csv`: perturbation definition and row counts.
+- `audit_background_plus2.py`: reproducible script.
+
+## Interpretation rule
+
+This audit tests whether a reasonable outward shift of local background materially changes Q_vessel, Q_tail or R. It must not be used to select whichever background gives a more monotonic or statistically favorable flow trend. The frozen directory `results/formal_sv_d128_v21_full2500_run001/` is untouched.
+"""
 (OUT / "README.md").write_text(readme, encoding="utf-8")
 print(readme)
