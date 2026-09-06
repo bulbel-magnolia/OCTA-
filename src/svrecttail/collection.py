@@ -271,7 +271,8 @@ def archive_frame(path: Path, maps: FrameMaps, flow: np.ndarray, record: dict,
     return sha256(path)
 
 
-def process_scan(output: Path, archive: Path, scan: str, remove_interim: bool = False) -> None:
+def process_scan(output: Path, archive: Path, scan: str, remove_interim: bool = False,
+                 write_summary: bool = True) -> None:
     freeze_evidence()
     local=json.loads((archive/'local_paths.json').read_text(encoding='utf-8'))
     run=json.loads((output/'collection_run.json').read_text(encoding='utf-8'))
@@ -365,7 +366,8 @@ def process_scan(output: Path, archive: Path, scan: str, remove_interim: bool = 
             source_mat.unlink()
         if frame%25==0 or frame==int(planned.iloc[-1].frame_index_0based):
             print(f'PROCESSED {scan} {frame}: valid={record["valid"]} {record.get("invalid_reason")}',flush=True)
-    summarize(output,archive)
+    if write_summary:
+        summarize(output,archive)
 
 
 def summarize(output: Path, archive: Path) -> None:
@@ -470,10 +472,13 @@ def main(argv=None):
     parser.add_argument('--stage',choices=['bridge','full'],default='bridge')
     parser.add_argument('--scan')
     parser.add_argument('--remove-interim',action='store_true')
+    parser.add_argument('--no-summary',action='store_true',
+                        help='Write only this scan checkpoints/QC; summarize after independent scans finish')
     parser.add_argument('--packages',type=Path)
     args=parser.parse_args(argv)
     if args.command=='prepare':prepare(args.raw_root,args.output,args.archive,args.stage)
-    elif args.command=='process':process_scan(args.output,args.archive,args.scan,args.remove_interim)
+    elif args.command=='process':process_scan(args.output,args.archive,args.scan,args.remove_interim,
+                                            write_summary=not args.no_summary)
     elif args.command=='summarize':summarize(args.output,args.archive)
     else:package(args.output,args.archive,args.packages)
     return 0
