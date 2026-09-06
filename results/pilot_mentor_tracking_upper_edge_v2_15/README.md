@@ -53,3 +53,10 @@ v1 顶缘，红线为 v2 顶缘，橙线为 v2 的 128 μm 下边界，青色为
 
 矩阵可由 `../../scripts/compare_upper_edge_thresholds.py` 重跑。原始 OCT、Flow
 DICOM 与大体积数组仍保存在仓库外；本目录只保存可审计的派生表格和图片。
+
+主要文件包括：`frame_results.csv`（15 帧指标）、`localization.csv`（最终
+边界）、`comparison_vs_legacy_upper_edge.csv`（逐帧新旧差异）、
+`full_volume_tracking_audit.csv`（5 卷轨迹审计）、`tracking/`（2500 帧主
+定位表）、`qc/`（15 张定量 QC 图）和 `arrays_sha256.csv`（未上传 MAT 的
+大小与 SHA-256）。`run_complete.json` 记录提交 `df67f67`、配置/清单哈希、
+15/15 有效和 0 次人工调整。

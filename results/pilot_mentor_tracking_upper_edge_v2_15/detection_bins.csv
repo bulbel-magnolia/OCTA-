@@ -1,0 +1,1 @@
+scan_id,frame_id,bin_index_0based,bin_start_um,bin_stop_um,signal_bin_mean,blank_median,blank_scaled_mad,threshold,blank_count,exceeds_threshold,sustained_detection

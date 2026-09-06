@@ -1,0 +1,53 @@
+{
+  "schema_version": "SV_Rectangle_v1_mentor_tracking_upper_edge_v2_pilot",
+  "parameter_status": "pilot",
+  "signal": {
+    "formal_input": "sv_raw",
+    "definition": "var(abs(E), 1, 3)",
+    "variance_denominator": "N",
+    "negative_background_residuals": "retain"
+  },
+  "calibration": {
+    "diameter_um": 128.0,
+    "dx_um": 12.7,
+    "dz_um": 6.7
+  },
+  "localization": {
+    "mode": "mentor_tracking",
+    "mentor_primary_alpha": 0.20,
+    "mentor_final_x_method": "X4_centroid_isolated_jump_corrected",
+    "mentor_lateral_width_method": "X1_continuous_run_recentered_on_X4",
+    "mentor_top_method": "primary_alpha_z_upper",
+    "mentor_required_assessability": "assessable"
+  },
+  "geometry": {
+    "coordinate_base": 0,
+    "coordinate_convention": "pixel-centre indices; outer image edges are -0.5 and n-0.5",
+    "tail_gap_um": 0.0,
+    "tail_length_um": 500.0,
+    "ellipse_supersample": 16
+  },
+  "background": {
+    "skip_columns": 3,
+    "strip_width_columns": 5,
+    "formal_estimator": "mean",
+    "diagnostic_estimators": ["std", "median", "scaled_mad"]
+  },
+  "detection": {
+    "enabled": true,
+    "bin_rows": 5,
+    "threshold_mad_multiplier": 3.0,
+    "minimum_consecutive_bins": 2,
+    "minimum_blank_samples_per_bin": 3
+  },
+  "sensitivity": {
+    "center_shift_columns": [-1, 1],
+    "top_shift_rows": [-1, 1],
+    "additional_background_skip_columns": 2
+  },
+  "pilot_sampling": {
+    "positions_per_scan": 3,
+    "position_labels": ["front", "middle", "rear"],
+    "flow_speed_mm_s": [1, 3, 5, 7, 10]
+  }
+}

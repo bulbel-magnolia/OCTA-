@@ -1,0 +1,6 @@
+scan_id,frames,candidate_present,candidate_accepted,qc_valid,assessable,uncertain,not_assessable,max_missing_run,run_start,run_end,median_delta_vs_v1_px,min_delta_vs_v1_px,max_delta_vs_v1_px,max_abs_delta_frame
+flow01,500,459,410,500,490,10,0,2,110,111,0.0,-4.0,4.0,411
+flow03,500,427,372,500,479,14,7,16,437,452,0.0,-4.0,46.0,447
+flow05,500,456,406,500,497,3,0,3,467,469,0.0,-2.0,14.0,7
+flow07,500,435,396,500,494,6,0,4,362,365,0.0,-2.0,24.0,89
+flow10,500,461,384,500,496,4,0,2,195,196,0.0,-3.0,16.0,96
