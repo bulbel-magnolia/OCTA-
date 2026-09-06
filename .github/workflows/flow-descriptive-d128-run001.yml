@@ -7,6 +7,7 @@ on:
       - feature/sv-rectangle-v1
     paths:
       - analysis/formal_sv_d128_v21_run001/flow_descriptive_d128_run001/analyze_flow_descriptive.py
+      - analysis/formal_sv_d128_v21_run001/flow_descriptive_d128_run001/_trigger.txt
       - .github/workflows/flow-descriptive-d128-run001.yml
 
 permissions:
