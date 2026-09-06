@@ -1,0 +1,15 @@
+scan_id,bin_index_0based,bin_start_um,bin_stop_um,signal_bin_mean,blank_median,blank_scaled_mad,threshold,blank_count,exceeds_threshold,sustained_detection
+synthetic_demo,0,0.0,33.5,1.1200000000000003,0.0,0.14826,0.44478,5,True,True
+synthetic_demo,1,33.5,67.0,0.9999999999999998,0.0,0.14826,0.44478,5,True,True
+synthetic_demo,2,67.0,100.5,1.0,0.0,0.14826,0.44478,5,True,True
+synthetic_demo,3,100.5,134.0,1.0000000000000002,0.0,0.14826,0.44478,5,True,True
+synthetic_demo,4,134.0,167.5,0.9999999999999998,0.0,0.14826,0.44478,5,True,True
+synthetic_demo,5,167.5,201.0,0.9999999999999998,0.0,0.14826,0.44478,5,True,True
+synthetic_demo,6,201.0,234.5,0.9999999999999998,0.0,0.14826,0.44478,5,True,True
+synthetic_demo,7,234.5,268.0,0.9999999999999994,0.0,0.14826,0.44478,5,True,True
+synthetic_demo,8,268.0,301.5,0.9999999999999998,0.0,0.14826,0.44478,5,True,True
+synthetic_demo,9,301.5,335.0,0.9999999999999998,0.0,0.14826,0.44478,5,True,True
+synthetic_demo,10,335.0,368.5,0.9999999999999994,0.0,0.14826,0.44478,5,True,True
+synthetic_demo,11,368.5,402.0,1.0000000000000002,0.0,0.14826,0.44478,5,True,True
+synthetic_demo,12,402.0,435.5,1.0000000000000002,0.0,0.14826,0.44478,5,True,True
+synthetic_demo,13,435.5,469.0,1.0,0.0,0.14826,0.44478,5,True,True
