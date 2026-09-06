@@ -1,0 +1,6 @@
+scan_id,total_frames,z_valid_frames,z_excluded_frames,z_coverage,tracking_qc_valid_frames,geometry_qc_valid_frames,geometry_qc_excluded_frames,accepted_candidates,short_gap_filled_frames,missing_segments,max_missing_length_frames,relock_count,max_adjacent_z_jump_px,v2_max_adjacent_z_jump_px,max_continuous_core_jump_px
+flow01,500,498,2,0.996,498,486,14,329,169,1,2,0,1.0,1.0,1.0
+flow03,500,476,24,0.952,476,468,32,306,170,2,18,2,1.0,4.0,1.0
+flow05,500,494,6,0.988,494,491,9,328,166,1,6,1,1.0,1.0,1.0
+flow07,500,499,1,0.998,499,493,7,332,167,1,1,0,1.0,1.0,1.0
+flow10,500,486,14,0.972,486,484,16,303,183,1,14,1,1.0,1.0,1.0

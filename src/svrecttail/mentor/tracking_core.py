@@ -38,6 +38,7 @@ EVIDENCE_WEAK = "weak_evidence"
 EVIDENCE_UNAVAILABLE = "unavailable"
 UPPER_EDGE_LEGACY = "legacy_connected_component_v1"
 UPPER_EDGE_PERSISTENT = "persistent_core_paired_edge_v2"
+UPPER_EDGE_CONTINUITY = "persistent_core_paired_edge_continuity_first_v2_1"
 
 
 # Defaults live in one place.  The formal pilot JSON should repeat/freeze every
@@ -106,6 +107,10 @@ DEFAULT_TRACKING_CONFIG: dict[str, Any] = {
     "trajectory_min_seed_frames": 8,
     "trajectory_min_seed_fraction": 0.05,
     "max_model_assisted_gap_frames": 75,
+    "upper_continuity_max_step_px": 2.0,
+    "upper_continuity_prediction_tolerance_px": 3.0,
+    "upper_continuity_prediction_history_frames": 5,
+    "upper_continuity_relock_frames": 3,
     "qc_overlay_frames": 12,
     "input_dataset_candidates": ["p_bld_ed", "p_bld_ed_sparse"],
     "expected_z_px": 351,
@@ -402,10 +407,11 @@ def validate_tracking_config(cfg: Mapping[str, Any]) -> None:
     if str(cfg["upper_edge_method"]) not in {
         UPPER_EDGE_LEGACY,
         UPPER_EDGE_PERSISTENT,
+        UPPER_EDGE_CONTINUITY,
     }:
         raise TrackingError(
             "upper_edge_method must be legacy_connected_component_v1 or "
-            "persistent_core_paired_edge_v2"
+            "persistent_core_paired_edge_v2 or persistent_core_paired_edge_continuity_first_v2_1"
         )
     alphas = [float(x) for x in cfg["upper_edge_alphas"]]
     if not alphas or any(not 0 < x < 1 for x in alphas):
@@ -446,6 +452,14 @@ def validate_tracking_config(cfg: Mapping[str, Any]) -> None:
             raise TrackingError(f"{key} must lie in (0,1]")
     if int(cfg["upper_edge_max_gap_px"]) < 0:
         raise TrackingError("upper_edge_max_gap_px must be non-negative")
+    for key in ("upper_continuity_max_step_px", "upper_continuity_prediction_tolerance_px"):
+        if not np.isfinite(float(cfg[key])) or float(cfg[key]) <= 0:
+            raise TrackingError(f"{key} must be finite and positive")
+    for key, minimum in (("upper_continuity_prediction_history_frames", 2),
+                         ("upper_continuity_relock_frames", 3),
+                         ("max_model_assisted_gap_frames", 0)):
+        if int(cfg[key]) != float(cfg[key]) or int(cfg[key]) < minimum:
+            raise TrackingError(f"{key} must be an integer >= {minimum}")
 
 
 def _row_robust_zscore(score: np.ndarray) -> np.ndarray:
@@ -1093,7 +1107,7 @@ def persistent_upper_edge_candidate(
     )
 
 
-def locate_peak_path(
+def _peak_path_scores(
     profiles: ProfileBundle,
     cfg: Mapping[str, Any],
     diameter_um: float | None = None,
@@ -1103,7 +1117,7 @@ def locate_peak_path(
     z1 = min(nz, int(cfg["z_search_px"][1]))
     noise = np.maximum(profiles.background_sigma[:, z0:z1], np.finfo(np.float32).eps)
     score = profiles.excess_localization[:, z0:z1] / noise
-    if str(cfg["upper_edge_method"]) == UPPER_EDGE_PERSISTENT:
+    if str(cfg["upper_edge_method"]) in {UPPER_EDGE_PERSISTENT, UPPER_EDGE_CONTINUITY}:
         if diameter_um is None:
             raise TrackingError(
                 "diameter_um is required for persistent upper-edge localization"
@@ -1120,6 +1134,16 @@ def locate_peak_path(
         )
         score = uniform_filter1d(score, size=depth, axis=1, mode="nearest")
     score = _row_robust_zscore(score)
+    return score
+
+
+def locate_peak_path(
+    profiles: ProfileBundle,
+    cfg: Mapping[str, Any],
+    diameter_um: float | None = None,
+) -> np.ndarray:
+    z0 = max(0, int(cfg["z_search_px"][0]))
+    score = _peak_path_scores(profiles, cfg, diameter_um)
     relative = viterbi_continuous_path(
         score,
         int(cfg["z_viterbi_max_jump_px"]),
@@ -1185,6 +1209,137 @@ def _robust_trajectory(
     return model, accepted, residual, support_distance
 
 
+class _UpperContinuityGate:
+    """Causal candidate gate shared by core feedback and final segment modelling."""
+
+    def __init__(self, candidate: np.ndarray, cfg: Mapping[str, Any]):
+        self.candidate = candidate
+        self.step = float(cfg["upper_continuity_max_step_px"])
+        self.tolerance = float(cfg["upper_continuity_prediction_tolerance_px"])
+        self.gap = int(cfg["max_model_assisted_gap_frames"])
+        self.required = int(cfg["upper_continuity_relock_frames"])
+        self.history_size = int(cfg["upper_continuity_prediction_history_frames"])
+        n = candidate.size
+        self.accepted = np.zeros(n, bool)
+        self.prediction = np.full(n, np.nan)
+        self.confirmation = np.full(n, np.nan)
+        self.status = np.full(n, "no_candidate", object)
+        self.relock = np.zeros(n, bool)
+        self.history: list[int] = []
+        self.pending: list[int] = []
+        self.locked = False
+
+    def predict(self, indices: list[int]) -> float:
+        recent = np.asarray(indices[-self.history_size:], int)
+        # A robust local level avoids extrapolating a short sequence of noisy
+        # accepted edges into a false ramp. The predictor has no surface prior.
+        return float(np.median(self.candidate[recent]))
+
+    def observe(self, frame: int, valid: bool) -> None:
+        if self.locked and frame - self.history[-1] - 1 > self.gap:
+            self.locked = False
+            self.history = []
+            self.pending = []
+        if not valid:
+            self.pending = []
+            return
+        if not self.accepted.any() and frame <= self.gap:
+            self.accepted[frame] = True
+            self.status[frame] = "accepted_initial"
+            self.history = [frame]
+            self.locked = True
+            return
+        if self.locked:
+            self.prediction[frame] = self.predict(self.history)
+            elapsed = frame - self.history[-1]
+            if (abs(self.candidate[frame] - self.candidate[self.history[-1]]) <= self.step * elapsed
+                    and abs(self.candidate[frame] - self.prediction[frame]) <= self.tolerance):
+                self.accepted[frame] = True
+                self.status[frame] = "accepted"
+                self.history.append(frame)
+            else:
+                self.status[frame] = "rejected_continuity"
+            return
+        if self.pending:
+            self.prediction[frame] = self.predict(self.pending)
+            if (frame != self.pending[-1] + 1
+                    or abs(self.candidate[frame] - self.candidate[self.pending[-1]]) > self.step
+                    or abs(self.candidate[frame] - self.prediction[frame]) > self.tolerance):
+                self.pending = []
+                self.prediction[frame] = np.nan
+        self.pending.append(frame)
+        self.status[frame] = "pending_relock"
+        if len(self.pending) >= self.required:
+            self.accepted[self.pending] = True
+            self.confirmation[self.pending] = frame
+            self.status[self.pending] = "accepted_relock"
+            self.relock[self.pending[0]] = True
+            self.history = self.pending.copy()
+            self.pending = []
+            self.locked = True
+
+
+def continuity_first_trajectory(
+    candidate: np.ndarray,
+    initially_valid: np.ndarray,
+    cfg: Mapping[str, Any],
+) -> tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray, dict[str, np.ndarray]]:
+    """Gate raw upper edges before interpolation and segment-local smoothing.
+
+    Prediction is the median of up to five recent accepted upper edges. A long gap clears that history. Reacquisition
+    requires three consecutive candidates; confirmation is
+    retrospective to the first candidate, with its confirmation frame recorded.
+    No endpoint extrapolation is reported. Rejected candidates remain audit-only.
+    """
+    candidate = np.asarray(candidate, float)
+    valid = np.asarray(initially_valid, bool) & np.isfinite(candidate)
+    n = candidate.size
+    step = float(cfg["upper_continuity_max_step_px"])
+    gap = int(cfg["max_model_assisted_gap_frames"])
+    gate = _UpperContinuityGate(candidate, cfg)
+    for frame in range(n):
+        gate.observe(frame, valid[frame])
+    accepted = gate.accepted
+    prediction = gate.prediction
+    confirmation = gate.confirmation
+    status = gate.status
+    relock = gate.relock
+
+    filled = np.where(accepted, candidate, np.nan)
+    for start, stop in _boolean_runs(~accepted):
+        if start == 0 or stop == n or stop - start > gap:
+            continue
+        # Both endpoints must belong to the same confirmed continuous track.
+        if relock[stop]:
+            continue
+        if abs(candidate[stop] - candidate[start - 1]) <= step * (stop - start + 1):
+            filled[start:stop] = np.linspace(candidate[start - 1], candidate[stop],
+                                           stop - start + 2)[1:-1]
+    model = np.full(n, np.nan)
+    segment = np.full(n, -1, int)
+    for segment_id, (start, stop) in enumerate(_boolean_runs(np.isfinite(filled))):
+        values = median_filter(filled[start:stop],
+                               size=_odd_window(int(cfg["trajectory_median_window_frames"]), stop - start),
+                               mode="nearest")
+        sigma = float(cfg["trajectory_gaussian_sigma_frames"])
+        if sigma > 0:
+            values = gaussian_filter1d(values, sigma=sigma, mode="nearest")
+        # Median/Gaussian filters with replicated segment endpoints preserve
+        # the slope bound of the accepted/interpolated input sequence.
+        model[start:stop] = values
+        segment[start:stop] = segment_id
+    distance = distance_transform_edt(~accepted) if accepted.any() else np.full(n, np.inf)
+    audit = {
+        "z_continuity_status": status,
+        "z_local_prediction_px": prediction,
+        "z_relock_start": relock,
+        "z_relock_confirmation_frame": confirmation,
+        "z_short_gap_filled": np.isfinite(model) & ~accepted,
+        "z_valid_segment_id": segment,
+    }
+    return model, accepted, candidate - model, distance, audit
+
+
 def track_one_alpha(
     *,
     scan_id: str,
@@ -1216,11 +1371,47 @@ def track_one_alpha(
     min_component = int(cfg["upper_edge_min_component_px"])
     diameter_px_float = diameter_um / float(cfg["axial_um_per_px"])
     edge_method = str(cfg["upper_edge_method"])
+    feedback = _UpperContinuityGate(seed_upper, cfg) if edge_method == UPPER_EDGE_CONTINUITY else None
+    core_scores = _peak_path_scores(profiles, cfg, diameter_um) if feedback is not None else None
+    core_hints = np.asarray(peak_path, float).copy()
+    core_restart = np.zeros(nframe, bool)
+    core_prediction = np.full(nframe, np.nan)
+    z0, z1 = (int(value) for value in cfg["z_search_px"])
 
     for frame in range(nframe):
         if not profiles.roi_valid[frame]:
+            if feedback is not None:
+                feedback.observe(frame, False)
             continue
-        if edge_method == UPPER_EDGE_PERSISTENT:
+        if feedback is not None:
+            anchors = np.flatnonzero(feedback.accepted[:frame]).tolist()
+            long_gap = not anchors or frame - anchors[-1] - 1 > feedback.gap
+            lo, hi = z0, z1
+            if anchors:
+                # The last reliable vessel slab remains the restart search band.
+                # Hold the robust local level instead of extrapolating through NA.
+                predicted = feedback.predict(anchors)
+                core_prediction[frame] = predicted
+                pad = feedback.tolerance
+                lo = max(lo, int(np.floor(predicted - pad)))
+                hi = min(hi, int(np.ceil(predicted + diameter_px_float + pad)))
+            restart = frame == 0 or (long_gap and not feedback.pending)
+            core_restart[frame] = restart
+            if not restart:
+                jump = int(cfg["z_viterbi_max_jump_px"])
+                previous = int(core_hints[frame - 1])
+                limited_lo, limited_hi = max(lo, previous - jump), min(hi, previous + jump + 1)
+                if limited_hi > limited_lo:
+                    lo, hi = limited_lo, limited_hi
+                else:
+                    lo, hi = max(z0, previous - jump), min(z1, previous + jump + 1)
+            states = np.arange(lo, hi)
+            scores = core_scores[frame, lo - z0:hi - z0].copy()
+            if not restart:
+                scores -= float(cfg["z_viterbi_jump_penalty"]) * (states - core_hints[frame - 1]) ** 2
+            core_hints[frame] = (np.clip(peak_path[frame], lo, hi - 1) if not anchors
+                                 else states[int(np.argmax(scores))])
+        if edge_method in {UPPER_EDGE_PERSISTENT, UPPER_EDGE_CONTINUITY}:
             if row_support is None:
                 raise TrackingError(
                     "persistent upper-edge localization requires row support"
@@ -1229,7 +1420,7 @@ def track_one_alpha(
                 profiles.excess[frame],
                 profiles.background[frame],
                 row_support[frame],
-                float(peak_path[frame]),
+                float(core_hints[frame]),
                 diameter_um,
                 alpha,
                 cfg,
@@ -1256,6 +1447,8 @@ def track_one_alpha(
             if candidate.valid:
                 seed_upper[frame] = candidate.z_upper_px
                 seed_valid[frame] = True
+            if feedback is not None:
+                feedback.observe(frame, bool(seed_valid[frame]))
             continue
         pk0 = int(round(float(peak_path[frame])))
         lo = max(0, pk0 - 2)
@@ -1299,9 +1492,17 @@ def track_one_alpha(
         seed_upper[frame] = start
         seed_valid[frame] = peak_snr[frame] >= float(cfg["peak_min_snr"])
 
-    model, accepted, z_residual, support_distance = _robust_trajectory(
-        seed_upper, seed_valid, cfg
-    )
+    continuity_audit = {}
+    if edge_method == UPPER_EDGE_CONTINUITY:
+        model, accepted, z_residual, support_distance, continuity_audit = continuity_first_trajectory(
+            seed_upper, seed_valid, cfg
+        )
+        continuity_audit.update(z_core_path_px=core_hints, z_core_restart=core_restart,
+                                z_core_upper_prediction_px=core_prediction)
+    else:
+        model, accepted, z_residual, support_distance = _robust_trajectory(
+            seed_upper, seed_valid, cfg
+        )
     z_upper = np.rint(model)
     diameter_px = int(round(diameter_px_float))
     z_lower = z_upper + diameter_px
@@ -1450,6 +1651,10 @@ def track_one_alpha(
             item.append("PRIMARY_WINDOW_INCOMPLETE")
         if classes[frame] == CLASS_FAILED:
             item.append("TRACKING_FAILED")
+        if edge_method == UPPER_EDGE_CONTINUITY and not np.isfinite(z_upper[frame]):
+            item.append("Z_UPPER_UNAVAILABLE")
+        if edge_method == UPPER_EDGE_CONTINUITY and not accepted[frame]:
+            item.append("Z_CONTINUITY_" + str(continuity_audit["z_continuity_status"][frame]).upper())
         flags.append(";".join(item))
 
     frame_index = np.arange(nframe, dtype=np.int32)
@@ -1532,6 +1737,7 @@ def track_one_alpha(
             "window_300_fits": window_complete,
             "qc_valid": classes != CLASS_FAILED,
             "qc_flags": flags,
+            **continuity_audit,
         }
     )
 
@@ -1565,7 +1771,7 @@ def track_volume(
     peak_path = locate_peak_path(profiles, cfg, diameter_um)
     row_support = (
         extract_persistent_row_support(volume, xtrack["x_center"], diameter_um, cfg)
-        if str(cfg["upper_edge_method"]) == UPPER_EDGE_PERSISTENT
+        if str(cfg["upper_edge_method"]) in {UPPER_EDGE_PERSISTENT, UPPER_EDGE_CONTINUITY}
         else None
     )
     xtrack = dict(xtrack)

@@ -1,0 +1,7 @@
+scan_id,start_frame,end_frame,length_frames,terminal
+flow03,14,19,6,False
+flow03,195,212,18,False
+flow01,498,499,2,True
+flow05,46,51,6,False
+flow07,499,499,1,True
+flow10,425,438,14,False

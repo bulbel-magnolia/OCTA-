@@ -1,0 +1,38 @@
+[
+  {
+    "baseline": "pilot_mentor_tracking_15",
+    "scan_id": "flow03",
+    "frames": 500,
+    "max_abs_difference": {
+      "x_center_px": 5.684341886080802e-14,
+      "seed_z_upper_px": 0.0,
+      "z_upper_px": 0.0,
+      "x4_centroid_isolated_jump_corrected_px": 5.684341886080802e-14,
+      "assessability_score": 1.1102230246251565e-16
+    },
+    "categorical_exact": {
+      "qc_valid": true,
+      "new_tracking_class": true,
+      "vessel_presence_prediction": true
+    },
+    "status": "passed"
+  },
+  {
+    "baseline": "pilot_mentor_tracking_upper_edge_v2_15",
+    "scan_id": "flow03",
+    "frames": 500,
+    "max_abs_difference": {
+      "x_center_px": 5.684341886080802e-14,
+      "seed_z_upper_px": 0.0,
+      "z_upper_px": 0.0,
+      "x4_centroid_isolated_jump_corrected_px": 5.684341886080802e-14,
+      "assessability_score": 1.1102230246251565e-16
+    },
+    "categorical_exact": {
+      "qc_valid": true,
+      "new_tracking_class": true,
+      "vessel_presence_prediction": true
+    },
+    "status": "passed"
+  }
+]

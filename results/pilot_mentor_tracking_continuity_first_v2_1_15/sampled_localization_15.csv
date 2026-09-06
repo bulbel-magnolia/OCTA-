@@ -1,0 +1,16 @@
+scan_id,frame_index,seed_z_upper_px,z_upper_px,z_candidate_accepted,z_continuity_status,z_relock_start,z_relock_confirmation_frame,z_valid_segment_id,z_core_path_px,z_core_restart,qc_valid,new_tracking_class,vessel_presence_prediction,v2_z_upper_px,delta_z_upper_px,geometry_qc_valid,within_2px
+flow01,0,214.0,214.0,True,accepted_initial,False,,0,222.0,True,True,high_confidence,assessable,214.0,0.0,True,True
+flow01,249,199.0,199.0,True,accepted,False,,0,203.0,False,True,high_confidence,assessable,199.0,0.0,True,True
+flow01,499,192.0,,False,rejected_continuity,False,,-1,199.0,False,False,failed,not_assessable,192.0,,False,False
+flow03,0,210.0,210.0,True,accepted_initial,False,,0,218.0,True,True,high_confidence,assessable,210.0,0.0,True,True
+flow03,249,187.0,190.0,False,rejected_continuity,False,,2,201.0,False,True,model_assisted,assessable,189.0,1.0,True,True
+flow03,499,196.0,196.0,True,accepted,False,,2,202.0,False,True,high_confidence,assessable,196.0,0.0,True,True
+flow05,0,211.0,211.0,True,accepted_initial,False,,0,218.0,True,True,high_confidence,assessable,211.0,0.0,True,True
+flow05,249,198.0,197.0,True,accepted,False,,1,205.0,False,True,high_confidence,assessable,196.0,1.0,True,True
+flow05,499,194.0,194.0,True,accepted,False,,1,199.0,False,True,high_confidence,assessable,194.0,0.0,True,True
+flow07,0,214.0,214.0,True,accepted_initial,False,,0,220.0,True,True,high_confidence,assessable,214.0,0.0,True,True
+flow07,249,196.0,200.0,False,rejected_continuity,False,,0,213.0,False,True,model_assisted,assessable,199.0,1.0,True,True
+flow07,499,191.0,,False,rejected_continuity,False,,-1,204.0,False,False,failed,not_assessable,192.0,,False,False
+flow10,0,212.0,212.0,True,accepted_initial,False,,0,218.0,True,True,high_confidence,assessable,212.0,0.0,True,True
+flow10,249,196.0,194.0,True,accepted,False,,0,206.0,False,True,high_confidence,assessable,193.0,1.0,True,True
+flow10,499,192.0,192.0,True,accepted,False,,1,195.0,False,True,high_confidence,assessable,192.0,0.0,True,True

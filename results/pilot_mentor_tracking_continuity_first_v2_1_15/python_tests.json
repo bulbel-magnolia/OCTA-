@@ -1,0 +1,19 @@
+{
+  "command": "python -m pytest -q -p no:cacheprovider --basetemp scratch/pytest-v2-1-publish",
+  "passed": 55,
+  "failed": 0,
+  "warnings": 1,
+  "warning": "Existing requests dependency version warning",
+  "test_source_sha256": {
+    "tests/python/test_config_io.py": "d1543e0808c0ec792325ea1559a5369b9c528e9e3ef42ca06d750b942278e404",
+    "tests/python/test_continuity_first.py": "bb374b59f5a371dce6db3e3ce551ac0c47bc2d96a77c3f47616033ebcfd6a0fa",
+    "tests/python/test_detection.py": "71a573e9403f0b204971fb8c58b443848d803c411240b2fcadd07728c649d2c2",
+    "tests/python/test_geometry.py": "a3839d401c5e09128bc400d22c71bee4e9757e6c73e2eca5cfb3f3759bd69cf5",
+    "tests/python/test_localization.py": "e4c1cc612e2076349c679991ee4e547d1c79615e0fa3bf5f81a85262e07003ed",
+    "tests/python/test_mentor_tracking.py": "77bfbebac808dab229f8d9b30f5fddb662e362887aca7d8fff05cadf7baad3d0",
+    "tests/python/test_mentor_tracking_core.py": "b126ad2cb4742e61c169a5aef851c6b0e29c707991967f4f394d266d7f010452",
+    "tests/python/test_pipeline.py": "2128746dc0d6f2853c34d5be40175a4c37251742121aa6ebae3c5daf23414256",
+    "tests/python/test_quantification.py": "8aa8d8233927403568c5fe75fedd9394ac5fff6da7653f28eb02e1a45ae4f82b",
+    "tests/python/test_signal.py": "dcb4c9ba3e5f760d594c0fb2f580bef0b8c6389ec5315f1883dfdd019ba3081c"
+  }
+}

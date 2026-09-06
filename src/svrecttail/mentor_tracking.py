@@ -170,10 +170,18 @@ def build_mentor_tracking_tables(
         feature["frame_index"] = int(frame_index)
         feature_rows.append(feature)
     features = pd.DataFrame.from_records(feature_rows)
-    neighbor = features["local_body_peak_cnr"].shift(1).combine(
-        features["local_body_peak_cnr"].shift(-1),
-        lambda left, right: np.nanmedian([left, right]),
-    )
+    if str(effective_config["upper_edge_method"]) == tracking_core.UPPER_EDGE_CONTINUITY:
+        # A volume with no reliable z anchors still needs a complete invalid
+        # table. Missing measurements are NA, never fabricated body evidence.
+        for column in sorted(REQUIRED_TRACKING_COLUMNS | {
+            "local_body_continuity_score", "local_body_width_consistency"
+        }):
+            if column not in features and column not in tracking:
+                features[column] = np.nan
+    neighbor = pd.concat(
+        [features["local_body_peak_cnr"].shift(1), features["local_body_peak_cnr"].shift(-1)],
+        axis=1,
+    ).median(axis=1, skipna=True)
     features["neighbor_peak_cnr"] = neighbor.fillna(
         features["local_body_peak_cnr"]
     )

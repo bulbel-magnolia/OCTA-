@@ -30,6 +30,12 @@ X4 孤立跳点修正、主 alpha=0.15 的 z_upper 和帧可评估性。此路�
 复现说明见
 [上边界 v2 候选试运行](results/pilot_mentor_tracking_upper_edge_v2_15/README.md)。
 
+### continuity-first v2.1（2026-09-06）
+
+新增上边界连续性门控、最多 5 帧双端补全、3 候选重新锁定及经批准的核心反馈。五卷 z 定位覆盖 2453/2500（98.12%），flow03 深部错误分支消失；15 帧中 13 帧与 v2 相差 0–1 px，2 个末帧保留 NA，均附例外图。55 项 Python 测试通过。当前验证范围为定位和定位几何 QC，未重跑 SV 定量。
+
+详见 [v2.1 方法、覆盖率与验证结果](results/pilot_mentor_tracking_continuity_first_v2_1_15/README.md)。legacy v1 与 v2 历史配置、默认行为和结果均保留。
+
 本仓库实现 OCTA 散斑方差（SV）矩形拖尾定量流程。MATLAB 保留现有
 `.oct` 重建与 OMAG 生成路径，Python 负责局部几何定位、固定双侧背景、
 物理面积积分、检出长度、敏感性分析和 QC 输出。

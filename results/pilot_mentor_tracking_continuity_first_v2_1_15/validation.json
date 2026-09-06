@@ -1,0 +1,45 @@
+{
+  "status": "complete_with_documented_sample_exceptions",
+  "scope": "five full Flow volumes and 15 fixed B-scan localization/QC checks; SV quantification not rerun",
+  "method": "persistent_core_paired_edge_continuity_first_v2_1",
+  "manual_clicks": 0,
+  "code_sha256": {
+    "src/svrecttail/mentor/tracking_core.py": "bf5a336f68f100ccac759dee89b736a29d33cb87f8323e3bb7e19bbdff361f6c",
+    "src/svrecttail/mentor_tracking.py": "3bc6fa03f2c48e5ee05de8066f29ef3cb15103af88547bf0a541ac5670b1994d",
+    "src/svrecttail/mentor/xroi.py": "f33be5dc7de775330c454290ab6810ab7ad880bcdc99d459a32f47a35d4a0f47",
+    "config/tracking_config.continuity_first_v2_1.a020_n4.json": "6ec1622a118ce3863a43726eafe328da773597f3a31b54d01179c260898f114e",
+    "scripts/validate_continuity_first_v2_1.py": "95b1fe7c1489e7fb5011b96b4dcde77a82c0538b229680a613b9bee127cd71a6"
+  },
+  "environment": {
+    "python": "3.12.10",
+    "numpy": "2.4.4",
+    "pandas": "2.3.3",
+    "scipy": "1.17.1",
+    "matplotlib": "3.10.8"
+  },
+  "all_2500_frames_audited": true,
+  "sampled_total": 15,
+  "sampled_within_2px": 13,
+  "sampled_exceptions": 2,
+  "total_z_valid_frames": 2453,
+  "total_z_excluded_frames": 47,
+  "flow03_wrong_branch_removed": true,
+  "final_adjacent_jump_limit_passed": true,
+  "short_gap_limit_passed": true,
+  "raw_candidate_continuity_limits_passed": true,
+  "missing_z_invalid_and_not_assessable_passed": true,
+  "code_sha256_git_lf": {
+    "src/svrecttail/mentor/tracking_core.py": "f1722c010e4f1d341d461b709f198fef845d1f443a20b0049bae1815a70bfac7",
+    "src/svrecttail/mentor_tracking.py": "7405b8d10f35cb5cef213ef2879417eccf0a5474c77cd9568a5756f4dade6671",
+    "src/svrecttail/mentor/xroi.py": "f33be5dc7de775330c454290ab6810ab7ad880bcdc99d459a32f47a35d4a0f47",
+    "config/tracking_config.continuity_first_v2_1.a020_n4.json": "65246b2c543d2fa909577bf446617917b233232ed224558ab630d38464aab83b",
+    "scripts/validate_continuity_first_v2_1.py": "e68b3dd5fd46e46ed35ba3b2ccb9ecae87682acf8e5f11f2592d35c16e0613c6"
+  },
+  "hash_line_endings": "code_sha256 records exact executed Windows bytes; code_sha256_git_lf records Git-normalized LF bytes.",
+  "python_test_summary": {
+    "passed": 55,
+    "failed": 0,
+    "warnings": 1,
+    "details": "python_tests.json"
+  }
+}
