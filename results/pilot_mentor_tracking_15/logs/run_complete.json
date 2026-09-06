@@ -1,0 +1,45 @@
+{
+  "status": "complete",
+  "completed_at_utc": "2026-09-06T09:16:56.326799+00:00",
+  "schema_version": "SV_Rectangle_v1_mentor_tracking_pilot",
+  "parameter_status": "pilot",
+  "formal_signal": "var(abs(E), 1, 3)",
+  "code_git": {
+    "commit": "ac2d2791622464f7fc2c57dfea45bbb731246c01",
+    "worktree_dirty": false
+  },
+  "config_sha256": "7a7379d6ed17a68e6a97229056c73f8b6aa305134a33ec0b6be18d069ea55b27",
+  "manifest_sha256": "a1a3be594c9a10feb9d1e54fccd251902dbd33f97a9eb2917e9a55ab689ed334",
+  "frame_count": 15,
+  "valid_frame_count": 15,
+  "invalid_frame_count": 0,
+  "frame_processing_error_count": 0,
+  "identity_incomplete_frame_count": 15,
+  "acquisition_metadata_incomplete_frame_count": 15,
+  "manual_adjustment_count": 0,
+  "detection_blank_profiles": null,
+  "detection_blank_profiles_sha256": null,
+  "environment": {
+    "python": "3.12.10",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "numpy": "2.4.4",
+    "pandas": "2.3.3",
+    "scipy": "1.17.1",
+    "h5py": "3.16.0",
+    "matplotlib": "3.10.8"
+  },
+  "products": [
+    "frame_results.csv",
+    "scan_summary.csv",
+    "profiles.csv",
+    "localization.csv",
+    "sensitivity_results.csv",
+    "detection_results.csv",
+    "detection_bins.csv",
+    "profiles/",
+    "arrays/",
+    "qc/",
+    "logs/",
+    "logs/manual_adjustments.csv"
+  ]
+}

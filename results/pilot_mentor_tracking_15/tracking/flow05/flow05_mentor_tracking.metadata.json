@@ -1,0 +1,90 @@
+{
+    "primary_alpha":  0.15,
+    "final_x_method":  "X4_centroid_isolated_jump_corrected",
+    "lateral_width_method":  "X1_continuous_run_recentered_on_X4",
+    "top_method":  "primary_alpha_z_upper",
+    "required_assessability":  "assessable",
+    "effective_tracking_config":  {
+                                      "upper_edge_alphas":  [
+                                                                0.1,
+                                                                0.15,
+                                                                0.2
+                                                            ],
+                                      "primary_alpha":  0.15,
+                                      "axial_um_per_px":  6.7,
+                                      "lateral_um_per_px":  12.7,
+                                      "primary_guard_px":  2,
+                                      "primary_window_um":  300.0,
+                                      "x_search_fraction":  [
+                                                                0.1,
+                                                                0.9
+                                                            ],
+                                      "z_search_px":  [
+                                                          150,
+                                                          330
+                                                      ],
+                                      "localization_depth_sigma_px":  1.2,
+                                      "localization_slow_sigma_frames":  2.0,
+                                      "x_core_depth_fraction_of_diameter":  0.4,
+                                      "x_viterbi_max_jump_px":  8,
+                                      "x_viterbi_jump_penalty":  0.1,
+                                      "z_viterbi_max_jump_px":  8,
+                                      "z_viterbi_jump_penalty":  0.12,
+                                      "x_seed_min_robust_snr":  3.0,
+                                      "x_seed_max_path_residual_px":  10.0,
+                                      "confidence_revision_version":  "local_x_and_z_components_v1",
+                                      "x_confidence_core_radius_fraction_of_diameter":  0.5,
+                                      "x_confidence_flank_width_fraction_of_diameter":  0.75,
+                                      "x_confidence_trajectory_change_multiplier":  2.0,
+                                      "x_confidence_min_trajectory_pad_px":  2,
+                                      "x_confidence_min_flank_points":  6,
+                                      "x_confidence_min_robust_snr":  3.0,
+                                      "x_confidence_alignment_tolerance_fraction_of_diameter":  0.35,
+                                      "x_confidence_min_alignment_tolerance_px":  3.0,
+                                      "confidence_full_score_multiple":  2.0,
+                                      "upper_edge_noise_multiplier":  3.0,
+                                      "upper_edge_min_component_px":  3,
+                                      "peak_min_snr":  3.0,
+                                      "central_width_fraction_of_lateral_diameter":  0.3333333333333333,
+                                      "central_min_width_px":  3,
+                                      "background_side_gap_px":  6,
+                                      "background_side_width_px":  16,
+                                      "background_min_total_width_px":  16,
+                                      "background_depth_trend_sigma_px":  8.0,
+                                      "trajectory_median_window_frames":  15,
+                                      "trajectory_gaussian_sigma_frames":  3.0,
+                                      "trajectory_outlier_min_px":  3.0,
+                                      "trajectory_outlier_mad_multiplier":  3.0,
+                                      "trajectory_min_seed_frames":  8,
+                                      "trajectory_min_seed_fraction":  0.05,
+                                      "max_model_assisted_gap_frames":  75,
+                                      "qc_overlay_frames":  12,
+                                      "input_dataset_candidates":  [
+                                                                       "p_bld_ed",
+                                                                       "p_bld_ed_sparse"
+                                                                   ],
+                                      "expected_z_px":  351,
+                                      "expected_x_px":  500,
+                                      "expected_frames":  null
+                                  },
+    "status":  "complete",
+    "scan_id":  "flow05",
+    "diameter_um":  128.0,
+    "flow_dicom_path":  "flow05 source Flow DICOM kept outside Git; verify with flow_dicom_sha256",
+    "flow_dicom_sha256":  "19921fb413bf733191a363e591dd25190ebe29ecdb7b28fd97e533303756e0ad",
+    "volume_shape_frame_z_x":  [
+                                   500,
+                                   351,
+                                   500
+                               ],
+    "primary_table":  "flow05_mentor_tracking.csv",
+    "primary_table_sha256":  "739d4454e795828a1501777e37233e5be5ee11d824dc10aff1215e3a71edbbbf",
+    "alpha_tables":  [
+                         "flow05_alpha010_tracking.csv",
+                         "flow05_alpha015_tracking.csv",
+                         "flow05_alpha020_tracking.csv"
+                     ],
+    "mentor_tracking_core_path":  "src/svrecttail/mentor/tracking_core.py",
+    "mentor_tracking_core_sha256":  "214cd12f5af958eb5ad3875e20226d85d5abe5f7f5a3735eac490dbdff9c3292",
+    "metric_boundary":  "localization only; no mentor tail AUC metric is computed"
+}

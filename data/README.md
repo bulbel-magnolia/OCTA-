@@ -1,5 +1,9 @@
 # 数据管理
 
+raw_inventory.csv 以 asset_type 区分 raw_oct 与
+localization_flow_dicom。当前 5 个原始 OCT 和 5 个定位 DICOM 均记录精确
+字节数与 SHA-256；DICOM 只用于师兄自动定位，不参与 SV 指标积分。
+
 ## 默认方案
 
 原始 `.oct` 和配套 `.dcm` 保存在仓库外，不进入 Git 历史。仓库中的
