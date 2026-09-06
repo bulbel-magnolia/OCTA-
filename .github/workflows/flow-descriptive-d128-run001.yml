@@ -33,6 +33,19 @@ jobs:
       - name: Install analysis dependencies
         run: python -m pip install --upgrade pip numpy pandas
 
+      - name: Apply explicit T-column access fix
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          path = Path('analysis/formal_sv_d128_v21_run001/flow_descriptive_d128_run001/analyze_flow_descriptive.py')
+          text = path.read_text(encoding='utf-8')
+          old = '"T": float(selected.T),'
+          new = '"T": float(selected["T"]),'
+          if old not in text:
+              raise SystemExit('Expected pandas T-column expression not found')
+          path.write_text(text.replace(old, new), encoding='utf-8')
+          PY
+
       - name: Analyze five-flow descriptive pattern
         run: |
           python analysis/formal_sv_d128_v21_run001/flow_descriptive_d128_run001/analyze_flow_descriptive.py \
