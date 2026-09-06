@@ -1,0 +1,8 @@
+{
+  "all_25_assets_uploaded": true,
+  "server_full_sha256_matches": 25,
+  "actual_public_download_range_checks": 50,
+  "full_2500_zip_redownloads": 0,
+  "bridge15_full_redownload_verified": true,
+  "scope": "Every full package matches GitHub server SHA-256 and actual public first/last-byte downloads. The 15-frame bridge was fully downloaded and hashed."
+}
