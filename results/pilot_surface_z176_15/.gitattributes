@@ -1,0 +1,2 @@
+.gitattributes text eol=lf
+manifest_original.csv.bin -text -diff
