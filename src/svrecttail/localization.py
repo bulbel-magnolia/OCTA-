@@ -6,6 +6,7 @@ from dataclasses import dataclass
 
 import numpy as np
 from numpy.typing import NDArray
+from scipy.ndimage import gaussian_filter1d
 
 from .geometry import VesselGeometry
 
@@ -21,6 +22,27 @@ def _runs(mask: NDArray[np.bool_]) -> list[tuple[int, int]]:
     starts = np.flatnonzero(changes == 1)
     stops = np.flatnonzero(changes == -1)
     return list(zip(starts.tolist(), stops.tolist(), strict=True))
+
+
+@dataclass(frozen=True)
+class SurfaceGuidedAnchorResult:
+    valid: bool
+    invalid_reason: str
+    surface_z_center_px: float
+    surface_to_vessel_top_um: float
+    effective_refractive_index: float
+    predicted_z_top_center_px: float
+    x_anchor_center_px: float
+    search_z_start_px: int
+    search_z_stop_px: int
+    peak_score: float
+    background_score: float
+    background_sigma: float
+    peak_cnr: float
+
+    @property
+    def qc_valid(self) -> bool:
+        return self.valid
 
 
 @dataclass(frozen=True)
@@ -72,10 +94,154 @@ class LocalizationResult:
     geometry: VesselGeometry
     lateral: LocalBodyResult
     top_edge: TopEdgeResult
+    coarse_anchor: SurfaceGuidedAnchorResult | None = None
 
     @property
     def source_qc_valid(self) -> bool:
-        return self.lateral.qc_valid and self.top_edge.qc_valid
+        coarse_valid = (
+            True if self.coarse_anchor is None else self.coarse_anchor.qc_valid
+        )
+        return coarse_valid and self.lateral.qc_valid and self.top_edge.qc_valid
+
+
+def find_surface_guided_anchor(
+    omag_frame: NDArray[np.floating],
+    *,
+    surface_z_center_px: float,
+    surface_to_vessel_top_um: float,
+    effective_refractive_index: float,
+    diameter_um: float,
+    dx_um: float,
+    dz_um: float,
+    axial_margin_above_px: int = 6,
+    axial_margin_below_px: int = 10,
+    lateral_smoothing_sigma_px: float = 2.5,
+    edge_exclusion_px: int = 12,
+    minimum_peak_cnr: float = 5.0,
+) -> SurfaceGuidedAnchorResult:
+    """Find a global lateral anchor in the known surface-relative depth band.
+
+    The search uses a log copy of the co-registered OMAG frame. Each depth row
+    is standardized by its lateral median and MAD so that the continuous vessel
+    response outranks depth-dependent background and isolated bright pixels.
+    Formal SV integration remains unchanged and uses linear sv_raw.
+    """
+
+    frame = np.asarray(omag_frame, dtype=np.float64)
+    if frame.ndim != 2:
+        raise ValueError("omag_frame must be a 2-D depth-by-A-line array")
+    parameters = np.asarray(
+        [
+            surface_z_center_px,
+            surface_to_vessel_top_um,
+            effective_refractive_index,
+            diameter_um,
+            dx_um,
+            dz_um,
+            lateral_smoothing_sigma_px,
+            minimum_peak_cnr,
+        ],
+        dtype=np.float64,
+    )
+    if not np.isfinite(parameters).all():
+        raise ValueError("surface-guided localization parameters must be finite")
+    if (
+        surface_z_center_px < 0
+        or surface_to_vessel_top_um <= 0
+        or effective_refractive_index <= 0
+        or diameter_um <= 0
+        or dx_um <= 0
+        or dz_um <= 0
+        or axial_margin_above_px < 0
+        or axial_margin_below_px < 0
+        or lateral_smoothing_sigma_px <= 0
+        or edge_exclusion_px < 0
+        or minimum_peak_cnr < 0
+    ):
+        raise ValueError("surface-guided localization parameters are out of range")
+
+    n_z, n_x = frame.shape
+    predicted_top = (
+        float(surface_z_center_px)
+        + float(surface_to_vessel_top_um)
+        * float(effective_refractive_index)
+        / float(dz_um)
+    )
+    diameter_rows = max(3, int(round(float(diameter_um) / float(dz_um))))
+    search_start = max(0, int(np.floor(predicted_top - axial_margin_above_px)))
+    search_stop = min(
+        n_z,
+        int(np.ceil(predicted_top + diameter_rows + axial_margin_below_px)),
+    )
+    if search_stop - search_start < 3:
+        raise ValueError("surface-guided depth band is outside the image")
+    if 2 * edge_exclusion_px >= n_x - 2:
+        raise ValueError("edge exclusion leaves no lateral search region")
+
+    band = frame[search_start:search_stop]
+    finite = np.isfinite(band)
+    usable_rows = finite.any(axis=1)
+    if not usable_rows.any():
+        raise ValueError("surface-guided depth band has no finite OMAG values")
+    band = band[usable_rows]
+    finite = finite[usable_rows]
+    transformed = np.full_like(band, np.nan, dtype=np.float64)
+    transformed[finite] = np.log1p(np.maximum(band[finite], 0.0))
+    row_background = np.nanmedian(transformed, axis=1, keepdims=True)
+    row_mad = np.nanmedian(
+        np.abs(transformed - row_background), axis=1, keepdims=True
+    )
+    row_sigma = np.maximum(1.4826 * row_mad, np.finfo(float).eps)
+    standardized = (transformed - row_background) / row_sigma
+    positive_support = np.clip(
+        np.nan_to_num(standardized, nan=0.0, posinf=8.0, neginf=0.0),
+        0.0,
+        8.0,
+    )
+    column_score = np.mean(positive_support, axis=0)
+    smoothed_score = gaussian_filter1d(
+        column_score,
+        sigma=float(lateral_smoothing_sigma_px),
+        mode="nearest",
+    )
+
+    allowed = np.ones(n_x, dtype=bool)
+    if edge_exclusion_px:
+        allowed[:edge_exclusion_px] = False
+        allowed[n_x - edge_exclusion_px :] = False
+    ranked_score = np.where(allowed, smoothed_score, -np.inf)
+    x_anchor = int(np.argmax(ranked_score))
+
+    expected_width = max(3, int(round(float(diameter_um) / float(dx_um))))
+    background_mask = allowed.copy()
+    exclusion = max(3, 2 * expected_width)
+    background_mask[
+        max(0, x_anchor - exclusion) : min(n_x, x_anchor + exclusion + 1)
+    ] = False
+    background_values = smoothed_score[background_mask]
+    if background_values.size < 5:
+        raise ValueError("too few lateral background columns for coarse localization")
+    background = float(np.median(background_values))
+    background_mad = float(np.median(np.abs(background_values - background)))
+    background_sigma = max(1.4826 * background_mad, np.finfo(float).eps)
+    peak_score = float(smoothed_score[x_anchor])
+    peak_cnr = (peak_score - background) / background_sigma
+    valid = bool(np.isfinite(peak_cnr) and peak_cnr >= minimum_peak_cnr)
+    return SurfaceGuidedAnchorResult(
+        valid=valid,
+        invalid_reason="ok" if valid else "coarse_peak_cnr_below_threshold",
+        surface_z_center_px=float(surface_z_center_px),
+        surface_to_vessel_top_um=float(surface_to_vessel_top_um),
+        effective_refractive_index=float(effective_refractive_index),
+        predicted_z_top_center_px=float(predicted_top),
+        x_anchor_center_px=float(x_anchor),
+        search_z_start_px=search_start,
+        search_z_stop_px=search_stop,
+        peak_score=peak_score,
+        background_score=background,
+        background_sigma=background_sigma,
+        peak_cnr=float(peak_cnr),
+    )
 
 
 def _invalid_lateral(reason: str, x_anchor: float, expected_width: int) -> LocalBodyResult:
@@ -324,6 +490,59 @@ def localize_geometry(
         dz_um=dz_um,
     )
     return LocalizationResult(geometry=geometry, lateral=lateral, top_edge=top)
+
+
+def localize_geometry_from_surface(
+    omag_frame: NDArray[np.floating],
+    *,
+    surface_z_center_px: float,
+    surface_to_vessel_top_um: float,
+    effective_refractive_index: float,
+    diameter_um: float,
+    dx_um: float,
+    dz_um: float,
+    axial_margin_above_px: int = 6,
+    axial_margin_below_px: int = 10,
+    lateral_smoothing_sigma_px: float = 2.5,
+    edge_exclusion_px: int = 12,
+    minimum_peak_cnr: float = 5.0,
+    local_half_width_px: int | None = None,
+) -> LocalizationResult:
+    """Run global surface-guided anchoring followed by the local X1 rules."""
+
+    coarse = find_surface_guided_anchor(
+        omag_frame,
+        surface_z_center_px=surface_z_center_px,
+        surface_to_vessel_top_um=surface_to_vessel_top_um,
+        effective_refractive_index=effective_refractive_index,
+        diameter_um=diameter_um,
+        dx_um=dx_um,
+        dz_um=dz_um,
+        axial_margin_above_px=axial_margin_above_px,
+        axial_margin_below_px=axial_margin_below_px,
+        lateral_smoothing_sigma_px=lateral_smoothing_sigma_px,
+        edge_exclusion_px=edge_exclusion_px,
+        minimum_peak_cnr=minimum_peak_cnr,
+    )
+    if not coarse.valid:
+        raise ValueError(
+            f"surface-guided localization failed: {coarse.invalid_reason}"
+        )
+    localized = localize_geometry(
+        omag_frame,
+        x_anchor_center_px=coarse.x_anchor_center_px,
+        z_anchor_center_px=coarse.predicted_z_top_center_px,
+        diameter_um=diameter_um,
+        dx_um=dx_um,
+        dz_um=dz_um,
+        local_half_width_px=local_half_width_px,
+    )
+    return LocalizationResult(
+        geometry=localized.geometry,
+        lateral=localized.lateral,
+        top_edge=localized.top_edge,
+        coarse_anchor=coarse,
+    )
 
 
 def shifted_geometry(

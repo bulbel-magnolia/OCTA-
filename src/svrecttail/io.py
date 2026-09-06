@@ -48,7 +48,12 @@ REQUIRED_MANIFEST_COLUMNS = {
 }
 
 
-def load_manifest(path: str | Path, *, require_complete: bool = True) -> pd.DataFrame:
+def load_manifest(
+    path: str | Path,
+    *,
+    require_complete: bool = True,
+    require_localization_anchors: bool = True,
+) -> pd.DataFrame:
     """Load a one-row-per-frame manifest and validate formal inputs."""
 
     manifest_path = Path(path)
@@ -78,14 +83,14 @@ def load_manifest(path: str | Path, *, require_complete: bool = True) -> pd.Data
         "dx_um",
         "dz_um",
         "bscan_index",
-        "x_anchor_center_px",
-        "z_anchor_center_px",
     ]
     optional_numeric = [
         "slow_axis_position_um",
         "temporal_repeat_count",
         "scan_time_interval_s",
         "acquisition_order",
+        "x_anchor_center_px",
+        "z_anchor_center_px",
     ]
     numeric = required_numeric + optional_numeric
     for column in numeric:
@@ -136,6 +141,8 @@ def load_manifest(path: str | Path, *, require_complete: bool = True) -> pd.Data
             *required_numeric,
             "geometry_source",
         ]
+        if require_localization_anchors:
+            required_values.extend(["x_anchor_center_px", "z_anchor_center_px"])
         incomplete = table[required_values].isna().any(axis=1)
         for column in (
             "source_file",

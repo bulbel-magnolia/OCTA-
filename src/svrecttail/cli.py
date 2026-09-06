@@ -69,7 +69,12 @@ def main(argv: Sequence[str] | None = None) -> int:
     if args.command == "validate":
         config = load_config(args.config)
         manifest = load_manifest(
-            args.manifest, require_complete=not args.allow_template_gaps
+            args.manifest,
+            require_complete=not args.allow_template_gaps,
+            require_localization_anchors=(
+                args.allow_template_gaps
+                or config.localization.mode == "manifest_anchor"
+            ),
         )
         print(
             json.dumps(

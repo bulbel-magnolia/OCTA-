@@ -24,7 +24,12 @@ from scipy.io import savemat
 from .config import RunConfig, load_config
 from .detection import DetectionResult, detect_tail_extent
 from .io import FrameMaps, load_frame_maps, load_manifest, resolve_source_path
-from .localization import LocalizationResult, localize_geometry, shifted_geometry
+from .localization import (
+    LocalizationResult,
+    localize_geometry,
+    localize_geometry_from_surface,
+    shifted_geometry,
+)
 from .qc import save_detection_qc, save_qc_figure
 from .quantification import QuantificationResult, quantify_frame
 
@@ -118,12 +123,26 @@ def _json_compatible(value: Any) -> Any:
 def _localization_record(localization: LocalizationResult) -> dict[str, Any]:
     lateral = asdict(localization.lateral)
     top = asdict(localization.top_edge)
+    coarse = (
+        {
+            "coarse_method": "manifest_anchor",
+        }
+        if localization.coarse_anchor is None
+        else {
+            "coarse_method": "fixed_surface_global_log_omag_mad",
+            **{
+                f"coarse_{key}": value
+                for key, value in asdict(localization.coarse_anchor).items()
+            },
+        }
+    )
     return {
         "localization_image": "omag_raw",
         "lateral_method": "mentor_X1_local_q75_continuous_run",
         "lateral_threshold_sigma": 1.5,
         "top_method": "X1_centreline_three_column_sustained_edge",
         "coordinate_convention": "zero_based_pixel_centres",
+        **coarse,
         **{f"lateral_{key}": value for key, value in lateral.items()},
         **{f"top_{key}": value for key, value in top.items()},
         "source_qc_valid": localization.source_qc_valid,
@@ -449,6 +468,40 @@ def _check_calibration(row: pd.Series, config: RunConfig) -> None:
         )
 
 
+def _localize_frame(
+    maps: FrameMaps, row: pd.Series, config: RunConfig
+) -> LocalizationResult:
+    localization = config.localization
+    if localization.mode == "fixed_surface_global_x":
+        if (
+            localization.fixed_surface_z_center_px is None
+            or localization.surface_to_vessel_top_um is None
+        ):
+            raise ValueError("fixed-surface localization parameters are incomplete")
+        return localize_geometry_from_surface(
+            maps.omag_raw,
+            surface_z_center_px=localization.fixed_surface_z_center_px,
+            surface_to_vessel_top_um=localization.surface_to_vessel_top_um,
+            effective_refractive_index=localization.effective_refractive_index,
+            diameter_um=float(row["diameter_um"]),
+            dx_um=float(row["dx_um"]),
+            dz_um=float(row["dz_um"]),
+            axial_margin_above_px=localization.axial_margin_above_px,
+            axial_margin_below_px=localization.axial_margin_below_px,
+            lateral_smoothing_sigma_px=localization.lateral_smoothing_sigma_px,
+            edge_exclusion_px=localization.edge_exclusion_px,
+            minimum_peak_cnr=localization.minimum_peak_cnr,
+        )
+    return localize_geometry(
+        maps.omag_raw,
+        x_anchor_center_px=float(row["x_anchor_center_px"]),
+        z_anchor_center_px=float(row["z_anchor_center_px"]),
+        diameter_um=float(row["diameter_um"]),
+        dx_um=float(row["dx_um"]),
+        dz_um=float(row["dz_um"]),
+    )
+
+
 def _write_json(path: Path, content: dict[str, Any]) -> None:
     with path.open("w", encoding="utf-8", newline="\n") as handle:
         json.dump(content, handle, ensure_ascii=False, indent=2, allow_nan=False)
@@ -523,7 +576,13 @@ def run_batch(
     manifest_source = Path(manifest_path).resolve()
     output = Path(output_dir).resolve()
     config = load_config(config_source)
-    manifest = load_manifest(manifest_source, require_complete=True)
+    manifest = load_manifest(
+        manifest_source,
+        require_complete=True,
+        require_localization_anchors=(
+            config.localization.mode == "manifest_anchor"
+        ),
+    )
     for _, calibration_row in manifest.iterrows():
         _check_calibration(calibration_row, config)
     if output.exists() and any(output.iterdir()):
@@ -587,14 +646,7 @@ def run_batch(
             try:
                 maps = load_frame_maps(source_path)
                 map_metadata_record = _validate_map_metadata(maps, row)
-                localization = localize_geometry(
-                    maps.omag_raw,
-                    x_anchor_center_px=float(row["x_anchor_center_px"]),
-                    z_anchor_center_px=float(row["z_anchor_center_px"]),
-                    diameter_um=float(row["diameter_um"]),
-                    dx_um=float(row["dx_um"]),
-                    dz_um=float(row["dz_um"]),
-                )
+                localization = _localize_frame(maps, row, config)
                 result = _quantify(
                     maps.sv_raw,
                     localization,

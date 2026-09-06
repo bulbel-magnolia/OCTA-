@@ -11,8 +11,10 @@ B-scan 帧，不以文件名推断管径、流速、血管身份或采集顺序�
 - `position_label`：`front`、`middle` 或 `rear`；
 - `bscan_index`：建议使用 0 基索引；
 - `reconstruction_version`：生成中间图的代码或提交版本；
-- `x_anchor_center_px`、`z_anchor_center_px`：导师轨迹给出的 0 基像素中心；
-- `geometry_source`：锚点来源，例如 `mentor_tracking`。
+- `x_anchor_center_px`、`z_anchor_center_px`：使用 `manifest_anchor` 模式时，
+  填写导师轨迹给出的 0 基像素中心；固定表面自动模式允许这两列留空；
+- `geometry_source`：定位来源，例如 `mentor_tracking` 或
+  `fixed_surface_global_x`。
 
 正式验证同时确认 `source_file` 实际存在。
 
@@ -55,5 +57,6 @@ svrecttail validate `
   --manifest data/manifest.csv
 ```
 
-正式验证会拒绝不存在的源文件，以及缺失物理参数、流速、B-scan、定位锚点、
-重建版本或几何来源的行，并检查每行的管径和像素标定是否与冻结配置一致。
+正式验证会拒绝不存在的源文件，以及缺失物理参数、流速、B-scan、重建版本
+或几何来源的行，并检查每行的管径和像素标定是否与冻结配置一致。
+`manifest_anchor` 模式还会拒绝缺失定位锚点的行。

@@ -39,6 +39,19 @@ class DetectionConfig:
 
 
 @dataclass(frozen=True)
+class LocalizationConfig:
+    mode: str
+    fixed_surface_z_center_px: float | None
+    surface_to_vessel_top_um: float | None
+    effective_refractive_index: float
+    axial_margin_above_px: int
+    axial_margin_below_px: int
+    lateral_smoothing_sigma_px: float
+    edge_exclusion_px: int
+    minimum_peak_cnr: float
+
+
+@dataclass(frozen=True)
 class RunConfig:
     schema_version: str
     parameter_status: str
@@ -46,6 +59,7 @@ class RunConfig:
     geometry: GeometryConfig
     background: BackgroundConfig
     detection: DetectionConfig
+    localization: LocalizationConfig
     raw: Mapping[str, Any]
 
 
@@ -92,6 +106,24 @@ def parse_config(data: Mapping[str, Any]) -> RunConfig:
     geometry = data["geometry"]
     background = data["background"]
     detection = data["detection"]
+    localization = data.get("localization", {"mode": "manifest_anchor"})
+    localization_mode = str(localization.get("mode", "manifest_anchor")).strip()
+    if localization_mode not in ("manifest_anchor", "fixed_surface_global_x"):
+        raise ValueError(
+            "localization.mode must be manifest_anchor or fixed_surface_global_x"
+        )
+    if localization_mode == "fixed_surface_global_x":
+        fixed_surface_z_center_px = _nonnegative(
+            "fixed_surface_z_center_px",
+            localization["fixed_surface_z_center_px"],
+        )
+        surface_to_vessel_top_um = _positive(
+            "surface_to_vessel_top_um",
+            localization["surface_to_vessel_top_um"],
+        )
+    else:
+        fixed_surface_z_center_px = None
+        surface_to_vessel_top_um = None
     coordinate_base = _integer(
         "coordinate_base", geometry.get("coordinate_base", -1), minimum=0
     )
@@ -150,6 +182,38 @@ def parse_config(data: Mapping[str, Any]) -> RunConfig:
                 "minimum_blank_samples_per_bin",
                 detection["minimum_blank_samples_per_bin"],
                 minimum=1,
+            ),
+        ),
+        localization=LocalizationConfig(
+            mode=localization_mode,
+            fixed_surface_z_center_px=fixed_surface_z_center_px,
+            surface_to_vessel_top_um=surface_to_vessel_top_um,
+            effective_refractive_index=_positive(
+                "effective_refractive_index",
+                localization.get("effective_refractive_index", 1.0),
+            ),
+            axial_margin_above_px=_integer(
+                "axial_margin_above_px",
+                localization.get("axial_margin_above_px", 6),
+                minimum=0,
+            ),
+            axial_margin_below_px=_integer(
+                "axial_margin_below_px",
+                localization.get("axial_margin_below_px", 10),
+                minimum=0,
+            ),
+            lateral_smoothing_sigma_px=_positive(
+                "lateral_smoothing_sigma_px",
+                localization.get("lateral_smoothing_sigma_px", 2.5),
+            ),
+            edge_exclusion_px=_integer(
+                "edge_exclusion_px",
+                localization.get("edge_exclusion_px", 12),
+                minimum=0,
+            ),
+            minimum_peak_cnr=_nonnegative(
+                "minimum_peak_cnr",
+                localization.get("minimum_peak_cnr", 5.0),
             ),
         ),
         raw=data,

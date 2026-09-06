@@ -22,6 +22,16 @@ def test_pilot_config_freezes_protocol_critical_values() -> None:
     assert config.background.strip_width_columns == 5
 
 
+def test_surface_guided_config_freezes_confirmed_surface_geometry() -> None:
+    config = load_config(
+        ROOT / "config" / "run_config.surface_z176.pilot.json"
+    )
+    assert config.localization.mode == "fixed_surface_global_x"
+    assert config.localization.fixed_surface_z_center_px == 176.0
+    assert config.localization.surface_to_vessel_top_um == 200.0
+    assert config.localization.effective_refractive_index == 1.12
+
+
 def test_manifest_template_has_complete_15_frame_pilot_grid() -> None:
     table = load_manifest(ROOT / "data" / "manifest_template.csv", require_complete=False)
     assert len(table) == 15
@@ -64,6 +74,49 @@ def test_manifest_allows_unknown_identity_and_acquisition_metadata(tmp_path: Pat
     table.to_csv(path, index=False)
     loaded = load_manifest(path, require_complete=True)
     assert pd.isna(loaded.loc[0, "vessel_id"])
+
+
+def test_surface_guided_manifest_allows_empty_legacy_anchor_columns(
+    tmp_path: Path,
+) -> None:
+    (tmp_path / "frame.mat").touch()
+    table = pd.DataFrame(
+        [
+            {
+                "scan_id": "scan",
+                "source_file": "frame.mat",
+                "vessel_id": pd.NA,
+                "phantom_id": pd.NA,
+                "session_id": pd.NA,
+                "diameter_um": 128,
+                "flow_speed_mm_s": 1,
+                "position_label": "front",
+                "dx_um": 12.7,
+                "dz_um": 6.7,
+                "bscan_index": 0,
+                "slow_axis_position_um": pd.NA,
+                "temporal_repeat_id": pd.NA,
+                "temporal_repeat_count": pd.NA,
+                "scan_time_interval_s": pd.NA,
+                "acquisition_order": pd.NA,
+                "reconstruction_version": "commit",
+                "x_anchor_center_px": pd.NA,
+                "z_anchor_center_px": pd.NA,
+                "geometry_source": "fixed_surface_global_x",
+                "background_excluded_side": pd.NA,
+                "background_exclusion_reason": pd.NA,
+            }
+        ]
+    )
+    path = tmp_path / "manifest.csv"
+    table.to_csv(path, index=False)
+    loaded = load_manifest(
+        path,
+        require_complete=True,
+        require_localization_anchors=False,
+    )
+    assert pd.isna(loaded.loc[0, "x_anchor_center_px"])
+    assert pd.isna(loaded.loc[0, "z_anchor_center_px"])
 
 
 def test_npz_loader_preserves_linear_maps(tmp_path: Path) -> None:
