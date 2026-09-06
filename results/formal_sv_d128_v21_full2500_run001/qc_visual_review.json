@@ -1,0 +1,150 @@
+{
+  "reviewed": [
+    {
+      "file": "qc/flow01_Bscan000_mapping.png",
+      "basis": "byte-identical to visually reviewed Stage A overlay"
+    },
+    {
+      "file": "qc/flow01_Bscan249_mapping.png",
+      "basis": "byte-identical to visually reviewed Stage A overlay"
+    },
+    {
+      "file": "qc/flow01_Bscan499_mapping.png",
+      "basis": "byte-identical to visually reviewed Stage A overlay"
+    },
+    {
+      "file": "qc/flow03_Bscan000_mapping.png",
+      "basis": "byte-identical to visually reviewed Stage A overlay"
+    },
+    {
+      "file": "qc/flow03_Bscan249_mapping.png",
+      "basis": "byte-identical to visually reviewed Stage A overlay"
+    },
+    {
+      "file": "qc/flow03_Bscan499_mapping.png",
+      "basis": "byte-identical to visually reviewed Stage A overlay"
+    },
+    {
+      "file": "qc/flow05_Bscan000_mapping.png",
+      "basis": "byte-identical to visually reviewed Stage A overlay"
+    },
+    {
+      "file": "qc/flow05_Bscan249_mapping.png",
+      "basis": "byte-identical to visually reviewed Stage A overlay"
+    },
+    {
+      "file": "qc/flow05_Bscan499_mapping.png",
+      "basis": "byte-identical to visually reviewed Stage A overlay"
+    },
+    {
+      "file": "qc/flow07_Bscan000_mapping.png",
+      "basis": "byte-identical to visually reviewed Stage A overlay"
+    },
+    {
+      "file": "qc/flow07_Bscan249_mapping.png",
+      "basis": "byte-identical to visually reviewed Stage A overlay"
+    },
+    {
+      "file": "qc/flow07_Bscan499_mapping.png",
+      "basis": "byte-identical to visually reviewed Stage A overlay"
+    },
+    {
+      "file": "qc/flow10_Bscan000_mapping.png",
+      "basis": "byte-identical to visually reviewed Stage A overlay"
+    },
+    {
+      "file": "qc/flow10_Bscan249_mapping.png",
+      "basis": "byte-identical to visually reviewed Stage A overlay"
+    },
+    {
+      "file": "qc/flow10_Bscan499_mapping.png",
+      "basis": "byte-identical to visually reviewed Stage A overlay"
+    },
+    {
+      "file": "qc/flow01_Bscan049_mapping.png",
+      "basis": "Codex image inspection"
+    },
+    {
+      "file": "qc/flow01_Bscan149_mapping.png",
+      "basis": "Codex image inspection"
+    },
+    {
+      "file": "qc/flow01_Bscan349_mapping.png",
+      "basis": "Codex image inspection"
+    },
+    {
+      "file": "qc/flow05_Bscan049_mapping.png",
+      "basis": "Codex image inspection"
+    },
+    {
+      "file": "qc/flow05_Bscan149_mapping.png",
+      "basis": "Codex image inspection"
+    },
+    {
+      "file": "qc/flow05_Bscan349_mapping.png",
+      "basis": "Codex image inspection"
+    },
+    {
+      "file": "qc/flow07_Bscan049_mapping.png",
+      "basis": "Codex image inspection"
+    },
+    {
+      "file": "qc/flow07_Bscan149_mapping.png",
+      "basis": "Codex image inspection"
+    },
+    {
+      "file": "qc/flow07_Bscan349_mapping.png",
+      "basis": "Codex image inspection"
+    },
+    {
+      "file": "qc/flow10_Bscan049_mapping.png",
+      "basis": "Codex image inspection"
+    },
+    {
+      "file": "qc/flow10_Bscan149_mapping.png",
+      "basis": "Codex image inspection"
+    },
+    {
+      "file": "qc/flow10_Bscan349_mapping.png",
+      "basis": "Codex image inspection"
+    },
+    {
+      "file": "qc/flow03_Bscan420_mapping.png",
+      "basis": "Codex image inspection"
+    },
+    {
+      "file": "qc/flow03_Bscan423_mapping.png",
+      "basis": "Codex image inspection"
+    },
+    {
+      "file": "qc/flow03_Bscan432_mapping.png",
+      "basis": "Codex image inspection"
+    },
+    {
+      "file": "qc/flow03_Bscan434_mapping.png",
+      "basis": "Codex image inspection"
+    },
+    {
+      "file": "qc/flow03_Bscan436_mapping.png",
+      "basis": "Codex image inspection"
+    },
+    {
+      "file": "qc/flow03_Bscan447_mapping.png",
+      "basis": "Codex image inspection"
+    },
+    {
+      "file": "qc/flow03_Bscan469_mapping.png",
+      "basis": "Codex image inspection"
+    },
+    {
+      "file": "qc/flow03_Bscan470_mapping.png",
+      "basis": "Codex image inspection"
+    },
+    {
+      "file": "qc/flow03_Bscan471_mapping.png",
+      "basis": "Codex image inspection"
+    }
+  ],
+  "conclusion": "No new same-frame coordinate-transfer or mirror/crop displacement observed. Diagnostic geometry on excluded frames is retained for review, not quantitative inclusion.",
+  "scope": "Technical mapping review of 36 overlays; all 91 fixed positions remain available for review, not all manually validated."
+}

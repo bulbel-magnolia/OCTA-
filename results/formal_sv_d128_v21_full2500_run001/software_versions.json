@@ -1,0 +1,23 @@
+{
+  "python": "3.12.10",
+  "numpy": "2.4.4",
+  "scipy": "1.17.1",
+  "pandas": "2.3.3",
+  "matplotlib": "3.10.8",
+  "pydicom": "3.0.1",
+  "matlab": "9.14.0.2206163 (R2023a)",
+  "matlab_tests": [
+    "test_compute_sv_maps: PASS",
+    "test_reconstruction_dependencies: PASS"
+  ],
+  "python_tests": "59 passed; one unrelated requests dependency-version warning",
+  "collection_code_commit": "d244cc793e3aa1db47e35ac65bc7bde5d585c1f9",
+  "verification_code_commit": "b1df9ab3c8872bdd5030a7cac7ffa09bd1ad42c3",
+  "frame_processing_code_commits": [
+    "a75365e912a5cbfa32c2858cf5db8ccb08277cb0",
+    "b1df9ab3c8872bdd5030a7cac7ffa09bd1ad42c3",
+    "be3cbcc68679aef019875869fe00423553dda69e",
+    "e43a2a2ce0de3f5e88757d5c4b10d0ff9d1e45ac"
+  ],
+  "final_verification_code_commit": "c967409f08dd5c3af16a763f630031aca31703f2"
+}

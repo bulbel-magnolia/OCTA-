@@ -1,0 +1,31 @@
+{
+  "scans": [
+    {
+      "scan_id": "flow01",
+      "rows": 500,
+      "frozen_coordinates_identical": true
+    },
+    {
+      "scan_id": "flow03",
+      "rows": 500,
+      "frozen_coordinates_identical": true
+    },
+    {
+      "scan_id": "flow05",
+      "rows": 500,
+      "frozen_coordinates_identical": true
+    },
+    {
+      "scan_id": "flow07",
+      "rows": 500,
+      "frozen_coordinates_identical": true
+    },
+    {
+      "scan_id": "flow10",
+      "rows": 500,
+      "frozen_coordinates_identical": true
+    }
+  ],
+  "bridge15_metrics_match_full_run": true,
+  "no_localization_rerun": true
+}

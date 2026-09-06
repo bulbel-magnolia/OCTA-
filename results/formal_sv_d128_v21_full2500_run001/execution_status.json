@@ -1,0 +1,10 @@
+{
+  "planned": 2500,
+  "processed": 2500,
+  "inputs_archived": 2500,
+  "quantification_valid": 2422,
+  "status": "numerical_extraction_complete",
+  "coordinate_mapping_review": "stage_A_all_15_passed; full_preselected_diagnostics_and_review_images_available",
+  "detection": "not_evaluated_no_matched_blank",
+  "fixed_qc_positions": 91
+}

@@ -1,0 +1,13 @@
+scan_id,detail,frames
+flow01,no_reliable_z_geometry;,2
+flow01,source_qc_failed;mentor_assessability_uncertain,12
+flow03,no_reliable_z_geometry;,24
+flow03,source_qc_failed;mentor_assessability_not_assessable,4
+flow03,source_qc_failed;mentor_assessability_uncertain,3
+flow03,source_qc_failed;q_vessel_nonpositive;mentor_assessability_uncertain,1
+flow05,no_reliable_z_geometry;,6
+flow05,source_qc_failed;mentor_assessability_uncertain,3
+flow07,no_reliable_z_geometry;,1
+flow07,source_qc_failed;mentor_assessability_uncertain,6
+flow10,no_reliable_z_geometry;,14
+flow10,source_qc_failed;mentor_assessability_uncertain,2
