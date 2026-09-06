@@ -1,0 +1,56 @@
+name: Five-flow descriptive analysis d128 run001
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - feature/sv-rectangle-v1
+    paths:
+      - analysis/formal_sv_d128_v21_run001/flow_descriptive_d128_run001/analyze_flow_descriptive.py
+      - .github/workflows/flow-descriptive-d128-run001.yml
+
+permissions:
+  contents: write
+
+jobs:
+  analyze:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Checkout branch
+        uses: actions/checkout@v4
+        with:
+          ref: feature/sv-rectangle-v1
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install analysis dependencies
+        run: python -m pip install --upgrade pip numpy pandas
+
+      - name: Analyze five-flow descriptive pattern
+        run: |
+          python analysis/formal_sv_d128_v21_run001/flow_descriptive_d128_run001/analyze_flow_descriptive.py \
+            --root . \
+            --task1-dir analysis/formal_sv_d128_v21_run001/relative_tail_intensity_full2422 \
+            --task2-dir analysis/formal_sv_d128_v21_run001/fixed128_width_sensitivity_full2422 \
+            --output-dir analysis/formal_sv_d128_v21_run001/flow_descriptive_d128_run001 \
+            --task1-source-sha f71e8df806ffca56eacb2df5167310108536a026 \
+            --task2-source-sha 02cc44a2bb2f5821e444d631f9a96bcaeb78e59e \
+            --workflow-source-sha "${{ github.sha }}"
+
+      - name: Commit generated descriptive-analysis outputs
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add analysis/formal_sv_d128_v21_run001/flow_descriptive_d128_run001/
+          if git diff --cached --quiet; then
+            echo 'No generated changes to commit.'
+            exit 0
+          fi
+          git commit -m 'analysis: add five-flow descriptive results'
+          git push origin HEAD:feature/sv-rectangle-v1
