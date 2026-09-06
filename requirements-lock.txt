@@ -2,5 +2,6 @@ h5py==3.16.0
 matplotlib==3.10.8
 numpy==2.4.4
 pandas==2.3.3
+pydicom==3.0.1
 pytest==9.0.3
 scipy==1.17.1

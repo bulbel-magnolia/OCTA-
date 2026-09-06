@@ -32,6 +32,22 @@ def test_surface_guided_config_freezes_confirmed_surface_geometry() -> None:
     assert config.localization.effective_refractive_index == 1.12
 
 
+def test_mentor_tracking_config_has_no_surface_or_distance_dependency() -> None:
+    config = load_config(ROOT / "config" / "run_config.mentor_tracking.pilot.json")
+    localization = config.localization
+    assert localization.mode == "mentor_tracking"
+    assert localization.fixed_surface_z_center_px is None
+    assert localization.surface_to_vessel_top_um is None
+    assert localization.mentor_primary_alpha == 0.15
+    assert localization.mentor_final_x_method == "X4_centroid_isolated_jump_corrected"
+    assert (
+        localization.mentor_lateral_width_method
+        == "X1_continuous_run_recentered_on_X4"
+    )
+    assert localization.mentor_top_method == "primary_alpha_z_upper"
+    assert localization.mentor_required_assessability == "assessable"
+
+
 def test_manifest_template_has_complete_15_frame_pilot_grid() -> None:
     table = load_manifest(ROOT / "data" / "manifest_template.csv", require_complete=False)
     assert len(table) == 15
@@ -117,6 +133,54 @@ def test_surface_guided_manifest_allows_empty_legacy_anchor_columns(
     )
     assert pd.isna(loaded.loc[0, "x_anchor_center_px"])
     assert pd.isna(loaded.loc[0, "z_anchor_center_px"])
+
+
+def test_mentor_manifest_requires_existing_tracking_file_not_legacy_anchors(
+    tmp_path: Path,
+) -> None:
+    (tmp_path / "frame.mat").touch()
+    pd.DataFrame({"frame_index": [0]}).to_csv(
+        tmp_path / "tracking.csv", index=False
+    )
+    table = pd.DataFrame(
+        [
+            {
+                "scan_id": "scan",
+                "source_file": "frame.mat",
+                "tracking_file": "tracking.csv",
+                "vessel_id": pd.NA,
+                "phantom_id": pd.NA,
+                "session_id": pd.NA,
+                "diameter_um": 128,
+                "flow_speed_mm_s": 1,
+                "position_label": "front",
+                "dx_um": 12.7,
+                "dz_um": 6.7,
+                "bscan_index": 0,
+                "slow_axis_position_um": pd.NA,
+                "temporal_repeat_id": pd.NA,
+                "temporal_repeat_count": pd.NA,
+                "scan_time_interval_s": pd.NA,
+                "acquisition_order": pd.NA,
+                "reconstruction_version": "commit",
+                "x_anchor_center_px": pd.NA,
+                "z_anchor_center_px": pd.NA,
+                "geometry_source": "mentor_tracking",
+                "background_excluded_side": pd.NA,
+                "background_exclusion_reason": pd.NA,
+            }
+        ]
+    )
+    path = tmp_path / "manifest.csv"
+    table.to_csv(path, index=False)
+    loaded = load_manifest(
+        path,
+        require_complete=True,
+        require_localization_anchors=False,
+        require_tracking_files=True,
+    )
+    assert pd.isna(loaded.loc[0, "x_anchor_center_px"])
+    assert loaded.loc[0, "tracking_file"] == "tracking.csv"
 
 
 def test_npz_loader_preserves_linear_maps(tmp_path: Path) -> None:

@@ -1,5 +1,16 @@
 # 数据清单填写规范
 
+## mentor_tracking 模式补充
+
+当前正式先导清单增加 tracking_file。该字段指向师兄整卷定位输出的
+500 行 CSV，同一扫描的三条先导记录引用同一个文件。程序以 scan_id 和
+bscan_index 唯一选择定位行。该模式要求 tracking_file 存在，允许旧的
+x_anchor_center_px 与 z_anchor_center_px 留空，也不读取表面位置或距离。
+
+定位表至少保存 Viterbi 横向中心、0.15 主轨迹 z_upper、X1 连续段宽度、
+X2 与 X4 中心、跟踪类别、可评估性分数及分类。清单中的 source_file
+继续指向我们的线性 sv_raw/OMAG 单帧中间图，两类输入用途分开。
+
 `data/manifest_template.csv` 已展开为 15 个先导帧。每一行对应一个实际
 B-scan 帧，不以文件名推断管径、流速、血管身份或采集顺序。
 

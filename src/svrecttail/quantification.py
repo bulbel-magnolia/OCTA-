@@ -192,8 +192,11 @@ def quantify_frame(
         nx, geometry.x_left_edge_px, geometry.x_right_edge_px
     )
     vessel_profile = _weighted_row_mean(image, x_weights)
-    tail_contrast = vessel_profile - background.combined
     finite_corrected = np.isfinite(corrected)
+    # This is algebraically identical to vessel_profile - background. Taking
+    # the weighted mean after subtraction avoids catastrophic cancellation
+    # when raw SV has a large baseline and X4 supplies fractional coordinates.
+    tail_contrast = _weighted_row_mean(corrected, x_weights)
     tail_linear_density = np.sum(
         np.where(finite_corrected, corrected, 0.0) * x_weights[None, :],
         axis=1,

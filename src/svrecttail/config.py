@@ -43,6 +43,11 @@ class LocalizationConfig:
     mode: str
     fixed_surface_z_center_px: float | None
     surface_to_vessel_top_um: float | None
+    mentor_primary_alpha: float | None
+    mentor_final_x_method: str | None
+    mentor_lateral_width_method: str | None
+    mentor_top_method: str | None
+    mentor_required_assessability: str | None
     effective_refractive_index: float
     axial_margin_above_px: int
     axial_margin_below_px: int
@@ -108,9 +113,14 @@ def parse_config(data: Mapping[str, Any]) -> RunConfig:
     detection = data["detection"]
     localization = data.get("localization", {"mode": "manifest_anchor"})
     localization_mode = str(localization.get("mode", "manifest_anchor")).strip()
-    if localization_mode not in ("manifest_anchor", "fixed_surface_global_x"):
+    if localization_mode not in (
+        "manifest_anchor",
+        "fixed_surface_global_x",
+        "mentor_tracking",
+    ):
         raise ValueError(
-            "localization.mode must be manifest_anchor or fixed_surface_global_x"
+            "localization.mode must be manifest_anchor, "
+            "fixed_surface_global_x, or mentor_tracking"
         )
     if localization_mode == "fixed_surface_global_x":
         fixed_surface_z_center_px = _nonnegative(
@@ -124,6 +134,63 @@ def parse_config(data: Mapping[str, Any]) -> RunConfig:
     else:
         fixed_surface_z_center_px = None
         surface_to_vessel_top_um = None
+    if localization_mode == "mentor_tracking":
+        mentor_primary_alpha = _positive(
+            "mentor_primary_alpha",
+            localization.get("mentor_primary_alpha", 0.15),
+        )
+        mentor_final_x_method = str(
+            localization.get(
+                "mentor_final_x_method",
+                "X4_centroid_isolated_jump_corrected",
+            )
+        ).strip()
+        mentor_lateral_width_method = str(
+            localization.get(
+                "mentor_lateral_width_method",
+                "X1_continuous_run_recentered_on_X4",
+            )
+        ).strip()
+        mentor_top_method = str(
+            localization.get("mentor_top_method", "primary_alpha_z_upper")
+        ).strip()
+        mentor_required_assessability = str(
+            localization.get("mentor_required_assessability", "assessable")
+        ).strip()
+        expected_methods = {
+            "mentor_final_x_method": (
+                mentor_final_x_method,
+                "X4_centroid_isolated_jump_corrected",
+            ),
+            "mentor_lateral_width_method": (
+                mentor_lateral_width_method,
+                "X1_continuous_run_recentered_on_X4",
+            ),
+            "mentor_top_method": (
+                mentor_top_method,
+                "primary_alpha_z_upper",
+            ),
+            "mentor_required_assessability": (
+                mentor_required_assessability,
+                "assessable",
+            ),
+        }
+        mismatched_methods = [
+            name
+            for name, (actual, expected) in expected_methods.items()
+            if actual != expected
+        ]
+        if mismatched_methods:
+            raise ValueError(
+                "unsupported mentor localization method: "
+                + ", ".join(mismatched_methods)
+            )
+    else:
+        mentor_primary_alpha = None
+        mentor_final_x_method = None
+        mentor_lateral_width_method = None
+        mentor_top_method = None
+        mentor_required_assessability = None
     coordinate_base = _integer(
         "coordinate_base", geometry.get("coordinate_base", -1), minimum=0
     )
@@ -188,6 +255,11 @@ def parse_config(data: Mapping[str, Any]) -> RunConfig:
             mode=localization_mode,
             fixed_surface_z_center_px=fixed_surface_z_center_px,
             surface_to_vessel_top_um=surface_to_vessel_top_um,
+            mentor_primary_alpha=mentor_primary_alpha,
+            mentor_final_x_method=mentor_final_x_method,
+            mentor_lateral_width_method=mentor_lateral_width_method,
+            mentor_top_method=mentor_top_method,
+            mentor_required_assessability=mentor_required_assessability,
             effective_refractive_index=_positive(
                 "effective_refractive_index",
                 localization.get("effective_refractive_index", 1.0),

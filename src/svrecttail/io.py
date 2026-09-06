@@ -53,6 +53,7 @@ def load_manifest(
     *,
     require_complete: bool = True,
     require_localization_anchors: bool = True,
+    require_tracking_files: bool = False,
 ) -> pd.DataFrame:
     """Load a one-row-per-frame manifest and validate formal inputs."""
 
@@ -73,6 +74,10 @@ def load_manifest(
     missing = sorted(REQUIRED_MANIFEST_COLUMNS - set(table.columns))
     if missing:
         raise ValueError(f"manifest missing columns: {', '.join(missing)}")
+    if require_tracking_files and "tracking_file" not in table.columns:
+        raise ValueError("mentor_tracking manifest must contain tracking_file")
+    if "tracking_file" in table.columns:
+        table["tracking_file"] = table["tracking_file"].astype("string")
     if table.empty:
         raise ValueError("manifest must contain at least one frame")
     if table["scan_id"].isna().any() or table["scan_id"].str.strip().eq("").any():
@@ -124,6 +129,8 @@ def load_manifest(
         "acquisition_order",
         "reconstruction_version",
     )
+    if require_tracking_files:
+        scan_level_columns = (*scan_level_columns, "tracking_file")
     inconsistent = [
         column
         for column in scan_level_columns
@@ -143,13 +150,18 @@ def load_manifest(
         ]
         if require_localization_anchors:
             required_values.extend(["x_anchor_center_px", "z_anchor_center_px"])
+        if require_tracking_files:
+            required_values.append("tracking_file")
         incomplete = table[required_values].isna().any(axis=1)
-        for column in (
+        required_text = [
             "source_file",
             "position_label",
             "reconstruction_version",
             "geometry_source",
-        ):
+        ]
+        if require_tracking_files:
+            required_text.append("tracking_file")
+        for column in required_text:
             incomplete |= table[column].astype("string").str.strip().eq("").fillna(True)
         if incomplete.any():
             ids = ", ".join(table.loc[incomplete, "scan_id"].astype(str))
@@ -163,6 +175,19 @@ def load_manifest(
             raise FileNotFoundError(
                 "manifest source files not found: " + "; ".join(missing_sources)
             )
+        if require_tracking_files:
+            missing_tracking = [
+                f"{row.scan_id}: {row.tracking_file}"
+                for row in table.itertuples(index=False)
+                if not resolve_source_path(
+                    manifest_path, str(row.tracking_file)
+                ).is_file()
+            ]
+            if missing_tracking:
+                raise FileNotFoundError(
+                    "manifest tracking files not found: "
+                    + "; ".join(missing_tracking)
+                )
         if (table[["diameter_um", "dx_um", "dz_um"]] <= 0).any().any():
             raise ValueError("diameter and pixel pitches must be positive")
         if (table["flow_speed_mm_s"] <= 0).any():

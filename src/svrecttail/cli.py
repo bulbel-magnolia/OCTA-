@@ -11,6 +11,7 @@ import numpy as np
 
 from .config import load_config
 from .io import load_frame_maps, load_manifest
+from .mentor_tracking import write_mentor_tracking_bundle
 from .pipeline import run_batch
 
 
@@ -42,6 +43,20 @@ def _parser() -> argparse.ArgumentParser:
 
     inspect = subparsers.add_parser("inspect-maps", help="inspect one interim map file")
     inspect.add_argument("path", type=Path)
+
+    tracking = subparsers.add_parser(
+        "mentor-track",
+        help="run mentor full-volume localization on one Flow DICOM",
+    )
+    tracking.add_argument("--flow-dicom", required=True, type=Path)
+    tracking.add_argument("--scan-id", required=True)
+    tracking.add_argument("--diameter-um", required=True, type=float)
+    tracking.add_argument("--output", required=True, type=Path)
+    tracking.add_argument(
+        "--tracking-config",
+        type=Path,
+        help="optional JSON object, or a JSON file containing a tracking object",
+    )
     return parser
 
 
@@ -75,6 +90,10 @@ def main(argv: Sequence[str] | None = None) -> int:
                 args.allow_template_gaps
                 or config.localization.mode == "manifest_anchor"
             ),
+            require_tracking_files=(
+                not args.allow_template_gaps
+                and config.localization.mode == "mentor_tracking"
+            ),
         )
         print(
             json.dumps(
@@ -99,6 +118,32 @@ def main(argv: Sequence[str] | None = None) -> int:
                     "sv_min": None if finite_sv.size == 0 else float(finite_sv.min()),
                     "sv_max": None if finite_sv.size == 0 else float(finite_sv.max()),
                     "metadata": {key: str(value) for key, value in maps.metadata.items()},
+                },
+                ensure_ascii=False,
+            )
+        )
+        return 0
+    if args.command == "mentor-track":
+        tracking_config = None
+        if args.tracking_config is not None:
+            with args.tracking_config.open("r", encoding="utf-8") as handle:
+                tracking_config = json.load(handle)
+            if "tracking" in tracking_config:
+                tracking_config = tracking_config["tracking"]
+        bundle = write_mentor_tracking_bundle(
+            args.flow_dicom,
+            scan_id=args.scan_id,
+            diameter_um=args.diameter_um,
+            output_dir=args.output,
+            tracking_config=tracking_config,
+        )
+        print(
+            json.dumps(
+                {
+                    "status": "complete",
+                    "primary_table": str(bundle.primary_table_path),
+                    "metadata": str(bundle.metadata_path),
+                    "frame_count": bundle.frame_count,
                 },
                 ensure_ascii=False,
             )

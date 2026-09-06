@@ -1,5 +1,18 @@
 # Implementation audit
 
+## 2026-09-06 current-state correction
+
+本节取代下方早期的 Reusable localization boundary 与 Available data 状态。
+5 个原始 OCT 文件及对应的 5 个完整 500 帧 Flow DICOM 已定位并校验；
+15 个前/中/后 sv_raw 单帧中间图也已生成。当前实现纳入师兄原始
+tracking_core.py（与交付文件 SHA-256 完全一致），并仅抽取 X1/X2/X4 与
+可评估性模块。师兄的拖尾 AUC 指标未接入。
+
+当前正式定位由整卷 Viterbi、X4、X1 宽度和 z_upper 组成，不再使用固定
+表面或表面距离。5 卷共 2500 帧均形成轨迹；所选 15 帧全部为 assessable，
+全部通过定位、背景、窗口和最终指标 QC。完整证据见
+MENTOR_TRACKING_INTEGRATION.md 和 results/pilot_mentor_tracking_15。
+
 Date: 2026-09-06
 
 ## Confirmed local components

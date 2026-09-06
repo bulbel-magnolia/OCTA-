@@ -74,6 +74,27 @@ def test_formal_integrals_and_profile_identity() -> None:
     assert np.isclose(result.ratio_tail_to_vessel, result.q_tail / result.q_vessel)
 
 
+def test_fractional_x_geometry_is_stable_with_large_raw_baseline() -> None:
+    rng = np.random.default_rng(1)
+    image = 1e9 + rng.normal(size=(160, 100))
+    geometry = VesselGeometry(
+        x_left_edge_px=45.25,
+        x_right_edge_px=55.25,
+        z_top_edge_px=29.5,
+        diameter_um=128.0,
+        dx_um=12.7,
+        dz_um=6.7,
+    )
+    result = quantify_frame(image, geometry)
+    support = np.isfinite(result.tail_linear_density)
+    np.testing.assert_allclose(
+        result.tail_linear_density[support],
+        geometry.lateral_width_um * result.tail_contrast_profile[support],
+        rtol=2e-12,
+        atol=1e-9,
+    )
+
+
 def test_negative_background_residual_is_retained() -> None:
     geometry = _geometry()
     image = np.full((120, 80), 5.0)

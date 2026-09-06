@@ -90,14 +90,40 @@ class TopEdgeResult:
 
 
 @dataclass(frozen=True)
+class MentorTrackingEvidence:
+    """Full-volume mentor tracking evidence attached to one selected frame."""
+
+    scan_id: str
+    frame_index: int
+    primary_alpha: float
+    viterbi_x_center_px: float
+    z_upper_px: float
+    tracking_class: str
+    x_path_confidence_class: str
+    z_edge_confidence_class: str
+    x2_robust_centroid_px: float
+    x4_centroid_isolated_jump_corrected_px: float
+    x4_jump_corrected: bool
+    assessability_score: float
+    vessel_presence_prediction: str
+    valid_local_body: bool
+    x1_fallback: bool
+    qc_valid: bool
+    invalid_reason: str
+
+
+@dataclass(frozen=True)
 class LocalizationResult:
     geometry: VesselGeometry
     lateral: LocalBodyResult
     top_edge: TopEdgeResult
     coarse_anchor: SurfaceGuidedAnchorResult | None = None
+    mentor_tracking: MentorTrackingEvidence | None = None
 
     @property
     def source_qc_valid(self) -> bool:
+        if self.mentor_tracking is not None:
+            return self.mentor_tracking.qc_valid
         coarse_valid = (
             True if self.coarse_anchor is None else self.coarse_anchor.qc_valid
         )

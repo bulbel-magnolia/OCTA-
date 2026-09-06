@@ -30,6 +30,10 @@ from .localization import (
     localize_geometry_from_surface,
     shifted_geometry,
 )
+from .mentor_tracking import (
+    build_localization_from_tracking,
+    select_tracking_record,
+)
 from .qc import save_detection_qc, save_qc_figure
 from .quantification import QuantificationResult, quantify_frame
 
@@ -123,6 +127,22 @@ def _json_compatible(value: Any) -> Any:
 def _localization_record(localization: LocalizationResult) -> dict[str, Any]:
     lateral = asdict(localization.lateral)
     top = asdict(localization.top_edge)
+    if localization.mentor_tracking is not None:
+        mentor = asdict(localization.mentor_tracking)
+        return {
+            "localization_image": "full_volume_flow_dicom",
+            "coarse_method": "mentor_full_volume_slow_axis_viterbi",
+            "lateral_method": (
+                "mentor_X4_centroid_with_X1_width_recentered"
+            ),
+            "lateral_threshold_sigma": 1.5,
+            "top_method": "mentor_primary_alpha_z_upper",
+            "coordinate_convention": "zero_based_pixel_centres",
+            **{f"mentor_{key}": value for key, value in mentor.items()},
+            **{f"lateral_{key}": value for key, value in lateral.items()},
+            **{f"top_{key}": value for key, value in top.items()},
+            "source_qc_valid": localization.source_qc_valid,
+        }
     coarse = (
         {
             "coarse_method": "manifest_anchor",
@@ -469,9 +489,51 @@ def _check_calibration(row: pd.Series, config: RunConfig) -> None:
 
 
 def _localize_frame(
-    maps: FrameMaps, row: pd.Series, config: RunConfig
+    maps: FrameMaps,
+    row: pd.Series,
+    config: RunConfig,
+    *,
+    manifest_path: Path | None = None,
 ) -> LocalizationResult:
     localization = config.localization
+    if localization.mode == "mentor_tracking":
+        if manifest_path is None:
+            raise ValueError(
+                "manifest_path is required for mentor_tracking localization"
+            )
+        tracking_value = row.get("tracking_file")
+        if tracking_value is None or pd.isna(tracking_value):
+            raise ValueError("mentor_tracking row is missing tracking_file")
+        tracking_path = resolve_source_path(
+            manifest_path, str(tracking_value)
+        )
+        tracking_record = select_tracking_record(
+            tracking_path,
+            scan_id=str(row["scan_id"]),
+            frame_index=int(row["bscan_index"]),
+        )
+        if localization.mentor_primary_alpha is None:
+            raise ValueError("mentor primary alpha is not configured")
+        tracked_alpha = float(tracking_record["alpha"])
+        if not np.isclose(
+            tracked_alpha,
+            localization.mentor_primary_alpha,
+            rtol=0.0,
+            atol=1e-12,
+        ):
+            raise ValueError(
+                "tracking alpha differs from frozen mentor primary alpha: "
+                f"{tracked_alpha} versus {localization.mentor_primary_alpha}"
+            )
+        return build_localization_from_tracking(
+            tracking_record,
+            diameter_um=float(row["diameter_um"]),
+            dx_um=float(row["dx_um"]),
+            dz_um=float(row["dz_um"]),
+            required_assessability=(
+                localization.mentor_required_assessability or "assessable"
+            ),
+        )
     if localization.mode == "fixed_surface_global_x":
         if (
             localization.fixed_surface_z_center_px is None
@@ -582,6 +644,9 @@ def run_batch(
         require_localization_anchors=(
             config.localization.mode == "manifest_anchor"
         ),
+        require_tracking_files=(
+            config.localization.mode == "mentor_tracking"
+        ),
     )
     for _, calibration_row in manifest.iterrows():
         _check_calibration(calibration_row, config)
@@ -646,7 +711,12 @@ def run_batch(
             try:
                 maps = load_frame_maps(source_path)
                 map_metadata_record = _validate_map_metadata(maps, row)
-                localization = _localize_frame(maps, row, config)
+                localization = _localize_frame(
+                    maps,
+                    row,
+                    config,
+                    manifest_path=manifest_source,
+                )
                 result = _quantify(
                     maps.sv_raw,
                     localization,

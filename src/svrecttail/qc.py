@@ -192,6 +192,26 @@ def save_qc_figure(
         f"Qv={result.q_vessel:.6g}, Qtail={result.q_tail:.6g}, "
         f"R={result.ratio_tail_to_vessel:.6g}"
     )
+    if localization.mentor_tracking is not None:
+        evidence = localization.mentor_tracking
+        position_text = (
+            f"X4={geometry.x_center_px:.2f}, "
+            f"X1_width={localization.lateral.run_width_px}px, "
+            f"x_edges=[{geometry.x_left_edge_px:.2f},"
+            f"{geometry.x_right_edge_px:.2f}], "
+            f"z_top={localization.top_edge.z_top_center_px:.2f}, "
+            f"assessment={evidence.vessel_presence_prediction}, "
+            f"source_qc={localization.source_qc_valid}"
+        )
+        qc_text = (
+            f"scan={scan_id} | valid={result.valid} | "
+            f"reason={result.invalid_reason}"
+            + chr(10)
+            + position_text
+            + chr(10)
+            + f"Qv={result.q_vessel:.6g}, Qtail={result.q_tail:.6g}, "
+            f"R={result.ratio_tail_to_vessel:.6g}"
+        )
     fig.suptitle(qc_text, fontsize=10)
     fig.savefig(output, dpi=160)
     plt.close(fig)
