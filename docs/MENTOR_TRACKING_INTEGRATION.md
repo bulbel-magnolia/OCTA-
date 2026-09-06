@@ -30,6 +30,21 @@ Q_vessel、Q_tail 或 R 的数值积分，师兄原有的 AUC 指标也不参与
 6. CNR、连续性、宽度一致性、轴向完整性和相邻帧支持共同生成可评估性。
    分类为 assessable、uncertain 或 not_assessable。
 
+以上是已冻结的 `legacy_connected_component_v1`。2026-09-06 增加的候选
+`persistent_core_paired_edge_v2` 保留第 1、3–6 步，只升级轴向顶缘：
+
+1. 用 20% 峰值且至少 4 倍背景噪声的强阈值确认血管核心；
+2. 用较低滞回阈值从核心向上寻找可能顶缘，但要求信号横向覆盖一个按
+   `dx` 换算的血管宽度，且沿 z 连续存在；
+3. 候选顶缘按上方到内部的亮度跃迁、内部相对外部的横向支持、固定
+   128 μm 窗内的持续比例，以及上下半径平衡共同排序；
+4. 不使用表面 z 或表面到血管距离，不改变原有 assessable/uncertain/
+   not_assessable QC 规则。
+
+v2 的完整参数冻结在
+`config/tracking_config.upper_edge_v2.a020_n4.json`。默认配置仍指向 v1，
+避免旧命令在未声明版本时产生不同结果。
+
 ## 3. 转换为我们的几何
 
 正式几何使用以下固定映射：
@@ -85,15 +100,38 @@ sv_raw。实验身份与部分采集时间元数据仍为空，运行表会如�
 当前没有匹配空白剖面，探索性检出长度记录为未运行；Q_vessel、Q_tail 与
 R 不受此项影响。
 
+### 5.1 v2 候选试运行边界
+
+v2 对 15 个前/中/后样本全部产生有效几何，原 QC 下仍为 15/15 有效。相对
+v1，顶缘变化范围为 -2 至 +12 pixel，中位数为 0 pixel。五个先前目测偏上
+的样本分别变化 +4、+5、+12、+12、+1 pixel（正值表示向深部移动）。
+
+阈值矩阵同时测试了峰值比例 0.15/0.20/0.25 与背景噪声倍数 3/4/5。最终
+候选为 0.20 与 4；噪声 5 倍在 15 帧中出现 2 帧无局部种子，所以没有采用。
+这不是以 QC 通过率挑选最有利结果，旧 QC 代码未改。
+
+全 500 帧检查发现 flow03 第 425–465 帧附近出现向深部偏离的轨迹，最大
+相对 v1 为 +46 pixel。该段的合格候选稀疏，并混入少量更深的假候选，随后
+被原轨迹补全器连接。它没有覆盖本次选取的 0/249/499 帧，但说明 v2 尚不能
+直接替代整卷正式定位。冻结 v1 结果保留不变，v2 以候选结果发布供看图复核。
+
 ## 6. 可复现命令
 
 生成一卷定位表：
 
     svrecttail mentor-track --flow-dicom scan-Flow_ed.dcm --scan-id flow01 --diameter-um 128 --output outputs/mentor_tracking/flow01
 
+生成 v2 候选定位表时显式传入：
+
+    svrecttail mentor-track --flow-dicom scan-Flow_ed.dcm --scan-id flow01 --diameter-um 128 --tracking-config config/tracking_config.upper_edge_v2.a020_n4.json --output outputs/mentor_tracking_upper_edge_v2_a020_n4/flow01
+
 运行 15 帧混合先导：
 
     svrecttail run --config config/run_config.mentor_tracking.pilot.json --manifest data/manifest.csv --output outputs/pilot_mentor_tracking_15
+
+v2 候选定量使用：
+
+    svrecttail run --config config/run_config.mentor_tracking.upper_edge_v2.pilot.json --manifest outputs/local_run_inputs/manifest_mentor_tracking_upper_edge_v2.csv --output outputs/pilot_mentor_tracking_upper_edge_v2_15
 
 定位表保存 500 帧主表、三个 alpha 轨迹表、输入哈希、师兄代码哈希和有效
 配置。原始 OCT 与 DICOM 继续放在仓库外，GitHub 只保存代码、清单、哈希和

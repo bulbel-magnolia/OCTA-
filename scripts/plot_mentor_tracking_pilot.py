@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import argparse
+import sys
 from pathlib import Path
 
 import matplotlib
@@ -13,6 +14,11 @@ import numpy as np
 import pandas as pd
 from matplotlib.lines import Line2D
 from matplotlib.patches import Ellipse
+
+REPO_ROOT = Path(__file__).resolve().parents[1]
+SRC = REPO_ROOT / "src"
+if str(SRC) not in sys.path:
+    sys.path.insert(0, str(SRC))
 
 from svrecttail.io import load_frame_maps, resolve_source_path
 
@@ -25,6 +31,12 @@ def _arguments() -> argparse.Namespace:
     parser.add_argument("--overview-output", required=True, type=Path)
     parser.add_argument("--trajectory-output", required=True, type=Path)
     parser.add_argument("--comparison-output", type=Path)
+    parser.add_argument("--comparison-figure-output", type=Path)
+    parser.add_argument(
+        "--reference-label",
+        default="reference",
+        help="Short label for --old-localization in comparison outputs",
+    )
     return parser.parse_args()
 
 
@@ -276,10 +288,133 @@ def plot_trajectories(
     plt.close(fig)
 
 
+def plot_localization_comparison(
+    manifest_path: Path,
+    manifest: pd.DataFrame,
+    old_localization: pd.DataFrame,
+    new_localization: pd.DataFrame,
+    output_path: Path,
+    reference_label: str,
+) -> None:
+    """Overlay the reference and current axial borders on the same OMAG maps."""
+
+    speeds = sorted(manifest["flow_speed_mm_s"].astype(float).unique())
+    positions = ["front", "middle", "rear"]
+    fig, axes = plt.subplots(
+        len(speeds),
+        len(positions),
+        figsize=(15, 15),
+        constrained_layout=True,
+    )
+    for row_index, speed in enumerate(speeds):
+        for column_index, position in enumerate(positions):
+            ax = axes[row_index, column_index]
+            selected = manifest.loc[
+                np.isclose(manifest["flow_speed_mm_s"].astype(float), speed)
+                & manifest["position_label"].astype(str).eq(position)
+            ]
+            if len(selected) != 1:
+                raise ValueError(
+                    f"expected one frame for speed={speed}, position={position}"
+                )
+            manifest_row = selected.iloc[0]
+            scan_id = str(manifest_row["scan_id"])
+            frame_index = int(manifest_row["bscan_index"])
+            maps = load_frame_maps(
+                resolve_source_path(
+                    manifest_path, str(manifest_row["source_file"])
+                )
+            )
+            old = _localization_row(old_localization, scan_id, frame_index)
+            new = _localization_row(new_localization, scan_id, frame_index)
+            shown, vmin, vmax = _display_log(maps.omag_raw)
+            dx_um = float(new["dx_um"])
+            dz_um = float(new["dz_um"])
+            ax.imshow(
+                shown,
+                cmap="gray",
+                aspect=dz_um / dx_um,
+                vmin=vmin,
+                vmax=vmax,
+            )
+
+            old_top = float(old["z_top_edge_px"])
+            old_bottom = float(old["z_bottom_edge_px"])
+            new_top = float(new["z_top_edge_px"])
+            new_bottom = float(new["z_bottom_edge_px"])
+            x_left = float(new["x_left_edge_px"])
+            x_right = float(new["x_right_edge_px"])
+            x_center = 0.5 * (x_left + x_right)
+            width = x_right - x_left
+            ax.add_patch(
+                Ellipse(
+                    (x_center, 0.5 * (new_top + new_bottom)),
+                    width=width,
+                    height=new_bottom - new_top,
+                    fill=False,
+                    color="#00e5ff",
+                    linewidth=1.5,
+                )
+            )
+            ax.axvline(x_center, color="#00ff72", linewidth=1.1)
+            ax.axvline(x_left, color="#00e5ff", linewidth=0.9)
+            ax.axvline(x_right, color="#00e5ff", linewidth=0.9)
+            ax.axhline(old_top, color="#ffe066", linewidth=1.5, linestyle="--")
+            ax.axhline(old_bottom, color="#ffe066", linewidth=1.0, linestyle=":")
+            ax.axhline(new_top, color="#ff4d4d", linewidth=1.5)
+            ax.axhline(new_bottom, color="#ff9f1c", linewidth=1.2)
+
+            x_pad = max(18.0, 1.7 * width)
+            z_min = min(old_top, new_top)
+            z_max = max(old_bottom, new_bottom)
+            ax.set_xlim(
+                max(-0.5, x_left - x_pad),
+                min(maps.omag_raw.shape[1] - 0.5, x_right + x_pad),
+            )
+            ax.set_ylim(
+                min(maps.omag_raw.shape[0] - 0.5, z_max + 25),
+                max(-0.5, z_min - 25),
+            )
+            delta_px = new_top - old_top
+            ax.set_title(
+                f"{speed:g} mm/s | {position} | B-scan {frame_index}"
+                + chr(10)
+                + f"top: {reference_label}={old_top + 0.5:.1f}, "
+                + f"v2={new_top + 0.5:.1f}, delta={delta_px:+.0f}px "
+                + f"({delta_px * dz_um:+.1f} um)",
+                fontsize=9,
+            )
+            if row_index == len(speeds) - 1:
+                ax.set_xlabel("A-line x (pixel centre)")
+            if column_index == 0:
+                ax.set_ylabel("Depth z (pixel centre)")
+    handles = [
+        Line2D(
+            [0],
+            [0],
+            color="#ffe066",
+            linestyle="--",
+            label=f"{reference_label} top",
+        ),
+        Line2D([0], [0], color="#ff4d4d", label="v2 top"),
+        Line2D([0], [0], color="#ff9f1c", label="v2 128 um bottom"),
+        Line2D([0], [0], color="#00e5ff", label="v2 lateral geometry"),
+    ]
+    fig.legend(handles=handles, loc="lower center", ncol=4, fontsize=9)
+    fig.suptitle(
+        "Upper-edge localization comparison on the same OMAG B-scans",
+        fontsize=15,
+    )
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    fig.savefig(output_path, dpi=220)
+    plt.close(fig)
+
+
 def write_comparison(
     old_path: Path,
     new_localization: pd.DataFrame,
     output_path: Path,
+    reference_label: str,
 ) -> None:
     old = pd.read_csv(old_path)
     old = old.set_index("frame_id", drop=False)
@@ -301,14 +436,15 @@ def write_comparison(
                 "scan_id": new["scan_id"],
                 "frame_id": frame_id,
                 "bscan_index": int(new["mentor_frame_index"]),
-                "old_surface_guided_x_center_px": old_x,
-                "new_mentor_X4_center_px": new_x,
+                "reference_label": reference_label,
+                "reference_x_center_px": old_x,
+                "v2_X4_center_px": new_x,
                 "delta_x_px_new_minus_old": new_x - old_x,
                 "delta_x_um_new_minus_old": (
                     new_x - old_x
                 ) * float(new["dx_um"]),
-                "old_surface_guided_z_top_center_px": old_z,
-                "new_mentor_z_upper_center_px": new_z,
+                "reference_z_top_center_px": old_z,
+                "v2_z_upper_center_px": new_z,
                 "delta_z_px_new_minus_old": new_z - old_z,
                 "delta_z_um_new_minus_old": (
                     new_z - old_z
@@ -339,8 +475,20 @@ def main() -> int:
                 "--comparison-output is required with --old-localization"
             )
         write_comparison(
-            args.old_localization, localization, args.comparison_output
+            args.old_localization,
+            localization,
+            args.comparison_output,
+            args.reference_label,
         )
+        if args.comparison_figure_output is not None:
+            plot_localization_comparison(
+                manifest_path,
+                manifest,
+                pd.read_csv(args.old_localization),
+                localization,
+                args.comparison_figure_output,
+                args.reference_label,
+            )
     return 0
 
 

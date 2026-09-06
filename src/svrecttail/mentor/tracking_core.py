@@ -36,6 +36,8 @@ CLASS_FAILED = "failed"
 EVIDENCE_STRONG = "strong_evidence"
 EVIDENCE_WEAK = "weak_evidence"
 EVIDENCE_UNAVAILABLE = "unavailable"
+UPPER_EDGE_LEGACY = "legacy_connected_component_v1"
+UPPER_EDGE_PERSISTENT = "persistent_core_paired_edge_v2"
 
 
 # Defaults live in one place.  The formal pilot JSON should repeat/freeze every
@@ -43,6 +45,10 @@ EVIDENCE_UNAVAILABLE = "unavailable"
 DEFAULT_TRACKING_CONFIG: dict[str, Any] = {
     "upper_edge_alphas": [0.10, 0.15, 0.20],
     "primary_alpha": 0.15,
+    # Preserve the historical behaviour for callers that do not supply a
+    # versioned tracking configuration.  The v2 pilot opts into the new
+    # method explicitly, so an old command cannot silently change meaning.
+    "upper_edge_method": UPPER_EDGE_LEGACY,
     "axial_um_per_px": 6.7,
     "lateral_um_per_px": 12.7,
     "primary_guard_px": 2,
@@ -76,6 +82,16 @@ DEFAULT_TRACKING_CONFIG: dict[str, Any] = {
     "confidence_full_score_multiple": 2.0,
     "upper_edge_noise_multiplier": 3.0,
     "upper_edge_min_component_px": 3,
+    "z_core_depth_fraction_of_diameter": 0.40,
+    "upper_edge_support_width_fraction_of_lateral_diameter": 1.0,
+    "upper_edge_support_noise_multiplier": 2.0,
+    "upper_edge_core_min_support_fraction": 0.25,
+    "upper_edge_boundary_threshold_fraction": 0.60,
+    "upper_edge_boundary_noise_multiplier": 2.0,
+    "upper_edge_boundary_min_support_fraction": 0.15,
+    "upper_edge_max_gap_px": 1,
+    "upper_edge_contrast_window_fraction_of_diameter": 0.16,
+    "upper_edge_min_persistent_fraction": 0.55,
     "peak_min_snr": 3.0,
     "central_width_fraction_of_lateral_diameter": 1.0 / 3.0,
     "central_min_width_px": 3,
@@ -126,6 +142,25 @@ class ProfileBundle:
     side_right_start: np.ndarray
     side_right_stop: np.ndarray
     roi_valid: np.ndarray
+
+
+@dataclass(frozen=True)
+class UpperEdgeCandidate:
+    valid: bool
+    peak_z_px: float
+    peak_excess: float
+    noise_sigma: float
+    high_threshold: float
+    high_component_width_px: int
+    core_start_px: float
+    core_stop_exclusive_px: float
+    z_upper_px: float
+    boundary_score: float
+    top_contrast_snr: float
+    bottom_contrast_snr: float
+    support_difference: float
+    balance_fraction: float
+    persistent_fraction: float
 
 
 def robust_sigma(values: np.ndarray, axis: int | tuple[int, ...] | None = None) -> np.ndarray:
@@ -364,6 +399,14 @@ def merge_tracking_config(config: Mapping[str, Any] | None) -> dict[str, Any]:
 
 
 def validate_tracking_config(cfg: Mapping[str, Any]) -> None:
+    if str(cfg["upper_edge_method"]) not in {
+        UPPER_EDGE_LEGACY,
+        UPPER_EDGE_PERSISTENT,
+    }:
+        raise TrackingError(
+            "upper_edge_method must be legacy_connected_component_v1 or "
+            "persistent_core_paired_edge_v2"
+        )
     alphas = [float(x) for x in cfg["upper_edge_alphas"]]
     if not alphas or any(not 0 < x < 1 for x in alphas):
         raise TrackingError("upper_edge_alphas must be non-empty and in (0,1)")
@@ -385,9 +428,24 @@ def validate_tracking_config(cfg: Mapping[str, Any]) -> None:
         "x_confidence_flank_width_fraction_of_diameter",
         "x_confidence_alignment_tolerance_fraction_of_diameter",
         "confidence_full_score_multiple",
+        "z_core_depth_fraction_of_diameter",
+        "upper_edge_support_width_fraction_of_lateral_diameter",
+        "upper_edge_support_noise_multiplier",
+        "upper_edge_boundary_noise_multiplier",
+        "upper_edge_contrast_window_fraction_of_diameter",
     ):
         if float(cfg[key]) <= 0:
             raise TrackingError(f"{key} must be positive")
+    for key in (
+        "upper_edge_core_min_support_fraction",
+        "upper_edge_boundary_threshold_fraction",
+        "upper_edge_boundary_min_support_fraction",
+        "upper_edge_min_persistent_fraction",
+    ):
+        if not 0 < float(cfg[key]) <= 1:
+            raise TrackingError(f"{key} must lie in (0,1]")
+    if int(cfg["upper_edge_max_gap_px"]) < 0:
+        raise TrackingError("upper_edge_max_gap_px must be non-negative")
 
 
 def _row_robust_zscore(score: np.ndarray) -> np.ndarray:
@@ -713,12 +771,354 @@ def extract_profiles(
     )
 
 
-def locate_peak_path(profiles: ProfileBundle, cfg: Mapping[str, Any]) -> np.ndarray:
+def extract_persistent_row_support(
+    volume: np.ndarray,
+    x_center: np.ndarray,
+    diameter_um: float,
+    cfg: Mapping[str, Any],
+) -> np.ndarray:
+    """Measure laterally supported Flow signal at every frame and depth.
+
+    The foreground spans a physical vessel-width ROI, while the threshold at
+    each depth comes from bilateral local flanks.  This keeps a single bright
+    A-line or a broad horizontal band from defining an axial vessel edge.
+    """
+
+    nframe, nz, nx = volume.shape
+    lateral_diameter = diameter_um / float(cfg["lateral_um_per_px"])
+    support_width = max(
+        3,
+        int(
+            round(
+                lateral_diameter
+                * float(cfg["upper_edge_support_width_fraction_of_lateral_diameter"])
+            )
+        ),
+    )
+    if support_width % 2 == 0:
+        support_width += 1
+    half = support_width // 2
+    side_gap = int(cfg["background_side_gap_px"])
+    side_width = int(cfg["background_side_width_px"])
+    result = np.zeros((nframe, nz), dtype=np.float32)
+    for frame in range(nframe):
+        xc = int(round(float(x_center[frame])))
+        c0, c1 = xc - half, xc + half + 1
+        l1, l0 = c0 - side_gap, c0 - side_gap - side_width
+        r0, r1 = c1 + side_gap, c1 + side_gap + side_width
+        if c0 < 0 or c1 > nx or l0 < 0 or r1 > nx:
+            continue
+        smooth = gaussian_filter(
+            volume[frame].astype(np.float32, copy=False),
+            sigma=(float(cfg["localization_depth_sigma_px"]), 0.75),
+            mode="nearest",
+        )
+        flanks = np.concatenate((smooth[:, l0:l1], smooth[:, r0:r1]), axis=1)
+        if flanks.shape[1] < int(cfg["background_min_total_width_px"]):
+            continue
+        background = np.nanmedian(flanks, axis=1)
+        noise = robust_sigma(flanks, axis=1)
+        fallback = np.nanstd(flanks, axis=1)
+        noise = np.where(noise > np.finfo(np.float32).eps, noise, fallback)
+        valid = np.isfinite(background) & np.isfinite(noise) & (noise > 0)
+        excess = smooth[:, c0:c1] - background[:, None]
+        supported = excess >= (
+            float(cfg["upper_edge_support_noise_multiplier"]) * noise[:, None]
+        )
+        row_fraction = np.mean(supported, axis=1)
+        result[frame, valid] = row_fraction[valid]
+    return gaussian_filter1d(result, sigma=0.8, axis=1, mode="nearest")
+
+
+def _boolean_runs(mask: np.ndarray) -> list[tuple[int, int]]:
+    padded = np.pad(np.asarray(mask, dtype=np.int8), (1, 1))
+    changes = np.diff(padded)
+    starts = np.flatnonzero(changes == 1)
+    stops = np.flatnonzero(changes == -1)
+    return list(zip(starts.tolist(), stops.tolist(), strict=True))
+
+
+def _fill_short_false_runs(mask: np.ndarray, maximum_gap: int) -> np.ndarray:
+    result = np.asarray(mask, dtype=bool).copy()
+    if maximum_gap < 1:
+        return result
+    for start, stop in _boolean_runs(~result):
+        if start > 0 and stop < result.size and stop - start <= maximum_gap:
+            result[start:stop] = True
+    return result
+
+
+def persistent_upper_edge_candidate(
+    profile: np.ndarray,
+    background: np.ndarray,
+    row_support: np.ndarray,
+    peak_hint: float,
+    diameter_um: float,
+    alpha: float,
+    cfg: Mapping[str, Any],
+) -> UpperEdgeCandidate:
+    """Find one top edge from a strong core and a persistent paired boundary.
+
+    A high threshold establishes that a vessel core is present.  A lower
+    hysteresis mask links that core to candidate upper edges.  Candidates are
+    ranked by the rise across the upper boundary, physical-diameter interior
+    support, absence of a contradictory rise at the operational lower edge,
+    and axial balance.  These terms move the localization only; the existing
+    frame QC is intentionally unchanged.
+    """
+
+    values = np.asarray(profile, dtype=float)
+    bg_values = np.asarray(background, dtype=float)
+    support = np.asarray(row_support, dtype=float)
+    nz = values.size
+
+    def invalid(
+        *,
+        peak_z: float = math.nan,
+        peak: float = math.nan,
+        sigma: float = math.nan,
+        threshold: float = math.nan,
+        width: int = 0,
+        core_start: float = math.nan,
+        core_stop: float = math.nan,
+    ) -> UpperEdgeCandidate:
+        return UpperEdgeCandidate(
+            valid=False,
+            peak_z_px=peak_z,
+            peak_excess=peak,
+            noise_sigma=sigma,
+            high_threshold=threshold,
+            high_component_width_px=width,
+            core_start_px=core_start,
+            core_stop_exclusive_px=core_stop,
+            z_upper_px=math.nan,
+            boundary_score=math.nan,
+            top_contrast_snr=math.nan,
+            bottom_contrast_snr=math.nan,
+            support_difference=math.nan,
+            balance_fraction=math.nan,
+            persistent_fraction=math.nan,
+        )
+
+    if (
+        values.ndim != 1
+        or bg_values.shape != values.shape
+        or support.shape != values.shape
+        or not np.isfinite(peak_hint)
+    ):
+        return invalid()
+    diameter_px = max(3, int(round(diameter_um / float(cfg["axial_um_per_px"]))))
+    z0 = max(3, int(cfg["z_search_px"][0]))
+    z1 = min(nz - 3, int(cfg["z_search_px"][1]))
+    if z1 - z0 <= diameter_px + 6:
+        return invalid()
+    smooth = gaussian_filter1d(
+        np.nan_to_num(values, nan=0.0),
+        sigma=float(cfg["localization_depth_sigma_px"]),
+        mode="nearest",
+    )
+    peak0 = int(round(float(peak_hint)))
+    local0 = max(z0, peak0 - diameter_px // 2)
+    local1 = min(z1, peak0 + diameter_px // 2 + 1)
+    if local1 <= local0:
+        return invalid()
+    local_score = uniform_filter1d(smooth[local0:local1], size=3, mode="nearest")
+    peak_z = local0 + int(np.nanargmax(local_score))
+    peak = float(np.nanmax(smooth[local0:local1]))
+    bg_residual = bg_values - gaussian_filter1d(
+        bg_values,
+        sigma=float(cfg["background_depth_trend_sigma_px"]),
+        mode="nearest",
+    )
+    noise0 = max(z0, peak_z - diameter_px // 2)
+    noise1 = min(z1, peak_z + diameter_px // 2 + 1)
+    sigma = float(robust_sigma(bg_residual[noise0:noise1]))
+    if not np.isfinite(sigma) or sigma <= 0 or not np.isfinite(peak):
+        return invalid(peak_z=peak_z, peak=peak, sigma=sigma)
+    threshold = max(
+        float(alpha) * peak,
+        float(cfg["upper_edge_noise_multiplier"]) * sigma,
+    )
+    strong = (smooth >= threshold) & (
+        support >= float(cfg["upper_edge_core_min_support_fraction"])
+    )
+    components = [
+        (start + z0, stop + z0)
+        for start, stop in _boolean_runs(strong[z0:z1])
+        if stop - start >= int(cfg["upper_edge_min_component_px"])
+    ]
+    nearby = [
+        component
+        for component in components
+        if component[0] <= peak_z + 3 and component[1] >= peak_z - 2
+    ]
+    peak_snr = peak / sigma
+    if not nearby:
+        return invalid(
+            peak_z=peak_z,
+            peak=peak,
+            sigma=sigma,
+            threshold=threshold,
+        )
+    core_start, core_stop = max(
+        nearby,
+        key=lambda item: float(np.nanmean(smooth[item[0] : item[1]])),
+    )
+    component_width = core_stop - core_start
+    boundary_threshold = max(
+        float(cfg["upper_edge_boundary_threshold_fraction"])
+        * float(alpha)
+        * peak,
+        float(cfg["upper_edge_boundary_noise_multiplier"]) * sigma,
+    )
+    boundary_mask = (smooth >= boundary_threshold) & (
+        support >= float(cfg["upper_edge_boundary_min_support_fraction"])
+    )
+    boundary_mask = _fill_short_false_runs(
+        boundary_mask, int(cfg["upper_edge_max_gap_px"])
+    )
+    linked = [
+        (start + z0, stop + z0)
+        for start, stop in _boolean_runs(boundary_mask[z0:z1])
+        if start + z0 <= core_start < stop + z0
+    ]
+    linked_start = core_start if not linked else linked[0][0]
+    window = max(
+        2,
+        int(
+            round(
+                float(cfg["upper_edge_contrast_window_fraction_of_diameter"])
+                * diameter_px
+            )
+        ),
+    )
+    top_min = max(
+        z0 + window,
+        linked_start,
+        peak_z - diameter_px,
+        core_start - diameter_px + 1,
+    )
+    top_max = min(core_start, peak_z, z1 - diameter_px - window)
+    scored: list[tuple[float, int, float, float, float, float, float]] = []
+    for top in range(top_min, top_max + 1):
+        bottom = top + diameter_px
+        top_out = float(np.nanmedian(smooth[top - window : top]))
+        top_in = float(np.nanmedian(smooth[top : top + window]))
+        bottom_in = float(np.nanmedian(smooth[bottom - window : bottom]))
+        bottom_out = float(np.nanmedian(smooth[bottom : bottom + window]))
+        top_contrast = (top_in - top_out) / sigma
+        bottom_contrast = (bottom_in - bottom_out) / sigma
+        inside_support = float(np.nanmedian(support[top + 1 : bottom]))
+        outside_support = float(
+            np.nanmedian(
+                np.concatenate(
+                    (support[top - window : top], support[bottom : bottom + window])
+                )
+            )
+        )
+        support_difference = inside_support - outside_support
+        persistent_fraction = float(np.mean(boundary_mask[top:bottom]))
+        interior = smooth[top:bottom]
+        interior_level = float(np.nanmedian(interior)) / sigma
+        weights = np.maximum(interior - top_out, 0.0)
+        if float(np.sum(weights)) > 0:
+            centroid = top + float(
+                np.dot(np.arange(diameter_px), weights) / np.sum(weights)
+            )
+            balance = abs(centroid - (top + 0.5 * (diameter_px - 1))) / max(
+                0.5 * diameter_px, 1.0
+            )
+        else:
+            balance = 1.0
+        boundary_score = (
+            top_contrast
+            + 0.20 * interior_level
+            + 1.25 * support_difference
+            + 0.50 * min(bottom_contrast, 0.0)
+            - 0.20 * balance
+        )
+        if (
+            top_contrast > 0
+            and inside_support
+            >= float(cfg["upper_edge_boundary_min_support_fraction"])
+            and persistent_fraction
+            >= float(cfg["upper_edge_min_persistent_fraction"])
+        ):
+            scored.append(
+                (
+                    boundary_score,
+                    top,
+                    top_contrast,
+                    bottom_contrast,
+                    support_difference,
+                    balance,
+                    persistent_fraction,
+                )
+            )
+    if not scored:
+        return invalid(
+            peak_z=peak_z,
+            peak=peak,
+            sigma=sigma,
+            threshold=threshold,
+            width=component_width,
+            core_start=core_start,
+            core_stop=core_stop,
+        )
+    (
+        boundary_score,
+        top,
+        top_contrast,
+        bottom_contrast,
+        support_difference,
+        balance,
+        persistent_fraction,
+    ) = max(scored)
+    return UpperEdgeCandidate(
+        valid=peak_snr >= float(cfg["peak_min_snr"]),
+        peak_z_px=float(peak_z),
+        peak_excess=peak,
+        noise_sigma=sigma,
+        high_threshold=threshold,
+        high_component_width_px=component_width,
+        core_start_px=float(core_start),
+        core_stop_exclusive_px=float(core_stop),
+        z_upper_px=float(top),
+        boundary_score=boundary_score,
+        top_contrast_snr=top_contrast,
+        bottom_contrast_snr=bottom_contrast,
+        support_difference=support_difference,
+        balance_fraction=balance,
+        persistent_fraction=persistent_fraction,
+    )
+
+
+def locate_peak_path(
+    profiles: ProfileBundle,
+    cfg: Mapping[str, Any],
+    diameter_um: float | None = None,
+) -> np.ndarray:
     nframe, nz = profiles.excess_localization.shape
     z0 = max(0, int(cfg["z_search_px"][0]))
     z1 = min(nz, int(cfg["z_search_px"][1]))
     noise = np.maximum(profiles.background_sigma[:, z0:z1], np.finfo(np.float32).eps)
     score = profiles.excess_localization[:, z0:z1] / noise
+    if str(cfg["upper_edge_method"]) == UPPER_EDGE_PERSISTENT:
+        if diameter_um is None:
+            raise TrackingError(
+                "diameter_um is required for persistent upper-edge localization"
+            )
+        depth = max(
+            3,
+            int(
+                round(
+                    diameter_um
+                    / float(cfg["axial_um_per_px"])
+                    * float(cfg["z_core_depth_fraction_of_diameter"])
+                )
+            ),
+        )
+        score = uniform_filter1d(score, size=depth, axis=1, mode="nearest")
     score = _row_robust_zscore(score)
     relative = viterbi_continuous_path(
         score,
@@ -793,6 +1193,7 @@ def track_one_alpha(
     xtrack: Mapping[str, np.ndarray],
     peak_path: np.ndarray,
     profiles: ProfileBundle,
+    row_support: np.ndarray | None,
     cfg: Mapping[str, Any],
 ) -> pd.DataFrame:
     nframe, nz = profiles.excess.shape
@@ -804,11 +1205,57 @@ def track_one_alpha(
     component_width = np.zeros(nframe, dtype=np.int32)
     seed_valid = np.zeros(nframe, dtype=bool)
     peak_snr = np.full(nframe, np.nan)
+    core_start = np.full(nframe, np.nan)
+    core_stop = np.full(nframe, np.nan)
+    boundary_score = np.full(nframe, np.nan)
+    top_contrast = np.full(nframe, np.nan)
+    bottom_contrast = np.full(nframe, np.nan)
+    support_difference = np.full(nframe, np.nan)
+    balance_fraction = np.full(nframe, np.nan)
+    persistent_fraction = np.full(nframe, np.nan)
     min_component = int(cfg["upper_edge_min_component_px"])
     diameter_px_float = diameter_um / float(cfg["axial_um_per_px"])
+    edge_method = str(cfg["upper_edge_method"])
 
     for frame in range(nframe):
         if not profiles.roi_valid[frame]:
+            continue
+        if edge_method == UPPER_EDGE_PERSISTENT:
+            if row_support is None:
+                raise TrackingError(
+                    "persistent upper-edge localization requires row support"
+                )
+            candidate = persistent_upper_edge_candidate(
+                profiles.excess[frame],
+                profiles.background[frame],
+                row_support[frame],
+                float(peak_path[frame]),
+                diameter_um,
+                alpha,
+                cfg,
+            )
+            peak_z[frame] = candidate.peak_z_px
+            peak_excess[frame] = candidate.peak_excess
+            noise_sigma[frame] = candidate.noise_sigma
+            threshold[frame] = candidate.high_threshold
+            component_width[frame] = candidate.high_component_width_px
+            core_start[frame] = candidate.core_start_px
+            core_stop[frame] = candidate.core_stop_exclusive_px
+            boundary_score[frame] = candidate.boundary_score
+            top_contrast[frame] = candidate.top_contrast_snr
+            bottom_contrast[frame] = candidate.bottom_contrast_snr
+            support_difference[frame] = candidate.support_difference
+            balance_fraction[frame] = candidate.balance_fraction
+            persistent_fraction[frame] = candidate.persistent_fraction
+            if (
+                np.isfinite(candidate.peak_excess)
+                and np.isfinite(candidate.noise_sigma)
+                and candidate.noise_sigma > 0
+            ):
+                peak_snr[frame] = candidate.peak_excess / candidate.noise_sigma
+            if candidate.valid:
+                seed_upper[frame] = candidate.z_upper_px
+                seed_valid[frame] = True
             continue
         pk0 = int(round(float(peak_path[frame])))
         lo = max(0, pk0 - 2)
@@ -845,6 +1292,8 @@ def track_one_alpha(
             continue
         start, stop = component
         component_width[frame] = stop - start
+        core_start[frame] = start
+        core_stop[frame] = stop
         if stop - start < min_component:
             continue
         seed_upper[frame] = start
@@ -1058,6 +1507,15 @@ def track_one_alpha(
             "peak_snr": peak_snr,
             "upper_threshold": threshold,
             "upper_component_width_px": component_width,
+            "upper_edge_method": np.full(nframe, edge_method, dtype=object),
+            "upper_core_start_px": core_start,
+            "upper_core_stop_exclusive_px": core_stop,
+            "upper_boundary_score": boundary_score,
+            "upper_top_contrast_snr": top_contrast,
+            "upper_bottom_contrast_snr": bottom_contrast,
+            "upper_support_difference": support_difference,
+            "upper_balance_fraction": balance_fraction,
+            "upper_persistent_fraction": persistent_fraction,
             "seed_x_px": np.asarray(xtrack["x_local_seed"]),
             "seed_z_upper_px": seed_upper,
             "model_z_upper_px": model,
@@ -1104,7 +1562,12 @@ def track_volume(
             f"Only {int(profiles.roi_valid.sum())}/{volume.shape[0]} frames have valid "
             "central and bilateral background ROIs"
         )
-    peak_path = locate_peak_path(profiles, cfg)
+    peak_path = locate_peak_path(profiles, cfg, diameter_um)
+    row_support = (
+        extract_persistent_row_support(volume, xtrack["x_center"], diameter_um, cfg)
+        if str(cfg["upper_edge_method"]) == UPPER_EDGE_PERSISTENT
+        else None
+    )
     xtrack = dict(xtrack)
     xtrack["z_peak_path"] = peak_path.astype(float)
     outputs: dict[float, pd.DataFrame] = {}
@@ -1116,6 +1579,7 @@ def track_volume(
             xtrack=xtrack,
             peak_path=peak_path,
             profiles=profiles,
+            row_support=row_support,
             cfg=cfg,
         )
     return outputs, profiles, xtrack

@@ -200,6 +200,7 @@ def build_mentor_tracking_tables(
         "final_x_method": FINAL_X_METHOD,
         "lateral_width_method": LATERAL_WIDTH_METHOD,
         "top_method": TOP_METHOD,
+        "upper_edge_method": str(effective_config["upper_edge_method"]),
         "required_assessability": REQUIRED_ASSESSABILITY,
         "effective_tracking_config": effective_config,
     }

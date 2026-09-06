@@ -1,5 +1,22 @@
 # Implementation audit
 
+## 2026-09-06 upper-edge v2 candidate audit
+
+The versioned `persistent_core_paired_edge_v2` candidate adds lateral row
+support, sustained axial evidence, paired inside/outside contrast, and
+physical-diameter balance to upper-edge localization.  Its explicit pilot
+configuration raises the peak/noise thresholds from 0.15/3 to 0.20/4 without
+changing downstream QC.  All 15 selected frames remain valid; the five
+user-flagged panels move by +4, +5, +12, +12, and +1 axial pixels.
+
+The 2500-frame audit identified a separate failure mode in flow03 near frames
+425–465: sparse valid edge candidates plus deeper false candidates cause the
+existing trajectory completion step to descend as much as 46 pixels relative
+to v1.  The selected 0/249/499 frames are outside that event.  For this reason
+v2 is retained as a review candidate, the default remains
+`legacy_connected_component_v1`, and the earlier frozen result is not
+overwritten.
+
 ## 2026-09-06 current-state correction
 
 本节取代下方早期的 Reusable localization boundary 与 Available data 状态。
