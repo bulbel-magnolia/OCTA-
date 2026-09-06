@@ -6,14 +6,14 @@ import numpy as np
 sys.path.insert(0,'src')
 from svrecttail.collection import sha256,json_write,TRACKING
 p=Path('results/formal_sv_d128_v21_full2500_run001');bridge=p.parent/'formal_sv_d128_v21_bridge15_run001'
-t=pd.read_csv(p/'frame_results.csv');summary=pd.read_csv(p/'scan_summary.csv');sel=pd.read_csv(p/'preselected_qc_manifest.csv')
+t=pd.read_csv(p/'frame_results.csv',float_precision='round_trip');summary=pd.read_csv(p/'scan_summary.csv');sel=pd.read_csv(p/'preselected_qc_manifest.csv')
 assert len(t)==2500 and not t.duplicated(['scan_id','frame_index_0based']).any()
 assert t.input_mapping_valid.all()
 for r in sel.itertuples():assert (p/r.mapping_image).is_file()
 comparisons=[]
 for scan,g in t.groupby('scan_id'):
  tr=pd.read_csv(TRACKING/f'tracking/{scan}/{scan}_mentor_tracking.csv')
- joined=g.merge(tr,on='scan_id',suffixes=('_run','_frozen'),left_on=['scan_id','frame_index_0based'],right_on=['scan_id','frame_index'],validate='one_to_one') if False else g.merge(tr,left_on=['scan_id','frame_index_0based'],right_on=['scan_id','frame_index'],suffixes=('_run','_frozen'),validate='one_to_one')
+ joined=g.merge(tr,left_on=['scan_id','frame_index_0based'],right_on=['scan_id','frame_index'],suffixes=('_run','_frozen'),validate='one_to_one')
  for col in ['z_upper_px','seed_z_upper_px','x4_centroid_isolated_jump_corrected_px','x1_local_geometry_px','local_body_run_width_px']:
   np.testing.assert_array_equal(joined[col+'_run'],joined[col+'_frozen'])
  comparisons.append({'scan_id':scan,'rows':len(g),'frozen_coordinates_identical':True})
