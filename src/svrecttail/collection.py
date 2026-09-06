@@ -6,9 +6,11 @@ or moves a recorded vessel to an image maximum. All published paths are relative
 from __future__ import annotations
 
 import argparse
+from contextlib import contextmanager
 from dataclasses import asdict
 import hashlib
 import json
+import os
 from pathlib import Path
 import shutil
 import struct
@@ -271,8 +273,45 @@ def archive_frame(path: Path, maps: FrameMaps, flow: np.ndarray, record: dict,
     return sha256(path)
 
 
+@contextmanager
+def scan_lock(archive: Path, scan: str):
+    """OS-owned lock releases after crashes; two runners cannot write one frame."""
+    path = archive/'locks'/f'{scan}.lock'
+    path.parent.mkdir(parents=True, exist_ok=True)
+    with path.open('a+b') as handle:
+        if path.stat().st_size == 0:
+            handle.write(b'0'); handle.flush()
+        handle.seek(0)
+        if os.name == 'nt':
+            import msvcrt
+            while True:
+                try:
+                    msvcrt.locking(handle.fileno(), msvcrt.LK_NBLCK, 1)
+                    break
+                except OSError:
+                    time.sleep(1)
+            try:
+                yield
+            finally:
+                handle.seek(0)
+                msvcrt.locking(handle.fileno(), msvcrt.LK_UNLCK, 1)
+        else:
+            import fcntl
+            fcntl.flock(handle, fcntl.LOCK_EX)
+            try:
+                yield
+            finally:
+                fcntl.flock(handle, fcntl.LOCK_UN)
+
+
 def process_scan(output: Path, archive: Path, scan: str, remove_interim: bool = False,
                  write_summary: bool = True) -> None:
+    with scan_lock(archive, scan):
+        _process_scan(output, archive, scan, remove_interim, write_summary)
+
+
+def _process_scan(output: Path, archive: Path, scan: str, remove_interim: bool,
+                  write_summary: bool) -> None:
     freeze_evidence()
     local=json.loads((archive/'local_paths.json').read_text(encoding='utf-8'))
     run=json.loads((output/'collection_run.json').read_text(encoding='utf-8'))
