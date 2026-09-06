@@ -40,3 +40,20 @@ def test_source_and_frame_identity_are_required():
 def test_portable_nested_metadata_preserves_numerical_settings():
     assert portable({'path': r'C:\Users\private\config.ini', 'crop': [50,400]}) == {
         'path':'config.ini', 'crop':[50,400]}
+
+def test_scan_lock_releases_on_error_and_serializes(tmp_path):
+    from concurrent.futures import ThreadPoolExecutor
+    from threading import Event
+    from svrecttail.collection import scan_lock
+    entered = Event()
+    def second():
+        with scan_lock(tmp_path, 'flow01'):
+            entered.set()
+    with ThreadPoolExecutor(max_workers=1) as pool:
+        with pytest.raises(RuntimeError):
+            with scan_lock(tmp_path, 'flow01'):
+                future = pool.submit(second)
+                assert not entered.wait(.1)
+                raise RuntimeError('simulated interrupted collection')
+        future.result(timeout=5)
+        assert entered.is_set()
