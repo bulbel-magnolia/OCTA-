@@ -1,0 +1,12 @@
+{
+  "analysis": "three descriptive follow-ups for no-background RI_tail",
+  "source_sha": "98219646f0aaea71d50893613846091eaad28ae4",
+  "workflow_source_sha": "98219646f0aaea71d50893613846091eaad28ae4",
+  "primary_definition": "mean raw SV tail / mean raw SV vessel",
+  "audits": [
+    "source-tail-ratio coupling",
+    "exact 100/200/300/500 um windows",
+    "five 100-frame spatial segments"
+  ],
+  "statistical_scope": "within-volume descriptive only; no flow p-values; B-scans not independent experimental units"
+}
