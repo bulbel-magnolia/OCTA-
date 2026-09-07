@@ -1,0 +1,55 @@
+name: No-background SV three follow-ups v1
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - feature/sv-rectangle-v1
+    paths:
+      - analysis/formal_sv_d128_v21_run001/no_background_followup_three_audits_v1_full2422/analyze_three_followups.py
+      - analysis/formal_sv_d128_v21_run001/no_background_followup_three_audits_v1_full2422/_trigger.txt
+      - .github/workflows/no-background-three-followups-v1.yml
+
+permissions:
+  contents: write
+
+jobs:
+  analyze:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - name: Checkout branch
+        uses: actions/checkout@v4
+        with:
+          ref: feature/sv-rectangle-v1
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: python -m pip install --upgrade pip numpy pandas
+
+      - name: Run three follow-up audits
+        run: |
+          python analysis/formal_sv_d128_v21_run001/no_background_followup_three_audits_v1_full2422/analyze_three_followups.py \
+            --root . \
+            --output-dir analysis/formal_sv_d128_v21_run001/no_background_followup_three_audits_v1_full2422 \
+            --source-sha "${{ github.sha }}" \
+            --workflow-source-sha "${{ github.sha }}"
+
+      - name: Commit generated outputs
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add analysis/formal_sv_d128_v21_run001/no_background_followup_three_audits_v1_full2422/
+          if git diff --cached --quiet; then
+            echo 'No generated changes to commit.'
+            exit 0
+          fi
+          git commit -m 'analysis: add three no-background SV follow-up results'
+          git pull --rebase origin feature/sv-rectangle-v1
+          git push origin HEAD:feature/sv-rectangle-v1
