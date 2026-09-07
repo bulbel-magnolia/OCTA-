@@ -1,0 +1,20 @@
+{
+  "relative_path": "说明 (2).txt",
+  "sha256": "13f87161667c1a948a8cda25c6239c82a9f42a3bfc871589c7eaa47cb5469962",
+  "rules": [
+    "directory is diameter in um unless explicit mm",
+    "numeric OCT filename is flow speed in mm/s"
+  ],
+  "calibration_reference_protocols": [
+    [
+      1024.0,
+      500,
+      1500,
+      0,
+      1023,
+      1.2,
+      1.0,
+      3
+    ]
+  ]
+}

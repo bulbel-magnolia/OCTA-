@@ -119,6 +119,7 @@ def test_public_manifest_no_absolute_path(tmp_path):
     write_csv(target,[{k:v for k,v in row.items() if "absolute_path" not in k}])
     content = target.read_text()
     assert "D:" not in content and "absolute_path" not in content and "64/5.oct" in content
+    assert b"\r\n" not in target.read_bytes(), "Public CSV hashes must survive Git LF normalization"
 
 
 def record(diameter):

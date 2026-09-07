@@ -1,0 +1,33 @@
+{
+  "status": "COMPLETE_LOCAL_VALIDATION",
+  "git_publication": "recorded by final Git receipt / task report after commit and push",
+  "independent_acquisitions": 23,
+  "new_volumes_expected": 18,
+  "volumes_attempted": 18,
+  "volumes_successful": 18,
+  "failed_volumes": [],
+  "not_processed": [],
+  "exported_frame_count": 9000,
+  "all_exported_maps_read": true,
+  "frozen_d128_unchanged": true,
+  "raw_files_unchanged": true,
+  "tests": {
+    "python_total": 102,
+    "python_passed": 102,
+    "python_failures": 0,
+    "new_diameter_tests": 43,
+    "existing_python_tests": 59,
+    "matlab_test_functions": 2,
+    "matlab_passed": [
+      "test_compute_sv_maps",
+      "test_reconstruction_dependencies"
+    ],
+    "python_command": "python -m pytest -q -p no:cacheprovider --basetemp outputs/diameter_pytest_verified_03 --junitxml outputs/diameter_stage_v1/logs/pytest.xml",
+    "initial_attempt": "75 passed, 22 setup errors from Windows sandbox temp permissions; unchanged suite rerun outside sandbox with dedicated temp path",
+    "warning": "One installed requests dependency-version warning; no test failure"
+  },
+  "diameter_RI_tail_analysis_performed": false,
+  "p_values_computed": false,
+  "bscans_are_independent_replicates": false,
+  "validated_at_utc": "2026-09-07T10:13:21.669731+00:00"
+}

@@ -1,0 +1,12 @@
+{
+  "scan_id": "D235_F01_V01",
+  "frames_0based": [
+    0,
+    249,
+    497
+  ],
+  "selection": "first / middle / last geometry-valid frame in index order",
+  "review": "All three generated PNGs visually inspected. Vessel ellipse and rectangular tail use X4 centre and X1 span; physical axial diameter is 235 um; tail joins true bottom with guard 0 and extends 500 um. Selected overlays fit the image.",
+  "tail_intensity_or_RI_evaluated": false,
+  "parameters_adjusted": false
+}

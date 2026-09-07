@@ -1,0 +1,276 @@
+{
+  "repository": "bulbel-magnolia/OCTA-",
+  "base_branch": "origin/feature/sv-rectangle-v1",
+  "base_sha": "63de971678de9d66527b1414e28c0d31acf3dc6b",
+  "branch": "codex/sv-diameter-intake-v1",
+  "execution_source_head_sha": "fe80bbead6e197e6d8b497fce4dc5c8c22b20fc6",
+  "result_head_sha_resolution": "Resolve final branch HEAD from the pushed branch; exact post-commit SHA is in the local Git receipt and final task report (a file cannot contain its own commit SHA).",
+  "raw_root_logical_name": "OCTA_RAW_ROOT",
+  "python_version": "3.12.10 (tags/v3.12.10:0cc8128, Apr  8 2025, 12:21:36) [MSC v.1943 64 bit (AMD64)]",
+  "matlab_version": "9.14.0.2206163 (R2023a)",
+  "os": "Windows-11-10.0.26200-SP0",
+  "packages": {
+    "numpy": "2.4.4",
+    "pandas": "2.3.3",
+    "scipy": "1.17.1",
+    "pydicom": "3.0.1",
+    "h5py": "3.16.0",
+    "matplotlib": "3.10.8",
+    "pytest": "9.0.3"
+  },
+  "tracking_config_sha256": "65246b2c543d2fa909577bf446617917b233232ed224558ab630d38464aab83b",
+  "source_sha256": {
+    "config/tracking_config.continuity_first_v2_1.a020_n4.json": "65246b2c543d2fa909577bf446617917b233232ed224558ab630d38464aab83b",
+    "matlab/compute_sv_maps.m": "7365eaf8a5f4c922022c6275b04c57b154652872b01a33a05ab569783113e875",
+    "matlab/config.ini": "d4741f3bfe984b15a8373be8c0f66a126e9bb31c3e92d6abb9a1b0fd41230e4e",
+    "matlab/export_sv_collection.m": "34169c9895eb6d7505a25b3042755b4f53228fa9db434d286cb816ba21e70d6e",
+    "matlab/export_sv_omag_frame.m": "20ad0125e52a558ea967a2ece326f0d893ccd55bef73208d3ec1b41deaf29374",
+    "matlab/ini2struct.m": "68559b6f9404e1b629c4e8a39998a9d412e937da42b8feec32f635c54feae8ff",
+    "matlab/iniset.m": "23ddb3166eb6357f390ea51617c0db2b0251db909ca5e20de503e9f72c599957",
+    "matlab/load_and_reconstruct_common_oct.m": "85581e762e109b04e43d563283debea40138c142258323f50b1de3ead83c3a01",
+    "matlab/OCTA_F_ED_Clutter_EigFeed.m": "1fbbbe2bdcf68e8193cd4eb56b9446375d49d050ad481938a5bb9326e3060598",
+    "matlab/OCTA_F_SubPixReg.m": "f0b6337e0f3b3923954f24223a6821a897098badfc56d2e1dec3a0ae4c3aaaa8",
+    "matlab/SSOCT_F_PhCompV3.m": "b23f58a06f6dba02edd1811a28a4b642f8a4ac37fe8bc92a3963b3ef980b7c41",
+    "scripts/finalize_diameter_stage.py": "cb600998f6b036378963d4e0f00b15dd24a2ace2283a5a45b9a71fcf0e7ce5a4",
+    "scripts/prepare_diameter_stage_inputs.py": "209e7c725f1eac315628628f13bb9cf4d1f0d2757c626b60b512db0f34ba6877",
+    "scripts/process_diameter_stage.py": "028ece52073cf54701fd194a3a54af20d8081267baae4e5e3b3389a1b8820527",
+    "src/svrecttail/__init__.py": "357958c908ec0ce4ffd7152023756f6e4d3cbc691bab9712679afebc9e9eeea4",
+    "src/svrecttail/__main__.py": "0f7d54f3fbb1f79a85eb8110f11793db99da6f3c61ee979de5abe9a1b5f3fdb3",
+    "src/svrecttail/background.py": "4bad2a572fce8d537711f8e7bf1d0da7bc4de0901ed54d4cf90aa41f3e08682a",
+    "src/svrecttail/cli.py": "d2146b2edff18ae36a453453ac0789c421620db55fbce3fe9609bd64f98dd05b",
+    "src/svrecttail/collection.py": "174148b36e3372270b478d4db7da15ad1ef124f0e5f9ae090638a0304c57b209",
+    "src/svrecttail/config.py": "fd3d100d69b38284cd6ce20f9639ca8f4fc93395a7db4fbe03e30aa2ee9f66c8",
+    "src/svrecttail/detection.py": "e64497018803cd926d9b13175c47400d1acb6b2e86d1d67b377dc246d07ef3dc",
+    "src/svrecttail/geometry.py": "b480bc0a909f3b7f9b0946c7d6a6cb0a6d1dc96a6dccfbc7bad62a5ffc7b1f3a",
+    "src/svrecttail/io.py": "f978ef28b6fb41975e5a9237a9025a10e802a6581def237027d57d8a01ba5df9",
+    "src/svrecttail/localization.py": "079f99786b5a0b35f7f014a0604cfc8ab2d04606c7b686ce483cc4fcc1967d4d",
+    "src/svrecttail/mentor/__init__.py": "489638c9738759462a930246fce4dd482541af0ccb7e51f8483d788a9b196618",
+    "src/svrecttail/mentor/tracking_core.py": "f1722c010e4f1d341d461b709f198fef845d1f443a20b0049bae1815a70bfac7",
+    "src/svrecttail/mentor/xroi.py": "f33be5dc7de775330c454290ab6810ab7ad880bcdc99d459a32f47a35d4a0f47",
+    "src/svrecttail/mentor_tracking.py": "7405b8d10f35cb5cef213ef2879417eccf0a5474c77cd9568a5756f4dade6671",
+    "src/svrecttail/pipeline.py": "87cc51e5bb4d094cb91141eee6394bcd36f1eef7f5e70088d3196284c9e86ca8",
+    "src/svrecttail/qc.py": "48bd2328f847c181daaecbefaa98d68467fc13a42489c5a9c35b6e93fedbda1f",
+    "src/svrecttail/quantification.py": "ffcd6904fcef434d77c6da9a3e013f0cd03a4199590b8b61c428e9d6b3659795",
+    "src/svrecttail/signal.py": "7bb9bef95d88a6cd45e52e768dcd7eb068a9700e905ccb2fe2fcce3ded205b38",
+    "tests/python/test_diameter_intake.py": "8433167b44b4919e15926322b7e1935333b0f6db48f0802b689a38fff450172e"
+  },
+  "source_snapshot_note": "Generic core, frozen MATLAB and tracking config unchanged from base. Added orchestration source is tracked on this branch.",
+  "signal_definition": "sv_raw = var(abs(IMG),1,3)",
+  "variance_denominator": "N",
+  "background_subtraction": false,
+  "log": false,
+  "normalization": false,
+  "gain": false,
+  "clipping": false,
+  "positive_truncation": false,
+  "geometry": {
+    "x_center": "X4",
+    "lateral_span": "X1 apparent width",
+    "axial_diameter": "actual physical diameter from experiment",
+    "tail_start": "true physical vessel bottom",
+    "tail_length_um": 500,
+    "guard_um": 0,
+    "cone_model": false
+  },
+  "calibration": {
+    "dx_um": 12.7,
+    "dz_um": 6.7,
+    "source": "inherited_project_acquisition_calibration",
+    "evidence": "OCT protocol signature agrees with D128 and Flow dimensions match; not independently measured"
+  },
+  "pilot_selection": {
+    "rule": "complete pair and complete metadata; prefer non-128; sort diameter, flow, lexical OCT relative path; select first; never reselect based on images",
+    "scan_id": "D235_F01_V01",
+    "selected_before_tracking": true,
+    "selected_at_utc": "2026-09-07T09:06:01.585324+00:00"
+  },
+  "processing_timestamp_utc": "2026-09-07T10:13:21.883724+00:00",
+  "acquisitions": [
+    {
+      "scan_id": "D500_F01_V01",
+      "diameter_um": "500.0",
+      "flow_speed_mm_s": "1.0",
+      "oct_sha256": "f68b2efc64b987cc976211622ba03e5bb0c291ccf93528848e5ca6add228bb21",
+      "flow_dicom_sha256": "c2c8e87544e703d0243f5222d20fbd8b541bceec758ad6db0b5f13488cb197d0"
+    },
+    {
+      "scan_id": "D500_F10_V01",
+      "diameter_um": "500.0",
+      "flow_speed_mm_s": "10.0",
+      "oct_sha256": "b6b588d3c638c60136f373fed2a401ccea7d3fef4f207e890f4c8d2bc5454cb8",
+      "flow_dicom_sha256": "519952033a443217fd6476e224c156da1ee2c5b0d81a9eeee49c0f9d9b408541"
+    },
+    {
+      "scan_id": "D500_F12_V01",
+      "diameter_um": "500.0",
+      "flow_speed_mm_s": "12.0",
+      "oct_sha256": "e2827af6d64f71674118a8fbf93389ee3356eb4032ca12e563b3cbd56d4cca0a",
+      "flow_dicom_sha256": "d97c92314df83dfdcf9e172cbfa4ce6d5d7534bfc4834d1d5f351a2cdcd0c5f6"
+    },
+    {
+      "scan_id": "D500_F02_V01",
+      "diameter_um": "500.0",
+      "flow_speed_mm_s": "2.0",
+      "oct_sha256": "02ca16a1316292e8a6bd13c38833bf3ce0fee3e38a84971dcab20c58cd20910b",
+      "flow_dicom_sha256": "3f4aefdfd0db9a405cd97f7e5e72e3b8e165cb81e3c14f3db4be9ba3a7a8ceb2"
+    },
+    {
+      "scan_id": "D500_F03_V01",
+      "diameter_um": "500.0",
+      "flow_speed_mm_s": "3.0",
+      "oct_sha256": "8075d802f338b86a2e0fe5fb0230ec9ad08a5ad5a246b1d6fea1f1fb32ada9a6",
+      "flow_dicom_sha256": "14d906c37ba0520323e55a373da9d5747a917e5fa4a94c498cf801f4efb795f2"
+    },
+    {
+      "scan_id": "D500_F05_V01",
+      "diameter_um": "500.0",
+      "flow_speed_mm_s": "5.0",
+      "oct_sha256": "316335b1f0a82786aab7040c43ed4695f7155ca0853b3dee32313813050e9d7f",
+      "flow_dicom_sha256": "83b491c410113b85d3768a928d12a4b417ac34355adbf73b8937398ec712dab0"
+    },
+    {
+      "scan_id": "D500_F07_V01",
+      "diameter_um": "500.0",
+      "flow_speed_mm_s": "7.0",
+      "oct_sha256": "7fa5d28d2bcace886aa0836a2d6cb4638236c678dd4bd94ddc0810a3fbbc1969",
+      "flow_dicom_sha256": "d332a4614d90ba199c1bc23df34c2643683607974ec09b5712ae9462fb05454d"
+    },
+    {
+      "scan_id": "D500_F09_V01",
+      "diameter_um": "500.0",
+      "flow_speed_mm_s": "9.0",
+      "oct_sha256": "67c56daf9569097bb8f5469752971542488a8f860bfe629ded878dac80e357b0",
+      "flow_dicom_sha256": "47af8c29ef49c9a51a2549337d7741f4395faafb52b0b6e4800a81a5dc58af53"
+    },
+    {
+      "scan_id": "D128_F01_V01",
+      "diameter_um": "128.0",
+      "flow_speed_mm_s": "1.0",
+      "oct_sha256": "ac8af862695d65c416ffd5503c04c2b9eb868fc822871d1057151b56235dcbd0",
+      "flow_dicom_sha256": "ffc3bde86c3e4b36b54c3089327a10f1833418b1fb0b84ee2e4fe05e1a030d37"
+    },
+    {
+      "scan_id": "D128_F10_V01",
+      "diameter_um": "128.0",
+      "flow_speed_mm_s": "10.0",
+      "oct_sha256": "f7e0c352514c236a4f5ccf4a811e421222a108ecbaeaf400fc5b0ea57a4e3fa5",
+      "flow_dicom_sha256": "5d0428f6f13c0aded385e97d76b152ba373e4bee5e7d00942c0af42427c0819c"
+    },
+    {
+      "scan_id": "D128_F03_V01",
+      "diameter_um": "128.0",
+      "flow_speed_mm_s": "3.0",
+      "oct_sha256": "e989a8257a7fafda8d6e9ad2b1fef0c94807ae323683bc6e918c88bc2cce38f3",
+      "flow_dicom_sha256": "8a17755ea23b8d9283caa3467a200f47bc1b62db89b4c687e56d622403c0c8ba"
+    },
+    {
+      "scan_id": "D128_F05_V01",
+      "diameter_um": "128.0",
+      "flow_speed_mm_s": "5.0",
+      "oct_sha256": "e4739d3b26e250fa1159b0fa28b7a9a962626f0cc9239b7cd8bd74aa662ba0d2",
+      "flow_dicom_sha256": "19921fb413bf733191a363e591dd25190ebe29ecdb7b28fd97e533303756e0ad"
+    },
+    {
+      "scan_id": "D128_F07_V01",
+      "diameter_um": "128.0",
+      "flow_speed_mm_s": "7.0",
+      "oct_sha256": "96b8d8f7b1ec9341013d635a98e75554e7e5595ff5194d5f996808fa1207bdd4",
+      "flow_dicom_sha256": "f1e43b9ed8c7a2c9cc214cd00b6be458538101ed31b9943be04789e40861c226"
+    },
+    {
+      "scan_id": "D235_F01_V01",
+      "diameter_um": "235.0",
+      "flow_speed_mm_s": "1.0",
+      "oct_sha256": "08e9734543e59ba1a3782dc120cdee68086535efb15168a22cb6646f8200186a",
+      "flow_dicom_sha256": "79ebd73d2a5f43df9268124854a12fc8194db58ef6c5a90dfaa6c86ec201c55d"
+    },
+    {
+      "scan_id": "D235_F10_V01",
+      "diameter_um": "235.0",
+      "flow_speed_mm_s": "10.0",
+      "oct_sha256": "d586fceb7bb58c1bc5644fbae9f8e5575acd82dd640602400c561482c260efd4",
+      "flow_dicom_sha256": "9bb0541b522a674448c66e90313bf8da333e2f950d03187b797dfdd22c767047"
+    },
+    {
+      "scan_id": "D235_F03_V01",
+      "diameter_um": "235.0",
+      "flow_speed_mm_s": "3.0",
+      "oct_sha256": "7b69d50a0cde64fde1ae87f8af41db49ed6ba3dd4f359775dab2fb70f779d6d9",
+      "flow_dicom_sha256": "6c1e955ef4140fe34774edeba91659d9d21964cab0bf07b5f846d658cc6bcf57"
+    },
+    {
+      "scan_id": "D235_F05_V01",
+      "diameter_um": "235.0",
+      "flow_speed_mm_s": "5.0",
+      "oct_sha256": "5368ef2787df07363b5ff0ea91e29ab5b996fb49b173a09484dae663f89374bc",
+      "flow_dicom_sha256": "c414b9550e289dd95a9595a064a753b7e7a9ff458b0a83366651e45e4859337a"
+    },
+    {
+      "scan_id": "D235_F07_V01",
+      "diameter_um": "235.0",
+      "flow_speed_mm_s": "7.0",
+      "oct_sha256": "58e51eb1999f3b8acc17aeddf7b5771d69655376158cbd8fa5243a5465ceed33",
+      "flow_dicom_sha256": "a57a149c4c41390ddac05aeb129ee0507f9bb046a77a7587a10e236e0062af63"
+    },
+    {
+      "scan_id": "D285_F01_V01",
+      "diameter_um": "285.0",
+      "flow_speed_mm_s": "1.0",
+      "oct_sha256": "580b26e6bc676217c8092868dbcc352392b472a5f31f20725f579d7e875c3639",
+      "flow_dicom_sha256": "7e3c5f19404f4d412b41501312711688c8bdd9fb52a63088114901ce4f09e63e"
+    },
+    {
+      "scan_id": "D285_F10_V01",
+      "diameter_um": "285.0",
+      "flow_speed_mm_s": "10.0",
+      "oct_sha256": "2cef8ab88761e783190f0531e3084f46076beaba3ae6e80329ed0294dc03d385",
+      "flow_dicom_sha256": "f1de38788f7a8a7f453f6505e429ef5eb6bdaa16eadba455a0d8a94c66147721"
+    },
+    {
+      "scan_id": "D285_F03_V01",
+      "diameter_um": "285.0",
+      "flow_speed_mm_s": "3.0",
+      "oct_sha256": "f977eb755cb8d237417d66a87e33f95ee6168df7a0d35fd1c469b94f276c2433",
+      "flow_dicom_sha256": "849bff76b6c4583cb569daf0bf6f0ba988058bdd6cf785373e81c15a0de65f07"
+    },
+    {
+      "scan_id": "D285_F05_V01",
+      "diameter_um": "285.0",
+      "flow_speed_mm_s": "5.0",
+      "oct_sha256": "4457befa1309470b5f0b8547e46f98f4712381a9f481871fb9a2dd3d8d379e07",
+      "flow_dicom_sha256": "8736cdadc29f01133f98ff821084e2820a48a982beaeaca1bb339e031cc4e809"
+    },
+    {
+      "scan_id": "D285_F07_V01",
+      "diameter_um": "285.0",
+      "flow_speed_mm_s": "7.0",
+      "oct_sha256": "d996d4ae5db91bec2ecebaa186a95de39caa19efc02e4bd4a659874b213aa78e",
+      "flow_dicom_sha256": "f21ec916c5351202a8ccbd48975884013658849a2ab529790c1a1032e310f26f"
+    }
+  ],
+  "execution_snapshot": {
+    "source_commit": "fe80bbead6e197e6d8b497fce4dc5c8c22b20fc6",
+    "process_script_sha256": "028ece52073cf54701fd194a3a54af20d8081267baae4e5e3b3389a1b8820527",
+    "mode": "primary ascending sequential driver with independent 500um pre-exports; same tracking/export/validation functions; per-volume order unchanged; primary driver is sole processing-summary writer"
+  },
+  "independent_export_schedules": [
+    {
+      "selection": "last four scan IDs in descending fixed metadata order; independent pre-export while primary driver processes earlier scans; no quality selection",
+      "scans": [
+        "D500_F12_V01",
+        "D500_F10_V01",
+        "D500_F09_V01",
+        "D500_F07_V01"
+      ]
+    },
+    {
+      "selection": "remaining four 500um scan IDs in descending fixed metadata order; independent pre-export while primary driver processes earlier scans; no quality selection",
+      "scans": [
+        "D500_F05_V01",
+        "D500_F03_V01",
+        "D500_F02_V01",
+        "D500_F01_V01"
+      ]
+    }
+  ]
+}

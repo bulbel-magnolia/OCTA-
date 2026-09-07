@@ -1,0 +1,46 @@
+{
+  "scan_id": "D500_F01_V01",
+  "total_frames": 500,
+  "z_localization_valid": 500,
+  "geometry_qc_valid": 500,
+  "failed": 0,
+  "not_assessable": 0,
+  "direct_candidate": 435,
+  "short_gap_fill": 65,
+  "missing_segment_count": 0,
+  "relock_events": 0,
+  "dicom_dimensions": [
+    500,
+    351,
+    500
+  ],
+  "finite_fraction": 1.0,
+  "tracking_config_sha256": "65246b2c543d2fa909577bf446617917b233232ed224558ab630d38464aab83b",
+  "tracking_table_sha256": "f1ef3bde709d3dece89edb9f0f0f3133a8f3daa77d729e7647f540de7f50bd90",
+  "X1_width_px": {
+    "n": 500,
+    "min": 25.0,
+    "p25": 47.0,
+    "median": 48.5,
+    "p75": 50.0,
+    "max": 56.0
+  },
+  "X4_px": {
+    "n": 500,
+    "min": 184.04754153296048,
+    "p25": 189.7013403324102,
+    "median": 192.8476022206941,
+    "p75": 195.64616755256114,
+    "max": 200.44404767986683
+  },
+  "z_top_px": {
+    "n": 500,
+    "min": 164.0,
+    "p25": 165.0,
+    "median": 169.0,
+    "p75": 177.0,
+    "max": 187.0
+  },
+  "missing_segments": [],
+  "relock_frames": []
+}

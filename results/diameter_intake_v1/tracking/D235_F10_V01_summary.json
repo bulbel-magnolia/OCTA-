@@ -1,0 +1,59 @@
+{
+  "scan_id": "D235_F10_V01",
+  "total_frames": 500,
+  "z_localization_valid": 478,
+  "geometry_qc_valid": 461,
+  "failed": 22,
+  "not_assessable": 39,
+  "direct_candidate": 304,
+  "short_gap_fill": 174,
+  "missing_segment_count": 2,
+  "relock_events": 1,
+  "dicom_dimensions": [
+    500,
+    351,
+    500
+  ],
+  "finite_fraction": 1.0,
+  "tracking_config_sha256": "65246b2c543d2fa909577bf446617917b233232ed224558ab630d38464aab83b",
+  "tracking_table_sha256": "f8ed72016743b57c10f500f7e2a6662b833e6526de1a67df0322a70f516ea7c8",
+  "X1_width_px": {
+    "n": 478,
+    "min": 21.0,
+    "p25": 25.0,
+    "median": 27.0,
+    "p75": 28.0,
+    "max": 33.0
+  },
+  "X4_px": {
+    "n": 478,
+    "min": 197.88140928069197,
+    "p25": 202.1232328205125,
+    "median": 206.03646020549212,
+    "p75": 209.42988777698645,
+    "max": 213.2223606445684
+  },
+  "z_top_px": {
+    "n": 478,
+    "min": 190.0,
+    "p25": 192.0,
+    "median": 193.0,
+    "p75": 198.0,
+    "max": 205.0
+  },
+  "missing_segments": [
+    {
+      "first_frame": 137,
+      "last_frame": 157,
+      "frame_count": 21
+    },
+    {
+      "first_frame": 499,
+      "last_frame": 499,
+      "frame_count": 1
+    }
+  ],
+  "relock_frames": [
+    158
+  ]
+}

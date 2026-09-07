@@ -96,7 +96,7 @@ def finalize():
     matlab_tests = [name for name in ("test_compute_sv_maps","test_reconstruction_dependencies") if name + " PASS" in matlab_log]
     tests = dict(python_total=len(cases),python_passed=len(cases)-failures,python_failures=failures,new_diameter_tests=new_count,existing_python_tests=len(cases)-new_count,
                  matlab_test_functions=len(matlab_tests),matlab_passed=matlab_tests,
-                 python_command="python -m pytest -q -p no:cacheprovider --basetemp outputs/diameter_pytest_verified_02 --junitxml outputs/diameter_stage_v1/logs/pytest.xml",
+                 python_command="python -m pytest -q -p no:cacheprovider --basetemp outputs/diameter_pytest_verified_03 --junitxml outputs/diameter_stage_v1/logs/pytest.xml",
                  initial_attempt="75 passed, 22 setup errors from Windows sandbox temp permissions; unchanged suite rerun outside sandbox with dedicated temp path",
                  warning="One installed requests dependency-version warning; no test failure")
     complete = expected == set(statuses) and all(r["processing_status"] == "complete" for r in statuses.values()) and len(verified) == len(expected) and pilot["hard_gates_passed"] and pilot["full_volume_status"] == "passed" and failures == 0 and len(matlab_tests) == 2 and not intake["blockers"]
@@ -120,6 +120,9 @@ def finalize():
                       calibration=dict(dx_um=12.7,dz_um=6.7,source="inherited_project_acquisition_calibration",evidence="OCT protocol signature agrees with D128 and Flow dimensions match; not independently measured"),
                       pilot_selection=read_json(OUT/"pilot_selection.json"),processing_timestamp_utc=datetime.now(timezone.utc).isoformat(),
                       acquisitions=[{k:r[k] for k in ("scan_id","diameter_um","flow_speed_mm_s","oct_sha256","flow_dicom_sha256")} for r in volumes])
+    if (LOCAL / "execution_source_snapshot.json").exists():
+        provenance["execution_snapshot"] = read_json(LOCAL / "execution_source_snapshot.json")
+        provenance["independent_export_schedules"] = [read_json(p) for p in sorted(LOCAL.glob("independent_export_schedule*.json"))]
     write_json(OUT / "provenance.json",provenance)
     table = []
     for r in sorted(volumes,key=lambda r:(float(r["diameter_um"]),float(r["flow_speed_mm_s"]),r["oct_relative_path"])):
@@ -139,7 +142,7 @@ def finalize():
              "", "The parameterization audit distinguishes generic diameter-aware geometry from D128-specific collection and historical analysis harnesses. No existing production algorithm or frozen setting was changed. No Diameter–RI_tail comparison, significance analysis or formal tail-intensity computation was performed.",
              "", "## Files", "", "`volume_table.csv` lists all acquisitions; `processing_summary.csv` and `per_volume_tracking_summary.csv` cover new-volume processing; `tracking/*_summary.json` contains localization distributions, missing segments and relock frames; `exports/*_frames.csv` records every MAT hash, size and identity check; `validation.json`, `provenance.json`, `raw_identity_validation.json` and `d128_regression_protection.json` hold audit evidence.",
              "", "Raw assets and full MAT collections remain local. The local export jobs preserve actual storage destinations, including an external derived-output disk needed for the complete collection. Public tables contain relative paths only. Exact pushed commit identity is given in the final task report and local Git receipt.", ""]
-    (OUT/"README.md").write_text("\n".join(lines),encoding="utf-8")
+    (OUT/"README.md").write_text("\n".join(lines),encoding="utf-8",newline="\n")
     leaks = []
     for directory in (ROOT/"data/diameter_stage_v1",OUT):
         for path in directory.rglob("*"):

@@ -1,0 +1,46 @@
+{
+  "scan_id": "D285_F05_V01",
+  "total_frames": 500,
+  "z_localization_valid": 500,
+  "geometry_qc_valid": 492,
+  "failed": 0,
+  "not_assessable": 8,
+  "direct_candidate": 350,
+  "short_gap_fill": 150,
+  "missing_segment_count": 0,
+  "relock_events": 0,
+  "dicom_dimensions": [
+    500,
+    351,
+    500
+  ],
+  "finite_fraction": 1.0,
+  "tracking_config_sha256": "65246b2c543d2fa909577bf446617917b233232ed224558ab630d38464aab83b",
+  "tracking_table_sha256": "d53a744f8692aafd47fa289d0a3dc262f1c54ce7fb95597e0d8e3debb4819e86",
+  "X1_width_px": {
+    "n": 500,
+    "min": 24.0,
+    "p25": 30.0,
+    "median": 32.0,
+    "p75": 33.0,
+    "max": 39.0
+  },
+  "X4_px": {
+    "n": 500,
+    "min": 212.19059535376243,
+    "p25": 219.3410333611013,
+    "median": 225.75056192355152,
+    "p75": 231.22288677824744,
+    "max": 238.03536171125683
+  },
+  "z_top_px": {
+    "n": 500,
+    "min": 169.0,
+    "p25": 172.0,
+    "median": 181.0,
+    "p75": 189.0,
+    "max": 203.0
+  },
+  "missing_segments": [],
+  "relock_frames": []
+}

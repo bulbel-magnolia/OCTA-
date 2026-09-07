@@ -1,0 +1,2 @@
+scan_id,total_frames,z_localization_valid,geometry_qc_valid,failed,not_assessable,direct_candidate,short_gap_fill,missing_segment_count,relock_events,finite_fraction,tracking_config_sha256,tracking_table_sha256
+D235_F01_V01,500,492,448,8,52,319,173,1,1,1.0,65246b2c543d2fa909577bf446617917b233232ed224558ab630d38464aab83b,1726035cf9bfd9bbf2ebb25fb6b588379aa886edc36d21323eb56883bafb7a41
