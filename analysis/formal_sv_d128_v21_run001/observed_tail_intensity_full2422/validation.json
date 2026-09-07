@@ -1,0 +1,15 @@
+{
+  "valid_frames": 2422,
+  "depth_anchor_rows": 123522,
+  "depth_anchor_count_per_frame": 51,
+  "release_packages_verified": 25,
+  "valid_frame_npz_sha256_verified": 2422,
+  "baseline_replay_max_relative_error": 1.7498600978873804e-14,
+  "area_replay_max_relative_error": 2.1388641805473553e-15,
+  "max_depth_anchor_sampling_error_um": 3.3499999999999943,
+  "observed_metrics_background_subtracted": false,
+  "source_and_tail_same_signal_scale": true,
+  "p_values_computed": false,
+  "bscans_treated_as_independent_biological_replicates": false,
+  "parameter_selection_by_flow_pattern": false
+}
