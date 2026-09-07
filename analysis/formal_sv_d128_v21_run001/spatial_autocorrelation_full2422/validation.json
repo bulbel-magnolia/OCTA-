@@ -1,0 +1,28 @@
+{
+  "valid_frames": 2422,
+  "scan_valid_counts": {
+    "flow01": 486,
+    "flow03": 468,
+    "flow05": 491,
+    "flow07": 493,
+    "flow10": 484
+  },
+  "metrics": [
+    "q_vessel",
+    "source_mean",
+    "q_tail",
+    "ri_tail"
+  ],
+  "frame_axis_length_per_scan": 500,
+  "max_lag_evaluated_frames": 200,
+  "invalid_frames_interpolated": false,
+  "invalid_frames_zero_filled": false,
+  "acf_uses_exact_frame_index_separation": true,
+  "slow_axis_spacing_um_available": false,
+  "slow_axis_position_um_available": false,
+  "physical_length_conversion_performed": false,
+  "p_values_computed": false,
+  "bscan_independent_biological_replicate_claim": false,
+  "descriptive_spatial_ess_is_not_biological_n": true,
+  "acf_lag0_max_abs_error_from_1": 0.0
+}

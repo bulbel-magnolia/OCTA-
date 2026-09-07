@@ -1,0 +1,24 @@
+{
+  "analysis": "volume-internal spatial autocorrelation for formal SV d128 run001",
+  "input_task1": "analysis/formal_sv_d128_v21_run001/relative_tail_intensity_full2422/relative_tail_intensity_framewise.csv",
+  "input_formal_manifest": "results/formal_sv_d128_v21_full2500_run001/manifest.csv",
+  "source_branch_sha_before_analysis": "f446d811c1b2b482f79a75693836b41a04361c11",
+  "workflow_source_sha": "467ea0ffb2ff2f662ef2f2df5f2a62afb0b3d569",
+  "selection": "Task-1 formal valid frames only (2422 total)",
+  "metrics": {
+    "q_vessel": "Q_V",
+    "source_mean": "Sbar_V",
+    "q_tail": "Q_T",
+    "ri_tail": "RI_tail"
+  },
+  "acf_definition": "mean[(x_i-mu)(x_i+h-mu)] / mean[(x_i-mu)^2], using only finite exact-index pairs at lag h",
+  "correlation_length_definitions": {
+    "lag_at_acf_1_over_e_frames": "first downward crossing of ACF <= exp(-1), linearly interpolated between integer lags",
+    "lag_at_acf_0p1_frames": "first downward crossing of ACF <= 0.1, linearly interpolated",
+    "first_nonpositive_lag_frames": "first integer lag with ACF <= 0",
+    "initial_positive_tau_frames": "1 + 2*sum ACF(h) over the initial strictly-positive sequence",
+    "descriptive_spatial_ess": "n_valid / initial_positive_tau; descriptive spatial-information count only, never biological replicate n"
+  },
+  "slow_axis_physical_spacing": "not available in frozen manifest; no um conversion",
+  "statistical_unit_note": "Each flow is one volume; B-scans are adjacent spatial samples, not independent experiments."
+}
