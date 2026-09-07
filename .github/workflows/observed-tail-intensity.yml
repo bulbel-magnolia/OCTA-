@@ -1,0 +1,57 @@
+name: Observed Tail Intensity
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - feature/sv-rectangle-v1
+    paths:
+      - analysis/formal_sv_d128_v21_run001/observed_tail_intensity_full2422/analyze_observed_tail_intensity.py
+      - analysis/formal_sv_d128_v21_run001/observed_tail_intensity_full2422/_trigger.txt
+      - .github/workflows/observed-tail-intensity.yml
+
+permissions:
+  contents: write
+
+jobs:
+  analyze:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - name: Checkout branch
+        uses: actions/checkout@v4
+        with:
+          ref: feature/sv-rectangle-v1
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: python -m pip install --upgrade pip numpy pandas
+
+      - name: Analyze observed tail intensity
+        run: |
+          python analysis/formal_sv_d128_v21_run001/observed_tail_intensity_full2422/analyze_observed_tail_intensity.py \
+            --root . \
+            --formal-dir results/formal_sv_d128_v21_full2500_run001 \
+            --task1-dir analysis/formal_sv_d128_v21_run001/relative_tail_intensity_full2422 \
+            --output-dir analysis/formal_sv_d128_v21_run001/observed_tail_intensity_full2422 \
+            --frozen-source-sha acef5eb9d5ac356f1acf11aee885895da79a22e3 \
+            --workflow-source-sha "${{ github.sha }}"
+
+      - name: Commit generated outputs
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add analysis/formal_sv_d128_v21_run001/observed_tail_intensity_full2422/
+          if git diff --cached --quiet; then
+            echo 'No generated changes to commit.'
+            exit 0
+          fi
+          git commit -m 'analysis: add observed tail intensity results'
+          git pull --rebase origin feature/sv-rectangle-v1
+          git push origin HEAD:feature/sv-rectangle-v1
