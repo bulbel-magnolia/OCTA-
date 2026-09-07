@@ -1,0 +1,28 @@
+{
+  "valid_frames": 2422,
+  "scan_valid_counts": {
+    "flow01": 486,
+    "flow03": 468,
+    "flow05": 491,
+    "flow07": 493,
+    "flow10": 484
+  },
+  "strides_frames": [
+    2,
+    5,
+    10,
+    20,
+    25,
+    50
+  ],
+  "all_phase_partitions_assign_each_valid_frame_exactly_once": true,
+  "invalid_frames_interpolated": false,
+  "invalid_frames_zero_filled": false,
+  "subsample_uses_original_frame_index": true,
+  "volume_estimator": "median",
+  "p_values_computed": false,
+  "inferential_test_performed": false,
+  "bscan_independent_biological_replicate_claim": false,
+  "slow_axis_physical_spacing_available": false,
+  "planning_thresholds_are_inferential": false
+}

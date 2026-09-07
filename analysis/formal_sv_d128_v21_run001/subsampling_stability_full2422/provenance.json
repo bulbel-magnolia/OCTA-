@@ -1,0 +1,26 @@
+{
+  "analysis": "Systematic subsampling stability, formal SV d128 run001",
+  "source_branch_sha": "2ba519479a5a5ef7ff3c2d5e13c148d17b613e5d",
+  "workflow_source_sha": "4ea16cb27f2fead58c4ec4f578a3ac3e0c051736",
+  "input": "analysis/formal_sv_d128_v21_run001/relative_tail_intensity_full2422/relative_tail_intensity_framewise.csv",
+  "selection": "valid == True",
+  "scheme": "for each stride s and every phase p=0..s-1, keep valid frames whose original frame_index_0based mod s equals p",
+  "full_volume_reference": "median across all formally valid frames in that scan",
+  "metrics": {
+    "q_vessel": "Q_V",
+    "source_mean": "Sbar_V",
+    "q_tail": "Q_T",
+    "ri_tail": "RI_tail"
+  },
+  "primary_endpoints_for_planning_table": [
+    "q_tail",
+    "ri_tail"
+  ],
+  "planning_error_thresholds_pct": [
+    1.0,
+    2.0,
+    5.0,
+    10.0
+  ],
+  "restriction": "descriptive within-volume sampling stability only; not biological sample-size estimation"
+}

@@ -1,0 +1,5 @@
+criterion_abs_error_pct,sparsest_tested_stride_meeting_all_primary_scan_phases,approx_positions_per_500,status
+1.0,,,none_of_tested_grids_meet_criterion
+2.0,,,none_of_tested_grids_meet_criterion
+5.0,2.0,250.0,descriptive_planning_candidate_only
+10.0,5.0,100.0,descriptive_planning_candidate_only
