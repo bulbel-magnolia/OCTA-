@@ -5,7 +5,7 @@
   "output_directory": "analysis/formal_sv_d128_v21_run001/observed_tail_intensity_full2422",
   "formal_release_tag": "formal-sv-d128-v21-run001",
   "frozen_formal_source_sha": "acef5eb9d5ac356f1acf11aee885895da79a22e3",
-  "workflow_source_sha": "37ba7bcc5f335189fe5c88013aa237f4f647d0a8",
+  "workflow_source_sha": "fb60c00762810d85825435bcd4cfd8591e449fa5",
   "entry_rule": "valid == True only",
   "geometry": "frozen X4 centre + X1 apparent width + v2.1 z geometry",
   "sv_signal": "linear sv_raw = Var_t(|E|), N denominator",
