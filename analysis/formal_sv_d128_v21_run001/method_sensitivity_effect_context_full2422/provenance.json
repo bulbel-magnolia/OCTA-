@@ -1,0 +1,10 @@
+{
+  "analysis": "Observed volume-level flow contrast vs audited method-sensitivity context",
+  "source_sha": "d6fc2b714354a0f2b01f13da870906475f430a78",
+  "workflow_source_sha": "42fd23b5664897f12b37940856115612f802596c",
+  "selection": "Task1 valid frames only (2422)",
+  "observed_effect": "difference in per-volume medians relative to flow01",
+  "no_composite_uncertainty": true,
+  "reason_no_composite_uncertainty": "background, geometry, and sampling perturbations are not independent estimates of one random error distribution",
+  "statistical_unit_note": "Each flow currently has one independent scan volume; B-scans are spatial positions, not independent experiments."
+}

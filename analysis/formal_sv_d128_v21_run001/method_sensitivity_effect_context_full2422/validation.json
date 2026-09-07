@@ -1,0 +1,26 @@
+{
+  "task1_valid_frames": 2422,
+  "background_plus2_joined_frames": 2422,
+  "fixed128_joined_frames": 2422,
+  "metrics": [
+    "q_vessel",
+    "source_mean",
+    "q_tail",
+    "ri_tail"
+  ],
+  "observed_reference_scan": "flow01 / 1 mm/s",
+  "observed_comparison_scans": [
+    "flow03",
+    "flow05",
+    "flow07",
+    "flow10"
+  ],
+  "method_sensitivity_sources_are_not_combined_into_single_error": true,
+  "background_role": "local_method_perturbation",
+  "fixed128_role": "geometry_stress_test_not_random_error",
+  "subsampling_role": "sampling_design_approximation",
+  "p_values_computed": false,
+  "inferential_test_performed": false,
+  "bscan_independent_replicate_claim": false,
+  "independent_volume_replication_required_for_flow_effect_claim": true
+}
