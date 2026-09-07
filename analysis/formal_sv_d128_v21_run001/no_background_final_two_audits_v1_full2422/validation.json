@@ -1,0 +1,14 @@
+{
+  "valid_frames": 2422,
+  "scan_counts": {
+    "flow01": 486,
+    "flow03": 468,
+    "flow05": 491,
+    "flow07": 493,
+    "flow10": 484
+  },
+  "aggregation_methods": 6,
+  "background_subtracted": false,
+  "p_values_computed": false,
+  "bscans_independent_replicates": false
+}

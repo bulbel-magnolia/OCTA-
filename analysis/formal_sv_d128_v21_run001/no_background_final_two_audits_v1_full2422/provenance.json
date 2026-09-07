@@ -1,0 +1,23 @@
+{
+  "analysis": "aggregation sensitivity + residual geometry/localization QC",
+  "source_sha": "c31ed605c41d34216e3fe4eb2099a3bcfa246520",
+  "workflow_source_sha": "c31ed605c41d34216e3fe4eb2099a3bcfa246520",
+  "primary_definition": "mean raw SV tail / mean raw SV vessel",
+  "aggregation_methods": [
+    "mean_framewise_RI",
+    "median_of_5_spatial_segment_medians",
+    "pooled_area_weighted_raw_ratio",
+    "primary_median_framewise_RI",
+    "ratio_of_mean_raw_means",
+    "ratio_of_median_raw_means"
+  ],
+  "residual_qc": [
+    "lateral_width_um",
+    "source_area_um2",
+    "z_top_edge_px",
+    "x4_px",
+    "localization_source",
+    "pre-specified restricted subsets"
+  ],
+  "scope": "descriptive within-volume QC; no flow inference"
+}
