@@ -7,6 +7,7 @@ on:
       - feature/sv-rectangle-v1
     paths:
       - analysis/formal_sv_d128_v21_run001/no_background_followup_three_audits_v1_full2422/analyze_three_followups.py
+      - analysis/formal_sv_d128_v21_run001/no_background_followup_three_audits_v1_full2422/run_three_followups_fixed.py
       - analysis/formal_sv_d128_v21_run001/no_background_followup_three_audits_v1_full2422/_trigger.txt
       - .github/workflows/no-background-three-followups-v1.yml
 
@@ -35,7 +36,7 @@ jobs:
 
       - name: Run three follow-up audits
         run: |
-          python analysis/formal_sv_d128_v21_run001/no_background_followup_three_audits_v1_full2422/analyze_three_followups.py \
+          python analysis/formal_sv_d128_v21_run001/no_background_followup_three_audits_v1_full2422/run_three_followups_fixed.py \
             --root . \
             --output-dir analysis/formal_sv_d128_v21_run001/no_background_followup_three_audits_v1_full2422 \
             --source-sha "${{ github.sha }}" \
