@@ -1,0 +1,21 @@
+{
+  "valid_frames": 2422,
+  "scan_valid_counts": {
+    "flow01": 486,
+    "flow03": 468,
+    "flow05": 491,
+    "flow07": 493,
+    "flow10": 484
+  },
+  "release_packages_verified": 25,
+  "valid_frame_npz_sha256_verified": 2422,
+  "baseline_observed_replay_max_relative_error": 3.013418231380585e-15,
+  "primary_background_subtracted": false,
+  "primary_definition": "mean raw SV tail / mean raw SV vessel",
+  "depth_definition": "raw SV lateral mean / raw vessel mean",
+  "fixed128_background_used": false,
+  "invalid_frames_interpolated": false,
+  "invalid_frames_zero_filled": false,
+  "p_values_computed": false,
+  "bscans_treated_as_independent_biological_replicates": false
+}

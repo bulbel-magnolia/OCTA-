@@ -1,0 +1,14 @@
+{
+  "analysis": "No-background Relative Tail Intensity primary reanalysis v1",
+  "source_sha": "a987047b7a8a2c0772aea22426603830183fe4e8",
+  "workflow_source_sha": "a987047b7a8a2c0772aea22426603830183fe4e8",
+  "formal_release": "formal-sv-d128-v21-run001",
+  "entry_rule": "valid == True only; 2422/2500",
+  "geometry": "frozen X4 center + X1 apparent width + v2.1 z; 500um tail; guard=0",
+  "primary_scalar": "RI_tail = tail_mean_raw/source_mean_raw",
+  "primary_depth": "RI(r)=raw tail lateral mean/source_mean_raw",
+  "background": "not used in any primary calculation",
+  "legacy_background_corrected_outputs": "retained historically only; not used",
+  "fixed128": "geometry stress test only; no background involved",
+  "statistics": "volume-level descriptive only; no p-values; B-scans are not independent biological replicates"
+}
