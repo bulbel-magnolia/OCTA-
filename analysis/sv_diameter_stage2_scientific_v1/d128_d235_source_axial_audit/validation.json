@@ -1,0 +1,68 @@
+{
+  "status": "passed",
+  "tolerance_relative_error": 1e-10,
+  "d128_frames_analyzed": 2422,
+  "d235_frames_analyzed": 2225,
+  "total_frames_analyzed": 4647,
+  "volume_count": 10,
+  "segment_count": 50,
+  "sha_verified_counts": {
+    "d128_release_zip": 25,
+    "d128_npz": 2422,
+    "d235_mat": 2225
+  },
+  "shape_expected": [
+    351,
+    500
+  ],
+  "shape_and_finite_verified_frames": 4647,
+  "band_Q_reconstruction_max_relative_error": 4.71412883780283e-16,
+  "band_weight_reconstruction_max_absolute_error": 0.0,
+  "source_roi_redefined": false,
+  "background_subtraction": false,
+  "normalization": false,
+  "log_transform": false,
+  "inferential_statistics": false,
+  "p_values": false,
+  "d285_d500_recomputed": false,
+  "preexisting_tracked_files_sha_unchanged": 946,
+  "d128_replay_max_relative_error": 3.239476120439153e-16,
+  "d128_source_replay_max_relative_error_by_metric": {
+    "area": 0.0,
+    "q": 0.0,
+    "mean": 3.239476120439153e-16
+  },
+  "d128_frames_per_volume": {
+    "D128_F01_V01": 486,
+    "D128_F03_V01": 468,
+    "D128_F05_V01": 491,
+    "D128_F07_V01": 493,
+    "D128_F10_V01": 484
+  },
+  "d235_replay_max_relative_error": 0.0,
+  "d235_source_replay_max_relative_error_by_metric": {
+    "area": 0.0,
+    "q": 0.0,
+    "mean": 0.0
+  },
+  "d235_frames_per_volume": {
+    "D235_F01_V01": 448,
+    "D235_F03_V01": 448,
+    "D235_F05_V01": 424,
+    "D235_F07_V01": 444,
+    "D235_F10_V01": 461
+  },
+  "serialized_artifact_validation": {
+    "status": "passed",
+    "frame_identities_match_frozen_sets": true,
+    "input_sha_matches_frozen_tables": true,
+    "ratio_and_q_fraction_identities": true,
+    "volume_and_segment_summaries_match_framewise": true,
+    "summary_max_relative_error": 0.0,
+    "synthetic_partition_and_constant_signal_checks_diameters_um": [
+      128,
+      235
+    ],
+    "band_reconstruction_failure_rejection_cases_passed": 3
+  }
+}
