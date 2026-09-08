@@ -318,11 +318,17 @@ def regression(packages_dir, wait_seconds=0):
         packages=package_audit,kernel_sha256=sha(KERNEL)))
 
 
+def has_absolute_windows_path(content):
+    # A URL scheme ending in 's:/' is not a drive; accept only a standalone
+    # drive letter, and also reject UNC paths (including JSON-escaped forms).
+    return bool(re.search(r"(?<![A-Za-z0-9])[A-Za-z]:[\\/]|\\\\[A-Za-z0-9_.-]+\\",content))
+
+
 def public_path_audit():
     for path in OUT.iterdir():
         if path.is_file():
             content=gzip.decompress(path.read_bytes()).decode("utf-8") if path.suffix==".gz" else path.read_text(encoding="utf-8")
-            if re.search(r"[A-Za-z]:[\\/]",content) or "\\\\Users\\" in content:
+            if has_absolute_windows_path(content):
                 raise ValueError("Absolute Windows path in "+path.name)
 
 

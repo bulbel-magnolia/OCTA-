@@ -171,6 +171,17 @@ def test_public_outputs_no_absolute_paths():
     DRIVER.public_path_audit()
 
 
+@pytest.mark.parametrize("text,expected", [
+    ("https://github.com/example/repo",False),
+    ("C:/Users/example/file.csv",True),
+    (r"D:\raw\scan.mat",True),
+    (r"\\server\share\file.csv",True),
+    ("relative/scan.csv",False),
+])
+def test_path_audit_distinguishes_urls_from_windows_paths(text,expected):
+    assert DRIVER.has_absolute_windows_path(text)==expected
+
+
 def test_committed_conditions_and_native_depth_geometry():
     if not (OUT/"framewise_primary.csv").exists():
         pytest.skip("Generated integration outputs not yet available")
