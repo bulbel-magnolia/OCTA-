@@ -18,6 +18,8 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import platform
+import subprocess
 import sys
 from pathlib import Path
 
@@ -119,6 +121,21 @@ def qtls(x):
     return float(q1), float(med), float(q3)
 
 
+def require_band_reconstruction(qsum: float, full_q: float) -> float:
+    error = relerr(qsum, full_q)
+    if not np.isfinite(error) or error >= TOL:
+        raise RuntimeError(f"Axial band Q does not reconstruct frozen source: {error}")
+    return error
+
+
+def descriptive_spearman(x, y):
+    """Pearson correlation of average ranks; no inferential p-value computed."""
+    x, y = pd.Series(x), pd.Series(y)
+    if len(x) < 2 or x.nunique() < 2 or y.nunique() < 2:
+        return np.nan
+    return float(x.rank(method="average").corr(y.rank(method="average")))
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--mat-root", required=True, help="Retained local per-frame MAT export root")
@@ -152,9 +169,15 @@ def main():
     rows = []
     reconstruction_errors = []
     sha_verified = 0
+    previous_scan = None
 
     for r in fw.itertuples(index=False):
+        if r.scan_id != previous_scan:
+            print(f"PROCESSING {r.scan_id}; verified so far {sha_verified}/{len(fw)}", flush=True)
+            previous_scan = r.scan_id
         p = find_mat(mat_root, str(r.scan_id), int(r.frame_index_0based))
+        if not p.stat().st_size:
+            raise RuntimeError(f"Empty MAT: {r.scan_id}/{p.name}")
         digest = sha256(p)
         if digest != str(r.input_mat_sha256):
             raise RuntimeError(f"MAT SHA mismatch: {r.scan_id}/{p.name}")
@@ -181,7 +204,7 @@ def main():
             "source_mean": relerr(full_mean, r.source_mean_raw),
         }
         reconstruction_errors.append(max(errs.values()))
-        if max(errs.values()) > TOL:
+        if max(errs.values()) >= TOL:
             raise RuntimeError(f"Frozen source replay mismatch {r.scan_id}/{p.name}: {errs}")
 
         rec = dict(
@@ -189,6 +212,7 @@ def main():
             frame_index_0based=int(r.frame_index_0based), slow_axis_segment=int(r.frame_index_0based)//100,
             source_mean_raw_frozen=float(r.source_mean_raw), source_q_raw_frozen=float(r.source_q_raw),
             source_area_um2_frozen=float(r.source_area_um2), localization_source=r.localization_source,
+            z_top_edge_px=float(r.z_top_edge_px), apparent_width_um=float(r.apparent_width_um),
             central80_x1=bool(r.central80_x1), central80_z_top=bool(r.central80_z_top),
             direct_only=bool(r.direct_only), central_geometry=bool(r.central_geometry),
             direct_plus_central=bool(r.direct_plus_central), input_mat_sha256=digest,
@@ -203,11 +227,11 @@ def main():
             qsum += q
         rec["lower_to_upper_mean_ratio"] = rec["lower_mean_raw"] / rec["upper_mean_raw"]
         rec["middle_to_upper_mean_ratio"] = rec["middle_mean_raw"] / rec["upper_mean_raw"]
-        rec["band_q_sum_relative_error"] = relerr(qsum, full_q)
+        rec["band_q_sum_relative_error"] = require_band_reconstruction(qsum, full_q)
         rows.append(rec)
 
     fr = pd.DataFrame(rows).sort_values(["diameter_um", "flow_mm_s", "frame_index_0based"])
-    fr.to_csv(out / "source_axial_band_framewise.csv", index=False, float_format="%.17g")
+    fr.to_csv(out / "source_axial_band_framewise.csv", index=False, float_format="%.17g", lineterminator="\n")
 
     summary_rows = []
     subset_defs = {
@@ -228,7 +252,7 @@ def main():
             row["lower_to_upper_mean_ratio_median"] = float(g.lower_to_upper_mean_ratio.median())
             summary_rows.append(row)
     sm = pd.DataFrame(summary_rows)
-    sm.to_csv(out / "source_axial_band_volume_summary.csv", index=False, float_format="%.17g")
+    sm.to_csv(out / "source_axial_band_volume_summary.csv", index=False, float_format="%.17g", lineterminator="\n")
 
     # D500-vs-D285 same-flow descriptive band contrasts.
     contrasts = []
@@ -246,7 +270,7 @@ def main():
                 contrasts.append(dict(subset=subset, flow_mm_s=flow, band=band,
                     d285_mean_raw=va, d500_mean_raw=vb,
                     absolute_difference=vb-va, percent_difference=100*(vb-va)/va))
-    pd.DataFrame(contrasts).to_csv(out / "d500_vs_d285_axial_band_contrasts.csv", index=False, float_format="%.17g")
+    pd.DataFrame(contrasts).to_csv(out / "d500_vs_d285_axial_band_contrasts.csv", index=False, float_format="%.17g", lineterminator="\n")
 
     # D500 spatial robustness by slow-axis fifth.
     seg_rows = []
@@ -258,11 +282,24 @@ def main():
             row[f"{band}_mean_raw_median"] = float(g[f"{band}_mean_raw"].median())
         row["lower_to_upper_mean_ratio_median"] = float(g.lower_to_upper_mean_ratio.median())
         seg_rows.append(row)
-    pd.DataFrame(seg_rows).to_csv(out / "d500_axial_band_slow_axis_summary.csv", index=False, float_format="%.17g")
+    pd.DataFrame(seg_rows).to_csv(out / "d500_axial_band_slow_axis_summary.csv", index=False, float_format="%.17g", lineterminator="\n")
+
+    # Requested within-volume spatial diagnostic, using the same four subsets.
+    correlation_rows = []
+    for subset, mask in subset_defs.items():
+        selected = fr.loc[mask & fr.diameter_um.eq(500).to_numpy()]
+        for (scan, flow), g in selected.groupby(["scan_id", "flow_mm_s"], sort=True):
+            for band in ("upper", "middle", "lower"):
+                rho = descriptive_spearman(g.z_top_edge_px, g[f"{band}_mean_raw"])
+                correlation_rows.append(dict(subset=subset, scan_id=scan, flow_mm_s=flow,
+                    band=band, n_frames=len(g), spearman_rho=rho,
+                    status="defined" if np.isfinite(rho) else "constant_or_insufficient_data"))
+    pd.DataFrame(correlation_rows).to_csv(out / "d500_axial_band_z_top_spearman.csv",
+        index=False, float_format="%.17g", lineterminator="\n")
 
     validation = {
         "status": "passed",
-        "mat_root": str(mat_root),
+        "mat_root": "retained_diameter_stage_v1_mat_root",
         "frames_analyzed": int(len(fr)),
         "mat_sha256_verified": int(sha_verified),
         "diameters": sorted(diameters),
@@ -275,8 +312,10 @@ def main():
         "background_subtraction": False,
         "normalization": False,
         "inferential_statistics": False,
+        "p_values_computed": False,
+        "per_volume_frames": {str(k): int(v) for k, v in fr.groupby("scan_id").size().items()},
     }
-    (out / "validation.json").write_text(json.dumps(validation, indent=2) + "\n", encoding="utf-8")
+    (out / "validation.json").write_text(json.dumps(validation, indent=2) + "\n", encoding="utf-8", newline="\n")
 
     provenance = {
         "frozen_framewise_source": str(FORMAL.relative_to(ROOT)),
@@ -284,8 +323,19 @@ def main():
         "signal": "sv_raw = var(abs(E),1,3)",
         "geometry": "frozen X4/X1/z_top + physical diameter; unchanged ellipse",
         "comparison": "D500 primary; D285 same-flow comparator when available",
+        "analyzed_commit_sha": subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=ROOT, text=True).strip(),
+        "analysis_script_sha256": sha256(Path(__file__)),
+        "formal_framewise_sha256": sha256(FORMAL),
+        "geometry_py_sha256": sha256(ROOT / "src/svrecttail/geometry.py"),
+        "input_mat_location": "retained_diameter_stage_v1_mat_root/<scan_id>/frame_XXX.mat; host locator kept in ignored local execution receipt",
+        "input_mat_hash_source": "formal framewise input_mat_sha256; actual hashes retained in source_axial_band_framewise.csv",
+        "calibration": {"dx_um": DX_UM, "dz_um": DZ_UM, "supersample": SUPERSAMPLE},
+        "z_top_diagnostic": "within-volume Spearman via average ranks; no p-value; B-scans/segments are not independent replicates",
+        "python_version": platform.python_version(),
+        "numpy_version": np.__version__,
+        "pandas_version": pd.__version__,
     }
-    (out / "provenance.json").write_text(json.dumps(provenance, indent=2) + "\n", encoding="utf-8")
+    (out / "provenance.json").write_text(json.dumps(provenance, indent=2) + "\n", encoding="utf-8", newline="\n")
 
     print(json.dumps(validation, indent=2))
 
