@@ -1,0 +1,92 @@
+[
+  {
+    "scan_id": "D235_F01_V01",
+    "tracking_table_sha256": "1726035cf9bfd9bbf2ebb25fb6b588379aa886edc36d21323eb56883bafb7a41",
+    "intake_geometry_table_sha256": "642361f1b054b4163599366ee377f159d184c75075a49f8831f6abbaf76997bd"
+  },
+  {
+    "scan_id": "D235_F03_V01",
+    "tracking_table_sha256": "6eaf02d06e62befad55d7073fefdfe26b7570feff2342eb3edb153049199dc3a",
+    "intake_geometry_table_sha256": "f6f4a2fa5c5497da4b166a2979a48ad23a91b805d804e6868d33287a30d62b59"
+  },
+  {
+    "scan_id": "D235_F05_V01",
+    "tracking_table_sha256": "72e59eab579246f4ba43e49e7c67773808a666bcc70883c6bd2bfe2c40812ba2",
+    "intake_geometry_table_sha256": "4396217b69c8931c08a867bddb3ba4fae168d0b10a19d0d72c696ed7c9908c80"
+  },
+  {
+    "scan_id": "D235_F07_V01",
+    "tracking_table_sha256": "6cc43625f00e7e76eca9f66963b78c67f48e954580dc77b9a22a7b994840dbf0",
+    "intake_geometry_table_sha256": "a76fa6f3ae68ce3b13357fcd5ca49aaad48c917d1d536ec83941e067cc287786"
+  },
+  {
+    "scan_id": "D235_F10_V01",
+    "tracking_table_sha256": "f8ed72016743b57c10f500f7e2a6662b833e6526de1a67df0322a70f516ea7c8",
+    "intake_geometry_table_sha256": "368c11953f7da33d2cf355e99a2936b2423f818c00f80981027dbe05650c63c1"
+  },
+  {
+    "scan_id": "D285_F01_V01",
+    "tracking_table_sha256": "15cfc6b6bd50eecc6270d3446edeeae74559c45ff4d5c986b5bb1341bd29c58e",
+    "intake_geometry_table_sha256": "f03c7bb47411b109274e2274b2116e6604fd4c5fe45a0b0bf1a37c315b529025"
+  },
+  {
+    "scan_id": "D285_F03_V01",
+    "tracking_table_sha256": "121cd2d30de56269c6e3f7e7d96a74a02694ae7dda8d8550af7f2ff076ba3037",
+    "intake_geometry_table_sha256": "c8c1fd0c7c82bd0893c9f1f9b7fd410fdfa59a2bae8852f7a7c22576111d41f0"
+  },
+  {
+    "scan_id": "D285_F05_V01",
+    "tracking_table_sha256": "d53a744f8692aafd47fa289d0a3dc262f1c54ce7fb95597e0d8e3debb4819e86",
+    "intake_geometry_table_sha256": "86403cf19a3c2a433dc87735e2429e58f792fe396251187c16c0e10e3466a20c"
+  },
+  {
+    "scan_id": "D285_F07_V01",
+    "tracking_table_sha256": "ac71f9b92b9d5525e876dd9b64664e56328024527bf90301bd4156da3d335b9f",
+    "intake_geometry_table_sha256": "8d05d203ba02c9233577fdf342e32c9b964d06253f1e7a6d95b18e8eda54fcc0"
+  },
+  {
+    "scan_id": "D285_F10_V01",
+    "tracking_table_sha256": "d7186686690dca2107e0a3309bf4a68cbfc36851d4ad5f09d79bb506392022a2",
+    "intake_geometry_table_sha256": "2c273bb8d1bc4a2dff13937f683edce3abe4fbe2cf754ce3520cb85c6182ce39"
+  },
+  {
+    "scan_id": "D500_F01_V01",
+    "tracking_table_sha256": "f1ef3bde709d3dece89edb9f0f0f3133a8f3daa77d729e7647f540de7f50bd90",
+    "intake_geometry_table_sha256": "9248d9a3da39dfe2dd3f76ffed3c1d82e6bff1ae3e2df87a593fb90f48d4f5bd"
+  },
+  {
+    "scan_id": "D500_F02_V01",
+    "tracking_table_sha256": "a07f65888fd75a8f448b4507bdf48324ad6dfac431fba508e8047dc17093da50",
+    "intake_geometry_table_sha256": "1ab197e84d1323b005f2e2abbdec1af82ad8e12b78e77133727b5e0caae02ea1"
+  },
+  {
+    "scan_id": "D500_F03_V01",
+    "tracking_table_sha256": "7047f451a15182f5347bc8587a1372b433104036c9fe2ccaf54ebf79307ce14a",
+    "intake_geometry_table_sha256": "6e735ddcbe7a9380cd8a534bb9379ae415553066e7c8fdd729c288c4803e5061"
+  },
+  {
+    "scan_id": "D500_F05_V01",
+    "tracking_table_sha256": "706ef4ba58e2716f326950675d9cfa980c90d1d9e09db627c5f67b6c6dd59f21",
+    "intake_geometry_table_sha256": "133fb622af264dd62e60599b20332708b744d7659410d51956ed90ad74565456"
+  },
+  {
+    "scan_id": "D500_F07_V01",
+    "tracking_table_sha256": "65f1a21126b473dad234150249dd195055b0da59eb74fc9294eb92d1a308d798",
+    "intake_geometry_table_sha256": "106acda468ecf957396d6be1cb142f53458025c48e08677afadfd56d3b1eb890"
+  },
+  {
+    "scan_id": "D500_F09_V01",
+    "tracking_table_sha256": "b2fdee89582181dd9ea593d5aae4339dd1c60ef7f06d53550a8d45bf9d8df2cb",
+    "intake_geometry_table_sha256": "6602bff65e0fd6ca86f937f7224d37518c855bd7be6b910a543566d64bbca37f"
+  },
+  {
+    "scan_id": "D500_F10_V01",
+    "tracking_table_sha256": "576173eadcc02d1b6cb60a4339419ad487aae6d58f165e6a43be61c0711a081d",
+    "intake_geometry_table_sha256": "14f92a91dd0b5c8c08d466c30b273d1a83d5e59b05389efd6072b6cfa47e2d1b"
+  },
+  {
+    "scan_id": "D500_F12_V01",
+    "tracking_table_sha256": "3f47eb7420bcfa90bb4aad12cd5a2130fe086f424bfe1afb7905255539234182",
+    "intake_geometry_table_sha256": "e5dd522459ffc132c297b82727d913b499b842ec911863c830255aa135de5eeb"
+  }
+]
