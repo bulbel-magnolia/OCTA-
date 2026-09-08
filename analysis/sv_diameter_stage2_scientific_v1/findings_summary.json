@@ -1,0 +1,65 @@
+{
+  "ri_tail_median_across_common_flows_by_diameter": {
+    "128": 0.2594674560926589,
+    "235": 0.1752906840013198,
+    "285": 0.16095275520138355,
+    "500": 0.2576421712422814
+  },
+  "spatial_robustness": {
+    "total_common_flow_segments": 25,
+    "segments_with_ri_128_gt_235_gt_285": 25,
+    "segments_with_larger_128_to_235_than_235_to_285_drop": 25,
+    "segments_with_d500_ri_gt_d285": 25,
+    "segments_with_d500_source_lt_d285": 25
+  },
+  "restricted_subset_robustness": {
+    "all_valid": {
+      "ri_128_to_235_percent": -32.44213103213938,
+      "ri_235_to_285_percent": -8.179515575299085,
+      "ri_285_to_500_percent": 60.073166141157614,
+      "decline_128_to_235_to_285_preserved": true,
+      "larger_first_drop_preserved": true,
+      "d500_rebound_preserved": true
+    },
+    "direct_candidate_supported_only": {
+      "ri_128_to_235_percent": -32.73697166150934,
+      "ri_235_to_285_percent": -9.044569156503636,
+      "ri_285_to_500_percent": 60.59464277469578,
+      "decline_128_to_235_to_285_preserved": true,
+      "larger_first_drop_preserved": true,
+      "d500_rebound_preserved": true
+    },
+    "central80_x1": {
+      "ri_128_to_235_percent": -32.35130925382273,
+      "ri_235_to_285_percent": -8.514771421531522,
+      "ri_285_to_500_percent": 59.970708546122104,
+      "decline_128_to_235_to_285_preserved": true,
+      "larger_first_drop_preserved": true,
+      "d500_rebound_preserved": true
+    },
+    "central80_z_top": {
+      "ri_128_to_235_percent": -31.628797747358217,
+      "ri_235_to_285_percent": -8.950410303968178,
+      "ri_285_to_500_percent": 61.40007947671452,
+      "decline_128_to_235_to_285_preserved": true,
+      "larger_first_drop_preserved": true,
+      "d500_rebound_preserved": true
+    },
+    "central80_x1_z_top": {
+      "ri_128_to_235_percent": -31.44571258890223,
+      "ri_235_to_285_percent": -8.647198447715276,
+      "ri_285_to_500_percent": 60.22881394122441,
+      "decline_128_to_235_to_285_preserved": true,
+      "larger_first_drop_preserved": true,
+      "d500_rebound_preserved": true
+    },
+    "direct_plus_central_geometry": {
+      "ri_128_to_235_percent": -32.1485484405092,
+      "ri_235_to_285_percent": -9.126550176838347,
+      "ri_285_to_500_percent": 59.8016458741619,
+      "decline_128_to_235_to_285_preserved": true,
+      "larger_first_drop_preserved": true,
+      "d500_rebound_preserved": true
+    }
+  }
+}
