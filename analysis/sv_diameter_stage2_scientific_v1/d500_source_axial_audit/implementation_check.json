@@ -1,0 +1,20 @@
+{
+  "stage2_base_sha": "a7d55d0e81a8e0b3fc7c60e464d469a3a5eae4a9",
+  "execution_commit_sha": "562d041e154b5968b888fc31b0c4dae60852b2af",
+  "unchanged_scientific_functions": [
+    "band_weights",
+    "geometry_from_row",
+    "weighted_stats",
+    "qtls"
+  ],
+  "ast_equivalence": true,
+  "corrections": [
+    "Enforce failure if band-Q reconstruction does not pass tolerance; previously recorded only",
+    "Use strict less-than replay tolerance as requested",
+    "Add requested z_top Spearman rank diagnostic without p-values",
+    "Record execution provenance and a logical MAT root; keep host locator local",
+    "Deterministic LF text output and progress logging"
+  ],
+  "script_sha256": "12489b3f6b97e21dcb926d46c9d551ee8aa3470029ad1b4d44a38277f699fb2b",
+  "unit_tests_passed": 7
+}

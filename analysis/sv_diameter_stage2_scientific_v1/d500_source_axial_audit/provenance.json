@@ -1,0 +1,42 @@
+{
+  "frozen_framewise_source": "analysis/formal_sv_diameter_v1/framewise_primary.csv",
+  "analysis_script": "analysis/sv_diameter_stage2_scientific_v1/d500_source_axial_local_array_audit.py",
+  "signal": "sv_raw = var(abs(E),1,3)",
+  "geometry": "frozen X4/X1/z_top + physical diameter; unchanged ellipse",
+  "comparison": "D500 primary; D285 same-flow comparator when available",
+  "analyzed_commit_sha": "562d041e154b5968b888fc31b0c4dae60852b2af",
+  "analysis_script_sha256": "12489b3f6b97e21dcb926d46c9d551ee8aa3470029ad1b4d44a38277f699fb2b",
+  "formal_framewise_sha256": "bbf0e9d30bfb41b06e5e0ca002e47c8c63123329a01bd9a39d393f16519e8995",
+  "geometry_py_sha256": "b480bc0a909f3b7f9b0946c7d6a6cb0a6d1dc96a6dccfbc7bad62a5ffc7b1f3a",
+  "input_mat_location": "retained_diameter_stage_v1_mat_root/<scan_id>/frame_XXX.mat; host locator kept in ignored local execution receipt",
+  "input_mat_hash_source": "formal framewise input_mat_sha256; actual hashes retained in source_axial_band_framewise.csv",
+  "calibration": {
+    "dx_um": 12.7,
+    "dz_um": 6.7,
+    "supersample": 16
+  },
+  "z_top_diagnostic": "within-volume Spearman via average ranks; no p-value; B-scans/segments are not independent replicates",
+  "python_version": "3.12.10",
+  "numpy_version": "2.4.4",
+  "pandas_version": "2.3.3",
+  "stage2_base_sha": "a7d55d0e81a8e0b3fc7c60e464d469a3a5eae4a9",
+  "variance_denominator": "N",
+  "reexport": false,
+  "original_input_root_logical_name": "OCTA_SV_Derived/diameter_stage_v1",
+  "input_recovery_source": "prior intake export_jobs.json and volume_manifest_local.csv; absolute host locators retained only in ignored local receipt",
+  "common_flows_mm_s": [
+    1,
+    3,
+    5,
+    7,
+    10
+  ],
+  "secondary_d500_flows_mm_s": [
+    2,
+    9,
+    12
+  ],
+  "supplemental_segment_contrast": "Existing framewise band raw means: median by diameter, flow and frame_index//100, then D500 minus D285 and 100*(D500-D285)/D285; no new ROI or array reconstruction",
+  "clinical_or_physical_mechanism_inference": false,
+  "independent_unit": "scan volume; slow-axis frames and segments are not independent replicates"
+}
