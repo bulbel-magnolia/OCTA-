@@ -42,3 +42,4 @@ jobs:
               assert r['band_q_sum_relative_error']<1e-12
           print('four-diameter synthetic checks passed')
           PY
+# trigger after workflow creation
