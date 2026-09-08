@@ -1,0 +1,44 @@
+name: Four-diameter source axial code check
+
+on:
+  push:
+    branches: [analysis/sv-diameter-stage2]
+    paths:
+      - analysis/sv_diameter_stage2_scientific_v1/compare_four_diameter_source_axial.py
+      - .github/workflows/four-diameter-source-axial-codecheck.yml
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: analysis/sv-diameter-stage2
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install --upgrade pip numpy pandas scipy
+      - name: Syntax and synthetic band checks
+        run: |
+          python -m py_compile analysis/sv_diameter_stage2_scientific_v1/compare_four_diameter_source_axial.py
+          python - <<'PY'
+          import importlib.util
+          import numpy as np
+          from pathlib import Path
+          p=Path('analysis/sv_diameter_stage2_scientific_v1/compare_four_diameter_source_axial.py')
+          s=importlib.util.spec_from_file_location('cmp',p); m=importlib.util.module_from_spec(s); s.loader.exec_module(m)
+          from svrecttail.geometry import VesselGeometry
+          for d,w,z in [(128,254,180),(235,330,178),(285,406,176),(500,610,170)]:
+              cx=250.; wpx=w/12.7
+              g=VesselGeometry(cx-wpx/2,cx+wpx/2,z,float(d),12.7,6.7)
+              sv=np.full((351,500),7.0)
+              r=m.band_record(sv,g)
+              assert abs(r['source_mean_raw_replay']-7.0)<1e-12
+              assert abs(r['middle_to_upper_mean_ratio']-1.0)<1e-12
+              assert abs(r['lower_to_upper_mean_ratio']-1.0)<1e-12
+              assert r['band_q_sum_relative_error']<1e-12
+          print('four-diameter synthetic checks passed')
+          PY
