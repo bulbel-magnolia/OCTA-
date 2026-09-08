@@ -3,8 +3,8 @@
   "base_branch": "codex/sv-diameter-intake-v1",
   "base_sha": "d250615f84b371e0cc352abf5a22e4453de7b7b0",
   "working_branch": "codex/sv-diameter-formal-quant-v1",
-  "output_commit_sha": null,
-  "output_commit_note": "Filled with the metrics commit SHA in a subsequent provenance-only commit; a commit cannot embed its own SHA.",
+  "output_commit_sha": "00389a5c2aa517f467594dbb6349f08e9183930a",
+  "output_commit_note": "This is the metrics commit containing all numerical outputs; the subsequent provenance-only commit records this SHA and refreshes the provenance hash.",
   "python_version": "3.12.10",
   "packages": {
     "numpy": "2.4.4",
