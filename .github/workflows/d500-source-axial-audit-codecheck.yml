@@ -1,0 +1,52 @@
+name: D500 source axial audit code check
+
+on:
+  push:
+    branches:
+      - analysis/sv-diameter-stage2
+    paths:
+      - analysis/sv_diameter_stage2_scientific_v1/d500_source_axial_local_array_audit.py
+      - .github/workflows/d500-source-axial-audit-codecheck.yml
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: analysis/sv-diameter-stage2
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install --upgrade pip numpy pandas scipy
+      - name: Syntax and synthetic geometry checks
+        run: |
+          python -m py_compile analysis/sv_diameter_stage2_scientific_v1/d500_source_axial_local_array_audit.py
+          python - <<'PY'
+          import importlib.util
+          import numpy as np
+          from pathlib import Path
+          p=Path('analysis/sv_diameter_stage2_scientific_v1/d500_source_axial_local_array_audit.py')
+          s=importlib.util.spec_from_file_location('audit',p); m=importlib.util.module_from_spec(s); s.loader.exec_module(m)
+          from svrecttail.geometry import VesselGeometry, ellipse_weights
+          for diameter,width,z in [(285.0,406.4,180.5),(500.0,609.6,169.5)]:
+              cx=250.0; wpx=width/12.7
+              g=VesselGeometry(cx-wpx/2,cx+wpx/2,z,diameter,12.7,6.7)
+              full=ellipse_weights((351,500),g,supersample=16)
+              bands=[m.band_weights((351,500),g,lo,hi) for _,lo,hi in m.BANDS]
+              total=sum(bands)
+              assert np.max(np.abs(total-full)) <= 1e-15
+              img=np.full((351,500),7.0)
+              af,qf,mf=m.weighted_stats(img,full,12.7*6.7)
+              assert abs(mf-7.0) < 1e-12
+              qsum=0.0
+              for bw in bands:
+                  a,q,mean=m.weighted_stats(img,bw,12.7*6.7)
+                  assert abs(mean-7.0) < 1e-12
+                  qsum += q
+              assert m.relerr(qsum,qf) < 1e-12
+          print('synthetic checks passed')
+          PY
