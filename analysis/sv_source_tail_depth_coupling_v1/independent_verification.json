@@ -1,0 +1,16 @@
+{
+  "status": "passed",
+  "raw_array_replays": 8,
+  "raw_Q_comparisons": 344,
+  "raw_Q_max_relative_error": 4.834041487806412e-16,
+  "raw_area_max_relative_error": 3.819400322406011e-16,
+  "independently_recomputed_lag_rows": 5520,
+  "lag_max_absolute_error": 3.3306690738754696e-16,
+  "all_lag_summary_rows_verified": 13800,
+  "partial_scalar_checks": 92,
+  "partial_max_absolute_error": 4.440892098500626e-16,
+  "high_region_selection_checked": true,
+  "common_flow_consensus_and_cross_diameter_similarity_checked": true,
+  "original_coordinate_pairing_and_edge_medians_checked": true,
+  "existing_frozen_files_modified": 0
+}

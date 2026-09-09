@@ -1,0 +1,115 @@
+{
+  "starting_head": "98af95d4e16f3e117362ae2ae8a3c2600cc36ddc",
+  "analysis_code_commit": "Git commit containing this new directory",
+  "repository": "bulbel-magnolia/OCTA-",
+  "branch": "analysis/sv-diameter-stage2",
+  "extraction_script_sha256": "78a1e766d1c8f6d27f3c74ae617bc105d6bba38227ce84a692bd8717ccd9b804",
+  "input_manifest_sha256": "217ede5b303e15517fcad3c2a2dbd3dda5b8e678930eda598e643fc193c59efb",
+  "software": {
+    "python": "3.12.10",
+    "numpy": "2.4.4",
+    "pandas": "2.3.3",
+    "scipy": "1.17.1",
+    "matlab": "not used; read retained formal MAT",
+    "matplotlib": "3.10.8"
+  },
+  "signal": "var(abs(E),1,3), denominator N; linear raw SV",
+  "geometry": {
+    "frozen": "continuity-first v2.1",
+    "source": "unchanged X1 x physical diameter ellipse, centered X4",
+    "dx_um": 12.7,
+    "dz_um": 6.7,
+    "supersample": 16,
+    "tail": "frozen X1 rectangle below true physical bottom, guard 0"
+  },
+  "source_bins": [
+    4,
+    6,
+    8
+  ],
+  "primary_source_bins": 6,
+  "absolute_tail_edges_um": [
+    0,
+    25,
+    50,
+    75,
+    100,
+    125,
+    150,
+    175,
+    200,
+    225,
+    250,
+    275,
+    300,
+    325,
+    350,
+    375,
+    400,
+    425,
+    450,
+    475,
+    500
+  ],
+  "normalized_tail_edges_D": [
+    0,
+    0.2,
+    0.4,
+    0.6,
+    0.8,
+    1
+  ],
+  "normalized_tail_calculation": "direct integration at physical boundaries; no map interpolation",
+  "experimental_unit": "scan volume; no p-values, no pooled frames",
+  "analysis_script_sha256": "dd25f546244495e0650b06e5cd8e2e2e9dfcb329629d5c6e59260e311a3cd26b",
+  "analysis_parameters": {
+    "primary": "6 source bins x 20 nonoverlapping 25um bands; mean-mean, 51-frame residual, lag0",
+    "normalized": "6x5, direct 0.2D bins over 0-1D",
+    "source_bin_sensitivity": [
+      4,
+      8
+    ],
+    "optional_10_bins": "not performed",
+    "modes": [
+      "raw",
+      "detrended_31",
+      "detrended_51",
+      "detrended_101"
+    ],
+    "lag_range": [
+      -50,
+      50
+    ],
+    "full_lag_scope": "6 bins, mean-mean, raw/31/51/101, both tail coordinates",
+    "detrend": "centered median, original 0..499 grid, min_periods=1, truncated edges; invalid center remains NaN",
+    "spearman": "average ranks per pairwise-valid set; no p-values",
+    "lag_sign": "Source(i) versus Tail(i+lag); no wrap",
+    "controls": "source_area+z_top primary; X1+z_top sensitivity; controls detrended with signals in residual modes",
+    "high_region": "ceil(0.10 * number of positive cells), top signed rho, includes ties at cutoff; empty if no positive cells",
+    "peak_ties": "cell: smallest source_bin then tail_bin; lag: smallest |lag| then smaller signed lag",
+    "specificity": "rho(0) minus median rho at absolute lag 30..50 inclusive",
+    "flow_similarity": "Spearman of aligned map cells, ten pairs per diameter; map cells not independent replicates",
+    "source_resolution_map_comparison": "piecewise constant replication on LCM source rows only for shape diagnostic; no new quantitative SV and no tail-coordinate interpolation",
+    "Q_status": "Q–Q analysis includes signal-intensity and ROI-geometry contributions and is secondary to mean–mean analysis."
+  },
+  "all_script_sha256": {
+    "analyze_depth_coupling.py": "7b8da3b88313e56e570f2f9fd637fcc4da907e5a910de88915a3fefc01339020",
+    "build_report.py": "07f786f4d446b814adcc411f1b252f5634053c27f244f0a77ce1991251bf1131",
+    "derive_depth_metrics.py": "3ee1b3f3aad1bc97f917a6ad27e178f5a404a317489a532086ddbf117b21ad5c",
+    "make_figures.py": "2e37e45e5a0e6ea57ef93df47776a9d27c6e8d58e22a49d7c35657f8dd7352ca",
+    "verify_depth_analysis.py": "34f95cf8e4b17d804191a5d85ec8846e2ad1ec3a9a800822999c3beb3410d5cb"
+  },
+  "fixed_example_lag_cells": {
+    "flow_mm_s": 5,
+    "source_bins": [
+      2,
+      4,
+      6
+    ],
+    "absolute_tail_bins": [
+      2,
+      10
+    ]
+  },
+  "script_identity_note": "extraction_script_sha256 and analysis_script_sha256 identify the executed numerical scripts. all_script_sha256 identifies the delivered scripts after explicit UTF-8 JSON reads, verification-index sorting, and report metadata repair; numerical definitions are unchanged."
+}

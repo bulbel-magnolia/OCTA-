@@ -1,0 +1,14 @@
+{
+  "Q1": "绝对深度 consensus 的最大 cell，D128/D235/D285/D500 分别位于 (u,d)=(0.417,12.5 μm)、(0.583,12.5)、(0.417,12.5)、(0.250,12.5)，rho 分别为 0.342、0.228、0.259、0.128。120 个 cells 中 5/5 positive 的数量分别为 85、40、40、15；完整位置见固定色轴 Figure 1 和 consensus CSV。",
+  "Q2": "同一直径十对 absolute flow-map similarity 的 median [min,max] 为 D128 0.646 [0.532,0.765]、D235 0.600 [0.533,0.705]、D285 0.445 [0.319,0.528]、D500 0.195 [0.040,0.299]。数值不支持要求四直径的跨-flow 一致程度相同，不作主观等级划分。",
+  "Q3": "D128 五卷 peak source 都在 S3（u=0.417）；D235 peak 为 S3/S4，D285 为 S3/S4/S5。D500 四卷 peak 在 S2（u=0.25），flow1 在 S6（u=0.917）；其五卷 high-region source 中位数为 0.417–0.750，不能给出单一固定 source 深度。",
+  "Q4": "D235 五卷 peak tail 都在 T1（0–25 μm）；D128 在 T1/T2，D285 四卷在 T1、flow3 在 T3（50–75 μm），D500 在 T1/T2/T3。五卷 high-region tail 中位数范围分别为 D128 37.5–50、D235 25–62.5、D285 37.5–50、D500 62.5–137.5 μm；这与单最大 cell 的 12.5 μm 位置不同。",
+  "Q5": "在 u=1/3–1 的 S3–S6 × 0–100 μm 的 T1–T4 共 16 cells 内，D128、D235、D285 都是 16/16 cells 在 5/5 flows 为正，D500 为 6/16（≥4/5 为 11/16）。该区的 consensus rho 中位数依次为 0.187、0.148、0.136、0.030，方向一致不等同于相同幅度或共享全部拓扑。",
+  "Q6": "D500 的五卷 map-median rho 的中位数由 raw 0.223 降至 51-frame mean–mean 0.005；相应 secondary Q–Q 为 0.189，source_area–tail Q 为 0.544。D500 的 Q–Q map 中位数没有超过所有其他直径（D128/D235 均约 0.192），因此这里只报告其 mean 与 Q/geometry 关系不同，不写 D500 coupling strongest。",
+  "Q7": "D128 absolute consensus 有 85/120 cells 为 5/5 正，高于 D235/D285 的 40/120 和 D500 的 15/120；D128 的 peak source 在五个 flow 均固定于 u=0.417。它与 D235/D285 的 absolute map similarity 仍有 0.661/0.728，与 D500 为 0.313，不能描述成与所有大直径完全不相似。",
+  "Q8": "绝对坐标六对跨直径 similarity 按 D128–235、128–285、128–500、235–285、235–500、285–500 顺序为 0.661、0.728、0.313、0.698、0.509、0.361；median=0.585，min–max=0.313–0.728。每对都基于各直径五-flow median consensus 6×20 map。",
+  "Q9": "直接 normalized-tail 6×5 map 的同序 similarity 为 0.525、0.727、0.133、0.831、0.582、0.506；median=0.554，min–max=0.133–0.831。三个不含 D128 的 diameter pairs 均升高，三个含 D128 的 pairs 均降低，所以 d/D 未使四直径总体更一致；两个坐标方案同时改变了物理覆盖范围与 band 宽度。",
+  "Q10": "D128/D235/D285 各 5/5 卷的最大 lag0 cell，其 lag 曲线峰恰在 0；D500 为 4/5，flow5 的该 cell 曲线峰在 −38 帧。20 卷的这些 cells 全部 specificity>0，但 positive specificity 本身不能保证曲线最大值也在零位；对每卷 high-region 入选 cells 的近零位计数另逐卷保留。",
+  "Q11": "area+z_top 控制后，与未控制 absolute map 的逐卷 similarity 中位数为 D128/D235/D285/D500 0.931/0.932/0.950/0.896，high-region Jaccard 中位数为 0.769/0.545/0.727/0.500。Controlled consensus 的 high-region (u,d) 中位数由未控制 (0.417,37.5)/(0.583,37.5)/(0.583,37.5)/(0.417,62.5) 变为 (0.333,50)/(0.500,50)/(0.583,37.5)/(0.250,87.5)，故 map 形状与区域边界的保留程度不同；X1+z_top 给出近似的形状相似度，完整例外见逐卷 CSV。",
+  "Q12": "4 vs 6-bin 的逐卷形状相似度中位数依次为 0.874/0.868/0.788/0.718，8 vs 6 为 0.904/0.880/0.828/0.753；不宜称细胞级最大值与 region 边界完全一致。D500 absolute consensus high-region source 中位数随 4/6/8 bins 为 0.625/0.417/0.313，normalized-tail region 的 tail 中位数为 200/50/50 μm，位置不稳定；31/101 对 51 的 absolute map similarity 中位数均在约 0.933–0.961，完整范围见 detrend sensitivity CSV。"
+}
