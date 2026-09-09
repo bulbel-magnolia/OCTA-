@@ -1,0 +1,37 @@
+{
+  "starting_head": "cfac5eb929208195c3a6a65ce79c251ce1e59641",
+  "repository": "bulbel-magnolia/OCTA-",
+  "branch": "analysis/sv-diameter-stage2",
+  "software": {
+    "python": "3.12.10",
+    "numpy": "2.4.4",
+    "pandas": "2.3.3",
+    "scipy": "1.17.1"
+  },
+  "formal_signal": "var(abs(IMG),1,3), linear raw SV; denominator N; unchanged",
+  "geometry": "frozen continuity-first v2.1; X4 center, X1 span, physical D; dx12.7 dz6.7, supersample16",
+  "background": "centers X4 +/- 1.5 X1_px; source ellipse translated in physical geometry and rasterized on same lattice; tail same boundaries",
+  "weighted_statistics": "mean, median, MAD and population SD use fractional weights; weighted median inverse cumulative mass with midpoint for exact half ties; BG pools side pixels by weight",
+  "fov": "side invalid if full source plus 0-500um tail outside image edges; no recenter or clipping",
+  "asymmetry": "signed log ratio uses float64 tiny epsilon; absolute log, absolute difference, 2abs(L-R)/(L+R)",
+  "descriptive_thresholds": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "denominator_zero": "NaN, explicit flags; no epsilon for Z/CNR",
+  "physical_inference": "none",
+  "calibrated_noise_reference": "none documented; unavailable, no true instrument SNR",
+  "delivered_script_sha256": {
+    "analyze_qc.py": "8656ecf8f55fb396d12158ae5cebac41a42779b4e29bc4a216bab743f141a707",
+    "audit_additional_arrays.py": "57cc78245499a9b18b0e9d2f81e35068e346ebf5af676eca958b3f61d3004dc5",
+    "build_report.py": "376c7714c14672736facfa9c0b0c0e50941ab1606fac1e08a8cdeea792f36aa5",
+    "derive_qc.py": "a098d1e363e8f7d8b81b49626144954aeb4a4788e908435cf15ac9aeef8a8e51",
+    "finalize_delivery.py": "27f575caf11e4dfcb781b7d05a4d09ecd01d67470c1346651c2a58ed3cb55b1d",
+    "make_figures.py": "0586ad1c240641a6d793cd532bac02589f79453b06831cb39d01551d2b9da272",
+    "verify_qc.py": "58050b1e6e93be64dbb1cbfebee9bad026b368b2d8053aa35df64310b18b1e40"
+  },
+  "input_manifest_sha256": "435b0b6fd16a73aa3c04a024370044d8829a13f8007b46ea42d717ccd2858f80",
+  "read_policy_note": "CSV parser low_memory=False fixes mixed boolean inference; no numerical definition changed"
+}

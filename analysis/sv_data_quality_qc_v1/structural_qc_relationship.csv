@@ -1,0 +1,13 @@
+diameter_um,metric,structural_metric,spearman,n_volumes
+128,source_z,structural_source_sbr,0.40000000000000002,5
+128,proximal_z,structural_source_sbr,0.29999999999999999,5
+128,real_high_rho,structural_source_sbr,-0.60000000000000009,5
+235,source_z,structural_source_sbr,0.30000000000000004,5
+235,proximal_z,structural_source_sbr,-0.10000000000000003,5
+235,real_high_rho,structural_source_sbr,0.30000000000000004,5
+285,source_z,structural_source_sbr,0,5
+285,proximal_z,structural_source_sbr,0.099999999999999978,5
+285,real_high_rho,structural_source_sbr,-0.5,5
+500,source_z,structural_source_sbr,-0.60000000000000009,5
+500,proximal_z,structural_source_sbr,0.099999999999999978,5
+500,real_high_rho,structural_source_sbr,-0.30000000000000004,5

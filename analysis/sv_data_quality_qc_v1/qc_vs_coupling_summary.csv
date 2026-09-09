@@ -1,0 +1,141 @@
+diameter,predictor,outcome,n_volumes,spearman,interpretation
+128,source_z,real_high_rho,5,-0.20000000000000001,descriptive n=5; no p-value
+128,source_z,real_map_rho,5,-0.10000000000000003,descriptive n=5; no p-value
+128,source_z,real_peak_rho,5,0.10000000000000003,descriptive n=5; no p-value
+128,source_z,real_specificity,5,-0.10000000000000003,descriptive n=5; no p-value
+128,proximal_z,real_high_rho,5,-0.099999999999999978,descriptive n=5; no p-value
+128,proximal_z,real_map_rho,5,0,descriptive n=5; no p-value
+128,proximal_z,real_peak_rho,5,0.20000000000000001,descriptive n=5; no p-value
+128,proximal_z,real_specificity,5,0,descriptive n=5; no p-value
+128,background_rcv,real_high_rho,5,-0.90000000000000002,descriptive n=5; no p-value
+128,background_rcv,real_map_rho,5,-0.20000000000000001,descriptive n=5; no p-value
+128,background_rcv,real_peak_rho,5,-0.80000000000000004,descriptive n=5; no p-value
+128,background_rcv,real_specificity,5,-0.20000000000000001,descriptive n=5; no p-value
+128,z_top_jitter,real_high_rho,5,,descriptive n=5; no p-value
+128,z_top_jitter,real_map_rho,5,,descriptive n=5; no p-value
+128,z_top_jitter,real_peak_rho,5,,descriptive n=5; no p-value
+128,z_top_jitter,real_specificity,5,,descriptive n=5; no p-value
+128,X1_jitter,real_high_rho,5,,descriptive n=5; no p-value
+128,X1_jitter,real_map_rho,5,,descriptive n=5; no p-value
+128,X1_jitter,real_peak_rho,5,,descriptive n=5; no p-value
+128,X1_jitter,real_specificity,5,,descriptive n=5; no p-value
+128,valid_fraction,real_high_rho,5,0.5,descriptive n=5; no p-value
+128,valid_fraction,real_map_rho,5,0.60000000000000009,descriptive n=5; no p-value
+128,valid_fraction,real_peak_rho,5,0.59999999999999998,descriptive n=5; no p-value
+128,valid_fraction,real_specificity,5,0.60000000000000009,descriptive n=5; no p-value
+128,negative_control_rho,real_high_rho,5,0,descriptive n=5; no p-value
+128,negative_control_rho,real_map_rho,5,-0.30000000000000004,descriptive n=5; no p-value
+128,negative_control_rho,real_peak_rho,5,-0.30000000000000004,descriptive n=5; no p-value
+128,negative_control_rho,real_specificity,5,-0.30000000000000004,descriptive n=5; no p-value
+235,source_z,real_high_rho,5,0.70000000000000007,descriptive n=5; no p-value
+235,source_z,real_map_rho,5,0.5,descriptive n=5; no p-value
+235,source_z,real_peak_rho,5,0.80000000000000004,descriptive n=5; no p-value
+235,source_z,real_specificity,5,-0.099999999999999978,descriptive n=5; no p-value
+235,proximal_z,real_high_rho,5,0.60000000000000009,descriptive n=5; no p-value
+235,proximal_z,real_map_rho,5,0.60000000000000009,descriptive n=5; no p-value
+235,proximal_z,real_peak_rho,5,0.60000000000000009,descriptive n=5; no p-value
+235,proximal_z,real_specificity,5,0.29999999999999999,descriptive n=5; no p-value
+235,background_rcv,real_high_rho,5,0.20000000000000001,descriptive n=5; no p-value
+235,background_rcv,real_map_rho,5,-0.20000000000000001,descriptive n=5; no p-value
+235,background_rcv,real_peak_rho,5,0.20000000000000001,descriptive n=5; no p-value
+235,background_rcv,real_specificity,5,-0.5,descriptive n=5; no p-value
+235,z_top_jitter,real_high_rho,5,,descriptive n=5; no p-value
+235,z_top_jitter,real_map_rho,5,,descriptive n=5; no p-value
+235,z_top_jitter,real_peak_rho,5,,descriptive n=5; no p-value
+235,z_top_jitter,real_specificity,5,,descriptive n=5; no p-value
+235,X1_jitter,real_high_rho,5,,descriptive n=5; no p-value
+235,X1_jitter,real_map_rho,5,,descriptive n=5; no p-value
+235,X1_jitter,real_peak_rho,5,,descriptive n=5; no p-value
+235,X1_jitter,real_specificity,5,,descriptive n=5; no p-value
+235,valid_fraction,real_high_rho,5,0.97467943448089644,descriptive n=5; no p-value
+235,valid_fraction,real_map_rho,5,0.20519567041703082,descriptive n=5; no p-value
+235,valid_fraction,real_peak_rho,5,0.66688592885535014,descriptive n=5; no p-value
+235,valid_fraction,real_specificity,5,-0.2051956704170308,descriptive n=5; no p-value
+235,negative_control_rho,real_high_rho,5,0.80000000000000004,descriptive n=5; no p-value
+235,negative_control_rho,real_map_rho,5,-0.30000000000000004,descriptive n=5; no p-value
+235,negative_control_rho,real_peak_rho,5,0.30000000000000004,descriptive n=5; no p-value
+235,negative_control_rho,real_specificity,5,-0.5,descriptive n=5; no p-value
+285,source_z,real_high_rho,5,0.5,descriptive n=5; no p-value
+285,source_z,real_map_rho,5,0.10000000000000001,descriptive n=5; no p-value
+285,source_z,real_peak_rho,5,0.5,descriptive n=5; no p-value
+285,source_z,real_specificity,5,0.10000000000000001,descriptive n=5; no p-value
+285,proximal_z,real_high_rho,5,0.60000000000000009,descriptive n=5; no p-value
+285,proximal_z,real_map_rho,5,0.30000000000000004,descriptive n=5; no p-value
+285,proximal_z,real_peak_rho,5,0.60000000000000009,descriptive n=5; no p-value
+285,proximal_z,real_specificity,5,0.30000000000000004,descriptive n=5; no p-value
+285,background_rcv,real_high_rho,5,0,descriptive n=5; no p-value
+285,background_rcv,real_map_rho,5,-0.60000000000000009,descriptive n=5; no p-value
+285,background_rcv,real_peak_rho,5,0,descriptive n=5; no p-value
+285,background_rcv,real_specificity,5,-0.60000000000000009,descriptive n=5; no p-value
+285,z_top_jitter,real_high_rho,5,,descriptive n=5; no p-value
+285,z_top_jitter,real_map_rho,5,,descriptive n=5; no p-value
+285,z_top_jitter,real_peak_rho,5,,descriptive n=5; no p-value
+285,z_top_jitter,real_specificity,5,,descriptive n=5; no p-value
+285,X1_jitter,real_high_rho,5,,descriptive n=5; no p-value
+285,X1_jitter,real_map_rho,5,,descriptive n=5; no p-value
+285,X1_jitter,real_peak_rho,5,,descriptive n=5; no p-value
+285,X1_jitter,real_specificity,5,,descriptive n=5; no p-value
+285,valid_fraction,real_high_rho,5,0.099999999999999978,descriptive n=5; no p-value
+285,valid_fraction,real_map_rho,5,0.20000000000000001,descriptive n=5; no p-value
+285,valid_fraction,real_peak_rho,5,0.099999999999999978,descriptive n=5; no p-value
+285,valid_fraction,real_specificity,5,0.20000000000000001,descriptive n=5; no p-value
+285,negative_control_rho,real_high_rho,5,0.50000000000000011,descriptive n=5; no p-value
+285,negative_control_rho,real_map_rho,5,-0.80000000000000004,descriptive n=5; no p-value
+285,negative_control_rho,real_peak_rho,5,0.50000000000000011,descriptive n=5; no p-value
+285,negative_control_rho,real_specificity,5,-0.80000000000000004,descriptive n=5; no p-value
+500,source_z,real_high_rho,5,0.40000000000000008,descriptive n=5; no p-value
+500,source_z,real_map_rho,5,0.69999999999999996,descriptive n=5; no p-value
+500,source_z,real_peak_rho,5,0.70000000000000007,descriptive n=5; no p-value
+500,source_z,real_specificity,5,0.89999999999999991,descriptive n=5; no p-value
+500,proximal_z,real_high_rho,5,0,descriptive n=5; no p-value
+500,proximal_z,real_map_rho,5,0.20000000000000001,descriptive n=5; no p-value
+500,proximal_z,real_peak_rho,5,0.69999999999999996,descriptive n=5; no p-value
+500,proximal_z,real_specificity,5,0.60000000000000009,descriptive n=5; no p-value
+500,background_rcv,real_high_rho,5,0.50000000000000011,descriptive n=5; no p-value
+500,background_rcv,real_map_rho,5,0.20000000000000004,descriptive n=5; no p-value
+500,background_rcv,real_peak_rho,5,-0.30000000000000004,descriptive n=5; no p-value
+500,background_rcv,real_specificity,5,0.10000000000000003,descriptive n=5; no p-value
+500,z_top_jitter,real_high_rho,5,,descriptive n=5; no p-value
+500,z_top_jitter,real_map_rho,5,,descriptive n=5; no p-value
+500,z_top_jitter,real_peak_rho,5,,descriptive n=5; no p-value
+500,z_top_jitter,real_specificity,5,,descriptive n=5; no p-value
+500,X1_jitter,real_high_rho,5,,descriptive n=5; no p-value
+500,X1_jitter,real_map_rho,5,,descriptive n=5; no p-value
+500,X1_jitter,real_peak_rho,5,,descriptive n=5; no p-value
+500,X1_jitter,real_specificity,5,,descriptive n=5; no p-value
+500,valid_fraction,real_high_rho,5,0.46169025843831935,descriptive n=5; no p-value
+500,valid_fraction,real_map_rho,5,0.56428809364683474,descriptive n=5; no p-value
+500,valid_fraction,real_peak_rho,5,0.56428809364683474,descriptive n=5; no p-value
+500,valid_fraction,real_specificity,5,0.82078268166812329,descriptive n=5; no p-value
+500,negative_control_rho,real_high_rho,5,0.50000000000000011,descriptive n=5; no p-value
+500,negative_control_rho,real_map_rho,5,0.20000000000000004,descriptive n=5; no p-value
+500,negative_control_rho,real_peak_rho,5,-0.30000000000000004,descriptive n=5; no p-value
+500,negative_control_rho,real_specificity,5,0.10000000000000003,descriptive n=5; no p-value
+pooled_20,source_z,real_high_rho,20,0.45563909774436084,potentially confounded by diameter; exploratory only
+pooled_20,source_z,real_map_rho,20,0.17443609022556389,potentially confounded by diameter; exploratory only
+pooled_20,source_z,real_peak_rho,20,0.42406015037593986,potentially confounded by diameter; exploratory only
+pooled_20,source_z,real_specificity,20,0.13082706766917288,potentially confounded by diameter; exploratory only
+pooled_20,proximal_z,real_high_rho,20,0.91879699248120295,potentially confounded by diameter; exploratory only
+pooled_20,proximal_z,real_map_rho,20,0.76240601503759386,potentially confounded by diameter; exploratory only
+pooled_20,proximal_z,real_peak_rho,20,0.82255639097744349,potentially confounded by diameter; exploratory only
+pooled_20,proximal_z,real_specificity,20,0.75488721804511272,potentially confounded by diameter; exploratory only
+pooled_20,background_rcv,real_high_rho,20,0.31278195488721805,potentially confounded by diameter; exploratory only
+pooled_20,background_rcv,real_map_rho,20,0.47368421052631576,potentially confounded by diameter; exploratory only
+pooled_20,background_rcv,real_peak_rho,20,0.27819548872180455,potentially confounded by diameter; exploratory only
+pooled_20,background_rcv,real_specificity,20,0.41654135338345866,potentially confounded by diameter; exploratory only
+pooled_20,z_top_jitter,real_high_rho,20,,potentially confounded by diameter; exploratory only
+pooled_20,z_top_jitter,real_map_rho,20,,potentially confounded by diameter; exploratory only
+pooled_20,z_top_jitter,real_peak_rho,20,,potentially confounded by diameter; exploratory only
+pooled_20,z_top_jitter,real_specificity,20,,potentially confounded by diameter; exploratory only
+pooled_20,X1_jitter,real_high_rho,20,,potentially confounded by diameter; exploratory only
+pooled_20,X1_jitter,real_map_rho,20,,potentially confounded by diameter; exploratory only
+pooled_20,X1_jitter,real_peak_rho,20,,potentially confounded by diameter; exploratory only
+pooled_20,X1_jitter,real_specificity,20,,potentially confounded by diameter; exploratory only
+pooled_20,valid_fraction,real_high_rho,20,-0.097817935892652724,potentially confounded by diameter; exploratory only
+pooled_20,valid_fraction,real_map_rho,20,0.15425136044610621,potentially confounded by diameter; exploratory only
+pooled_20,valid_fraction,real_peak_rho,20,-0.015801358874966934,potentially confounded by diameter; exploratory only
+pooled_20,valid_fraction,real_specificity,20,0.13845000157113929,potentially confounded by diameter; exploratory only
+pooled_20,negative_control_rho,real_high_rho,20,0.37593984962406019,potentially confounded by diameter; exploratory only
+pooled_20,negative_control_rho,real_map_rho,20,0.066165413533834538,potentially confounded by diameter; exploratory only
+pooled_20,negative_control_rho,real_peak_rho,20,0.33834586466165417,potentially confounded by diameter; exploratory only
+pooled_20,negative_control_rho,real_specificity,20,-0.055639097744360905,potentially confounded by diameter; exploratory only
