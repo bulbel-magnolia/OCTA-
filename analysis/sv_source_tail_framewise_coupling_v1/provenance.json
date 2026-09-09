@@ -1,0 +1,77 @@
+{
+  "repository": "bulbel-magnolia/OCTA-",
+  "branch": "analysis/sv-diameter-stage2",
+  "starting_head": "0d1c428d901447f17d0fa600b37dfdfa41e776dd",
+  "result_commit": "The Git commit containing this directory; reported after commit/push.",
+  "script": "analysis/sv_source_tail_framewise_coupling_v1/run_analysis.py",
+  "script_sha256": "8916ea8977a148272c1928c60837b5cb8f3babc5d125a59b5089c0c99d3cff68",
+  "completed_utc": "2026-09-09T11:57:24.455603+00:00",
+  "software": {
+    "python": "3.12.10",
+    "numpy": "2.4.4",
+    "pandas": "2.3.3",
+    "scipy": "1.17.1",
+    "matplotlib": "3.10.8"
+  },
+  "signal": "SV_raw = Var_t(abs(E)), denominator N; linear raw SV",
+  "geometry": {
+    "version": "continuity-first v2.1",
+    "source": "X1 apparent lateral span x physical diameter ellipse",
+    "lateral_center": "frozen X4",
+    "dx_um": 12.7,
+    "dz_um": 6.7,
+    "supersample": 16,
+    "bands": "physical axial thirds with frozen subpixel weights",
+    "tail": "X1 rectangle at true physical bottom",
+    "guard_um": 0,
+    "tail_windows_um": [
+      100,
+      500
+    ]
+  },
+  "analysis": {
+    "experimental_unit": "scan volume",
+    "frame_role": "within-volume spatial position",
+    "common_flows_mm_s": [
+      1,
+      3,
+      5,
+      7,
+      10
+    ],
+    "d500_extension_flows_mm_s": [
+      2,
+      9,
+      12
+    ],
+    "frame_index_base": 0,
+    "nominal_frame_grid": [
+      0,
+      499
+    ],
+    "detrend_windows": [
+      31,
+      51,
+      101
+    ],
+    "primary_detrend_window": 51,
+    "moving_median": "centered on original integer grid, min_periods=1; edge truncated; NaN ignored for baseline, invalid center stays NaN",
+    "lag_definition": "Source(i) versus Tail(i+lag)",
+    "lags": [
+      -50,
+      50
+    ],
+    "spearman": "Pearson of pairwise-valid average ranks; min 3 pairs",
+    "specificity": "rho(0) - median rho at absolute lag 30 through 50, inclusive",
+    "peak": "maximum signed rho; exact ties resolved by smallest absolute lag then smaller signed lag",
+    "zero_rank": "competition rank: 1 + number of strictly greater rho values",
+    "partial": "average ranks then OLS with intercept and indicated controls; Pearson of residuals; rank is re-computed in each pairwise-complete subset",
+    "partial_modes": "raw plus residual signals and residual controls at 31/51/101",
+    "no_p_values": true,
+    "no_frame_pooled_correlation": true,
+    "no_background_subtraction": true,
+    "no_raw_signal_normalization": true
+  },
+  "d128_q": "Direct quantify_raw_sv replay from SHA-verified retained formal NPZ; never median-times-area",
+  "reuse_verified_framewise": false
+}

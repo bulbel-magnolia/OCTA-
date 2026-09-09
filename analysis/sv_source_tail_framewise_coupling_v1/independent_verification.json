@@ -1,0 +1,14 @@
+{
+  "status": "passed",
+  "input_manifest_files_rehashed": 44,
+  "band_array_identities_matched_to_formal_frames": 10931,
+  "independently_recomputed_lag_rows": 2576,
+  "lag_max_absolute_error": 2.220446049250313e-16,
+  "independently_recomputed_first_difference_rows": 460,
+  "first_difference_max_absolute_error": 2.220446049250313e-16,
+  "coordinate_join_not_compressed_frames": true,
+  "edge_median_coordinate_neighborhood_verified": true,
+  "only_new_analysis_directory_changed": true,
+  "preexisting_files_modified": 0,
+  "notes": "No p-values computed. Additional publication integrity is verified by Git after commit/push."
+}
