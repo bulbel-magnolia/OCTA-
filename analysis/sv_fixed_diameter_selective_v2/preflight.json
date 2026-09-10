@@ -1,0 +1,9 @@
+{
+  "status": "passed",
+  "array_paths_checked": 4621,
+  "missing_paths": [],
+  "input_output_hashes_passed": true,
+  "nominal": 7500,
+  "valid": 7018,
+  "output_preexisted_as_results": false
+}

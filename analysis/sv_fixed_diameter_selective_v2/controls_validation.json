@@ -1,0 +1,11 @@
+{
+  "status": "passed",
+  "pseudo_and_real_matched_map_rows": 5400,
+  "expected_map_rows": 5400,
+  "excess_cell_rows": 1800,
+  "n_C16_volumes": 15,
+  "production_independent_checks": 7344,
+  "comparison_support": "mask before detrend verified",
+  "conditional_C_triggered": 0,
+  "conditional_A_triggered": 15
+}

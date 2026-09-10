@@ -1,0 +1,2 @@
+origin	https://github.com/bulbel-magnolia/OCTA-.git (fetch) [blob:none]
+origin	https://github.com/bulbel-magnolia/OCTA-.git (push)

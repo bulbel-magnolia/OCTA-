@@ -1,0 +1,9 @@
+{
+  "status": "passed",
+  "questions": 3,
+  "evidence_entries": 25,
+  "evidence_rows": 15994,
+  "no_weak_correlation_cutoff_introduced": true,
+  "all_claims_use_saved_v2_outputs": true,
+  "unresolved_physical_quantities_explicit": true
+}

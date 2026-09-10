@@ -1,0 +1,19 @@
+{
+  "status": "passed",
+  "figures": 14,
+  "all_main_map_cells_displayed": true,
+  "all_map_limits_rho": [
+    -1,
+    1
+  ],
+  "all_excess_limits": [
+    -2,
+    2
+  ],
+  "physical_depth_last_band": [
+    475,
+    500
+  ],
+  "visual_review": "all 14 PNGs actually inspected by Codex; labels, axes, layout and signed scales checked",
+  "reviewed_utc": "2026-09-10T04:14:39.937413+00:00"
+}

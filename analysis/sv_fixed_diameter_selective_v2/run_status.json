@@ -1,0 +1,18 @@
+{
+  "stage": "complete",
+  "updated_utc": "2026-09-10T04:14:40.029736+00:00",
+  "overall": "complete",
+  "pixel_inputs_available": true,
+  "last_completed_scan": "D285_F10_V01",
+  "arrays_verified": 7018,
+  "pixel_validation": "passed",
+  "conditional_extensions": "D all 15; B two scans; A complete; C and E not triggered",
+  "conditional_B_visual_review": "complete_with_unresolved_anatomical_boundary",
+  "remaining": "none within authorized local analysis scope",
+  "three_core_questions": "complete",
+  "figure_visual_review": "14 of 14 passed",
+  "scientific_computational_blockers": [],
+  "physical_undefined_results": "explicitly preserved in README and undefined_physical_interpretations.csv",
+  "local_output_review_pending": true,
+  "commit_push_or_publish": false
+}

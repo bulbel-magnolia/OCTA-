@@ -1,0 +1,7 @@
+{
+  "recorded_utc": "2026-09-10T05:28:22.507071+00:00",
+  "branch": "analysis/sv-diameter-stage2",
+  "head": "d6d1d8300d7b026fac2d3daecaec2a18503c11ed",
+  "remote_target": "origin/analysis/sv-diameter-stage2",
+  "authorization": "User explicitly approved a single independent commit and normal push of completed selective-v2 results and necessary dependencies; no scientific recomputation or result edits"
+}

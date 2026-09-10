@@ -1,0 +1,17 @@
+file,expected_rows,actual_rows,key,status
+depth_maps_raw51.csv,3600,3600,scan_id + diameter_um + flow_mm_s + mode + source_bin + tail_bin,passed
+pseudo_maps.csv,5400,5400,scan_id + diameter_um + flow_mm_s + side + source_bin + tail_bin,passed
+fixed_region_control_cells.csv,1800,1800,scan_id + diameter_um + flow_mm_s + source_bin + tail_bin,passed
+position_sensitivity_cells.csv,1200,1200,scan_id + diameter_um + flow_mm_s + offset + source_bin + tail_bin,passed
+volume_metrics.csv,75,75,scan_id + diameter_um + flow_mm_s + metric,passed
+raw_depth_profiles.csv,600,600,scan_id + diameter_um + flow_mm_s + tail_bin + metric,passed
+spatial_block_summary.csv,375,375,scan_id + diameter_um + flow_mm_s + frame_lo + metric,passed
+whole_coupling.csv,90,90,scan_id + diameter_um + flow_mm_s + mode + pair,passed
+representative_lag.csv.gz,18180,18180,scan_id + diameter_um + flow_mm_s + mode + pair + lag,passed
+pseudo_representative_lag.csv.gz,13635,13635,scan_id + diameter_um + flow_mm_s + side + pair + lag,passed
+position_sensitivity_lag.csv.gz,22725,22725,scan_id + diameter_um + flow_mm_s + offset + pair + lag,passed
+adjacent_difference.csv,45,45,scan_id + diameter_um + flow_mm_s + pair,passed
+crossed_controls.csv,90,90,scan_id + diameter_um + flow_mm_s + pair + side,passed
+background_real_tail_covariation.csv,600,600,scan_id + diameter_um + flow_mm_s + mode + tail_bin,passed
+conditional_A_cells.csv,180,180,scan_id + diameter_um + flow_mm_s + source_bin + tail_bin,passed
+conditional_D_structural_correlations.csv,450,450,scan_id + diameter_um + flow_mm_s + side + mode + kind + region,passed

@@ -1,0 +1,9 @@
+{
+  "status": "passed",
+  "main_map_rows": 3600,
+  "expected_map_rows": 3600,
+  "nominal_rows": 7500,
+  "valid_rows": 7018,
+  "reconstruction_checks": 90,
+  "no_old_arrays_read": true
+}

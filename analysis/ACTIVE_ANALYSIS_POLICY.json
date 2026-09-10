@@ -1,0 +1,48 @@
+{
+  "version": "physical_diameter_geometry_v2",
+  "decision_date": "2026-09-10",
+  "user_geometry_approval": "好的，我们就改进为这种方案吧",
+  "user_d500_approval": "D500 不再进入后续科学分析，但保留数据及排除记录",
+  "primary_diameters_um": [
+    128,
+    235,
+    285
+  ],
+  "common_flows_mm_s": [
+    1,
+    3,
+    5,
+    7,
+    10
+  ],
+  "excluded_diameters_um": [
+    500
+  ],
+  "excluded_volumes": 8,
+  "exclusion_timing": "post-hoc after image/QC inspection; not preregistered and not instrument failure certification",
+  "old_data_and_results": "retain; do not overwrite or delete",
+  "source": "physical D x D ellipse in pixel coordinates; same frozen X4 and z_top",
+  "tail": "physical D lateral width; begins z_top+D/dz; guard 0; no cone; raw SV",
+  "original_X1": "retain as original_apparent_width_um only; never relabel apparent width as physical D",
+  "invalid_geometry": "preserve original missing frames; fixed D does not recover missing top/center",
+  "new_coupling": "not computed in this geometry/input migration; old coupling not relabeled as new",
+  "old_qc": "belongs to old X1 geometry; not relabeled as QC for new ROI",
+  "status": "validated_geometry_and_raw_integration_inputs",
+  "active_input_directory": "analysis/sv_physical_diameter_geometry_v2",
+  "primary_volumes": 15,
+  "primary_valid_frames": 7018,
+  "primary_nominal_frames": 7500,
+  "provenance": "user-approved change on 2026-09-10; prior versions retained",
+  "excluded_volume_ids": [
+    "D500_F01_V01",
+    "D500_F02_V01",
+    "D500_F03_V01",
+    "D500_F05_V01",
+    "D500_F07_V01",
+    "D500_F09_V01",
+    "D500_F10_V01",
+    "D500_F12_V01"
+  ],
+  "excluded_valid_frames": 3913,
+  "downstream_rule": "New scientific analyses must use this fixed-physical-D geometry and this 15-volume cohort; never combine old-X1 and new-D metrics under one method label."
+}

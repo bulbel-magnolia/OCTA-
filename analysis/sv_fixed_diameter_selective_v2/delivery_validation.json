@@ -1,0 +1,11 @@
+{
+  "status": "passed",
+  "core_questions": 3,
+  "evidence_entries": 25,
+  "evidence_rows": 15994,
+  "evidence_hashes_and_row_bounds": "passed",
+  "python_syntax_files": 18,
+  "report_local_links": 60,
+  "reviewed_statistical_figures": 14,
+  "head_and_worktree_scope": "unchanged outside new output directory"
+}

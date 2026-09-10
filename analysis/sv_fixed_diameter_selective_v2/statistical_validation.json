@@ -1,0 +1,23 @@
+{
+  "status": "passed",
+  "cases": 7,
+  "production_volumes": 3,
+  "checks": 2571,
+  "rho_tolerance": 1e-12,
+  "covered": [
+    "lag original coordinates and pairs",
+    "missing endpoints and internal",
+    "ties",
+    "constant",
+    "empty",
+    "signed correlation",
+    "known shift",
+    "positive scaling",
+    "strict summaries",
+    "peak tie and undefined far lag",
+    "common mask before trend",
+    "raw adjacent difference",
+    "matched specificity",
+    "window counts and center missingness"
+  ]
+}

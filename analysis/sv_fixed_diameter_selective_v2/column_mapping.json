@@ -1,0 +1,160 @@
+{
+  "input": "C:\\Users\\zby\\Desktop\\2026血管三维重建项目\\算法差异分析\\_worktrees\\OCTA-\\sv-diameter-stage2\\analysis\\sv_physical_diameter_geometry_v2",
+  "join_keys": [
+    "scan_id",
+    "frame_index"
+  ],
+  "geometry_backbone": "geometry_manifest.csv.gz",
+  "regions": {
+    "source": {
+      "mean": "source_mean_raw",
+      "q": "source_q_raw",
+      "area": "source_area_um2"
+    },
+    "s1": {
+      "mean": "source_s1_mean_raw",
+      "q": "source_s1_q_raw",
+      "area": "source_s1_area_um2"
+    },
+    "s2": {
+      "mean": "source_s2_mean_raw",
+      "q": "source_s2_q_raw",
+      "area": "source_s2_area_um2"
+    },
+    "s3": {
+      "mean": "source_s3_mean_raw",
+      "q": "source_s3_q_raw",
+      "area": "source_s3_area_um2"
+    },
+    "s4": {
+      "mean": "source_s4_mean_raw",
+      "q": "source_s4_q_raw",
+      "area": "source_s4_area_um2"
+    },
+    "s5": {
+      "mean": "source_s5_mean_raw",
+      "q": "source_s5_q_raw",
+      "area": "source_s5_area_um2"
+    },
+    "s6": {
+      "mean": "source_s6_mean_raw",
+      "q": "source_s6_q_raw",
+      "area": "source_s6_area_um2"
+    },
+    "t01": {
+      "mean": "tail_t01_mean_raw",
+      "q": "tail_t01_q_raw",
+      "area": "tail_t01_area_um2"
+    },
+    "t02": {
+      "mean": "tail_t02_mean_raw",
+      "q": "tail_t02_q_raw",
+      "area": "tail_t02_area_um2"
+    },
+    "t03": {
+      "mean": "tail_t03_mean_raw",
+      "q": "tail_t03_q_raw",
+      "area": "tail_t03_area_um2"
+    },
+    "t04": {
+      "mean": "tail_t04_mean_raw",
+      "q": "tail_t04_q_raw",
+      "area": "tail_t04_area_um2"
+    },
+    "t05": {
+      "mean": "tail_t05_mean_raw",
+      "q": "tail_t05_q_raw",
+      "area": "tail_t05_area_um2"
+    },
+    "t06": {
+      "mean": "tail_t06_mean_raw",
+      "q": "tail_t06_q_raw",
+      "area": "tail_t06_area_um2"
+    },
+    "t07": {
+      "mean": "tail_t07_mean_raw",
+      "q": "tail_t07_q_raw",
+      "area": "tail_t07_area_um2"
+    },
+    "t08": {
+      "mean": "tail_t08_mean_raw",
+      "q": "tail_t08_q_raw",
+      "area": "tail_t08_area_um2"
+    },
+    "t09": {
+      "mean": "tail_t09_mean_raw",
+      "q": "tail_t09_q_raw",
+      "area": "tail_t09_area_um2"
+    },
+    "t10": {
+      "mean": "tail_t10_mean_raw",
+      "q": "tail_t10_q_raw",
+      "area": "tail_t10_area_um2"
+    },
+    "t11": {
+      "mean": "tail_t11_mean_raw",
+      "q": "tail_t11_q_raw",
+      "area": "tail_t11_area_um2"
+    },
+    "t12": {
+      "mean": "tail_t12_mean_raw",
+      "q": "tail_t12_q_raw",
+      "area": "tail_t12_area_um2"
+    },
+    "t13": {
+      "mean": "tail_t13_mean_raw",
+      "q": "tail_t13_q_raw",
+      "area": "tail_t13_area_um2"
+    },
+    "t14": {
+      "mean": "tail_t14_mean_raw",
+      "q": "tail_t14_q_raw",
+      "area": "tail_t14_area_um2"
+    },
+    "t15": {
+      "mean": "tail_t15_mean_raw",
+      "q": "tail_t15_q_raw",
+      "area": "tail_t15_area_um2"
+    },
+    "t16": {
+      "mean": "tail_t16_mean_raw",
+      "q": "tail_t16_q_raw",
+      "area": "tail_t16_area_um2"
+    },
+    "t17": {
+      "mean": "tail_t17_mean_raw",
+      "q": "tail_t17_q_raw",
+      "area": "tail_t17_area_um2"
+    },
+    "t18": {
+      "mean": "tail_t18_mean_raw",
+      "q": "tail_t18_q_raw",
+      "area": "tail_t18_area_um2"
+    },
+    "t19": {
+      "mean": "tail_t19_mean_raw",
+      "q": "tail_t19_q_raw",
+      "area": "tail_t19_area_um2"
+    },
+    "t20": {
+      "mean": "tail_t20_mean_raw",
+      "q": "tail_t20_q_raw",
+      "area": "tail_t20_area_um2"
+    },
+    "tail100": {
+      "mean": "tail_mean_raw_100um",
+      "q": "tail_q_raw_100um",
+      "area": "tail_area_um2_100um"
+    },
+    "tail500": {
+      "mean": "tail_mean_raw_500um",
+      "q": "tail_q_raw_500um",
+      "area": "tail_area_um2_500um"
+    },
+    "s36": {
+      "mean": "sum(source_s3..s6_q_raw)/sum(source_s3..s6_area_um2)",
+      "q": "sum(source_s3..s6_q_raw)",
+      "area": "sum(source_s3..s6_area_um2)"
+    }
+  }
+}

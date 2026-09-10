@@ -1,0 +1,73 @@
+{
+  "status": "passed",
+  "checks": {
+    "old_source_mean_replay": {
+      "max_absolute_error": 1.4901161193847656e-07,
+      "max_relative_error": 7.373996504682069e-16
+    },
+    "old_source_q_replay": {
+      "max_absolute_error": 0.01171875,
+      "max_relative_error": 6.095152713343015e-16
+    },
+    "old_tail100_mean_replay": {
+      "max_absolute_error": 5.960464477539063e-08,
+      "max_relative_error": 4.592275788866472e-16
+    },
+    "old_tail100_q_replay": {
+      "max_absolute_error": 0.001953125,
+      "max_relative_error": 2.648269680505172e-16
+    },
+    "old_tail500_mean_replay": {
+      "max_absolute_error": 1.862645149230957e-08,
+      "max_relative_error": 6.197675179700815e-16
+    },
+    "old_tail500_q_replay": {
+      "max_absolute_error": 0.00390625,
+      "max_relative_error": 2.6413540709509414e-16
+    },
+    "new_tail100_bin_sum": {
+      "max_absolute_error": 0.001953125,
+      "max_relative_error": 6.342925433274051e-16
+    },
+    "new_tail100_physical_area": {
+      "max_absolute_error": 3.637978807091713e-11,
+      "max_relative_error": 1.2789769243681803e-15
+    },
+    "new_tail500_bin_sum": {
+      "max_absolute_error": 0.001953125,
+      "max_relative_error": 5.951160183913476e-16
+    },
+    "new_tail500_physical_area": {
+      "max_absolute_error": 1.3096723705530167e-10,
+      "max_relative_error": 2.0463630789890884e-15
+    },
+    "new_source_vs_independent_full_image_Q": {
+      "max_absolute_error": 0.00390625,
+      "max_relative_error": 2.234810255408562e-16
+    },
+    "new_source_vs_independent_full_image_area": {
+      "max_absolute_error": 7.275957614183426e-12,
+      "max_relative_error": 1.6775585976697564e-16
+    }
+  },
+  "primary_volumes": 15,
+  "primary_valid_frames": 7018,
+  "primary_nominal_frames": 7500,
+  "original_invalid_frames_preserved": 482,
+  "excluded_d500_volumes": 8,
+  "excluded_d500_valid_frames": 3913,
+  "fixed_physical_dimensions_passed": true,
+  "frozen_centers_top_bottom_preserved": true,
+  "no_added_invalid_frames": true,
+  "raw_array_sha_all_passed": true,
+  "raw_finite_nonnegative_all": true,
+  "independent_full_image_checks": 45,
+  "frozen_references_unchanged": true,
+  "formal_coupling_rerun": false,
+  "matched_background_qc_rerun": false,
+  "exclusion_is_posthoc": true,
+  "independent_table_geometry_check": "passed",
+  "independent_frozen_center_top_check": "passed",
+  "invalid_metric_missingness_check": "passed",
+  "active_policy_written": true
+}

@@ -1,0 +1,5 @@
+scan_id,parameter,frame_i,frame_next,absolute_delta_px,selection
+D285_F01_V01,X4,192,193,1.8331216876142378,maximum actual adjacent absolute change; earliest tie
+D285_F01_V01,z_top,12,13,1,maximum actual adjacent absolute change; earliest tie
+D285_F03_V01,X4,134,135,2.1989857373314123,maximum actual adjacent absolute change; earliest tie
+D285_F03_V01,z_top,27,28,1,maximum actual adjacent absolute change; earliest tie

@@ -1,0 +1,464 @@
+{
+  "status": "passed",
+  "checks": [
+    {
+      "check": "array identity on all actual reads",
+      "status": "passed",
+      "arrays": 7018
+    },
+    {
+      "check": "cohort and nominal/valid identity",
+      "status": "passed"
+    },
+    {
+      "check": "depth_maps_raw51.csv complete keys",
+      "status": "passed",
+      "expected_rows": 3600,
+      "actual_rows": 3600
+    },
+    {
+      "check": "depth_maps_raw51.csv finite coefficients have reasons",
+      "status": "passed"
+    },
+    {
+      "check": "pseudo_maps.csv complete keys",
+      "status": "passed",
+      "expected_rows": 5400,
+      "actual_rows": 5400
+    },
+    {
+      "check": "pseudo_maps.csv finite coefficients have reasons",
+      "status": "passed"
+    },
+    {
+      "check": "fixed_region_control_cells.csv complete keys",
+      "status": "passed",
+      "expected_rows": 1800,
+      "actual_rows": 1800
+    },
+    {
+      "check": "position_sensitivity_cells.csv complete keys",
+      "status": "passed",
+      "expected_rows": 1200,
+      "actual_rows": 1200
+    },
+    {
+      "check": "position_sensitivity_cells.csv finite coefficients have reasons",
+      "status": "passed"
+    },
+    {
+      "check": "volume_metrics.csv complete keys",
+      "status": "passed",
+      "expected_rows": 75,
+      "actual_rows": 75
+    },
+    {
+      "check": "raw_depth_profiles.csv complete keys",
+      "status": "passed",
+      "expected_rows": 600,
+      "actual_rows": 600
+    },
+    {
+      "check": "spatial_block_summary.csv complete keys",
+      "status": "passed",
+      "expected_rows": 375,
+      "actual_rows": 375
+    },
+    {
+      "check": "whole_coupling.csv complete keys",
+      "status": "passed",
+      "expected_rows": 90,
+      "actual_rows": 90
+    },
+    {
+      "check": "representative_lag.csv.gz complete keys",
+      "status": "passed",
+      "expected_rows": 18180,
+      "actual_rows": 18180
+    },
+    {
+      "check": "representative_lag.csv.gz finite coefficients have reasons",
+      "status": "passed"
+    },
+    {
+      "check": "pseudo_representative_lag.csv.gz complete keys",
+      "status": "passed",
+      "expected_rows": 13635,
+      "actual_rows": 13635
+    },
+    {
+      "check": "pseudo_representative_lag.csv.gz finite coefficients have reasons",
+      "status": "passed"
+    },
+    {
+      "check": "position_sensitivity_lag.csv.gz complete keys",
+      "status": "passed",
+      "expected_rows": 22725,
+      "actual_rows": 22725
+    },
+    {
+      "check": "position_sensitivity_lag.csv.gz finite coefficients have reasons",
+      "status": "passed"
+    },
+    {
+      "check": "adjacent_difference.csv complete keys",
+      "status": "passed",
+      "expected_rows": 45,
+      "actual_rows": 45
+    },
+    {
+      "check": "adjacent_difference.csv finite coefficients have reasons",
+      "status": "passed"
+    },
+    {
+      "check": "crossed_controls.csv complete keys",
+      "status": "passed",
+      "expected_rows": 90,
+      "actual_rows": 90
+    },
+    {
+      "check": "crossed_controls.csv finite coefficients have reasons",
+      "status": "passed"
+    },
+    {
+      "check": "background_real_tail_covariation.csv complete keys",
+      "status": "passed",
+      "expected_rows": 600,
+      "actual_rows": 600
+    },
+    {
+      "check": "background_real_tail_covariation.csv finite coefficients have reasons",
+      "status": "passed"
+    },
+    {
+      "check": "conditional_A_cells.csv complete keys",
+      "status": "passed",
+      "expected_rows": 180,
+      "actual_rows": 180
+    },
+    {
+      "check": "conditional_A_cells.csv finite coefficients have reasons",
+      "status": "passed"
+    },
+    {
+      "check": "conditional_D_structural_correlations.csv complete keys",
+      "status": "passed",
+      "expected_rows": 450,
+      "actual_rows": 450
+    },
+    {
+      "check": "conditional_D_structural_correlations.csv finite coefficients have reasons",
+      "status": "passed"
+    },
+    {
+      "check": "D128_F01_V01 pixel and offset nominal skeleton",
+      "status": "passed"
+    },
+    {
+      "check": "D128_F01_V01 missing centers not zero-filled",
+      "status": "passed"
+    },
+    {
+      "check": "D128_F01_V01 median-of-frame RI100",
+      "status": "passed"
+    },
+    {
+      "check": "D128_F01_V01 median-of-frame RI500",
+      "status": "passed"
+    },
+    {
+      "check": "D128_F03_V01 pixel and offset nominal skeleton",
+      "status": "passed"
+    },
+    {
+      "check": "D128_F03_V01 missing centers not zero-filled",
+      "status": "passed"
+    },
+    {
+      "check": "D128_F03_V01 median-of-frame RI100",
+      "status": "passed"
+    },
+    {
+      "check": "D128_F03_V01 median-of-frame RI500",
+      "status": "passed"
+    },
+    {
+      "check": "D128_F05_V01 pixel and offset nominal skeleton",
+      "status": "passed"
+    },
+    {
+      "check": "D128_F05_V01 missing centers not zero-filled",
+      "status": "passed"
+    },
+    {
+      "check": "D128_F05_V01 median-of-frame RI100",
+      "status": "passed"
+    },
+    {
+      "check": "D128_F05_V01 median-of-frame RI500",
+      "status": "passed"
+    },
+    {
+      "check": "D128_F07_V01 pixel and offset nominal skeleton",
+      "status": "passed"
+    },
+    {
+      "check": "D128_F07_V01 missing centers not zero-filled",
+      "status": "passed"
+    },
+    {
+      "check": "D128_F07_V01 median-of-frame RI100",
+      "status": "passed"
+    },
+    {
+      "check": "D128_F07_V01 median-of-frame RI500",
+      "status": "passed"
+    },
+    {
+      "check": "D128_F10_V01 pixel and offset nominal skeleton",
+      "status": "passed"
+    },
+    {
+      "check": "D128_F10_V01 missing centers not zero-filled",
+      "status": "passed"
+    },
+    {
+      "check": "D128_F10_V01 median-of-frame RI100",
+      "status": "passed"
+    },
+    {
+      "check": "D128_F10_V01 median-of-frame RI500",
+      "status": "passed"
+    },
+    {
+      "check": "D235_F01_V01 pixel and offset nominal skeleton",
+      "status": "passed"
+    },
+    {
+      "check": "D235_F01_V01 missing centers not zero-filled",
+      "status": "passed"
+    },
+    {
+      "check": "D235_F01_V01 median-of-frame RI100",
+      "status": "passed"
+    },
+    {
+      "check": "D235_F01_V01 median-of-frame RI500",
+      "status": "passed"
+    },
+    {
+      "check": "D235_F03_V01 pixel and offset nominal skeleton",
+      "status": "passed"
+    },
+    {
+      "check": "D235_F03_V01 missing centers not zero-filled",
+      "status": "passed"
+    },
+    {
+      "check": "D235_F03_V01 median-of-frame RI100",
+      "status": "passed"
+    },
+    {
+      "check": "D235_F03_V01 median-of-frame RI500",
+      "status": "passed"
+    },
+    {
+      "check": "D235_F05_V01 pixel and offset nominal skeleton",
+      "status": "passed"
+    },
+    {
+      "check": "D235_F05_V01 missing centers not zero-filled",
+      "status": "passed"
+    },
+    {
+      "check": "D235_F05_V01 median-of-frame RI100",
+      "status": "passed"
+    },
+    {
+      "check": "D235_F05_V01 median-of-frame RI500",
+      "status": "passed"
+    },
+    {
+      "check": "D235_F07_V01 pixel and offset nominal skeleton",
+      "status": "passed"
+    },
+    {
+      "check": "D235_F07_V01 missing centers not zero-filled",
+      "status": "passed"
+    },
+    {
+      "check": "D235_F07_V01 median-of-frame RI100",
+      "status": "passed"
+    },
+    {
+      "check": "D235_F07_V01 median-of-frame RI500",
+      "status": "passed"
+    },
+    {
+      "check": "D235_F10_V01 pixel and offset nominal skeleton",
+      "status": "passed"
+    },
+    {
+      "check": "D235_F10_V01 missing centers not zero-filled",
+      "status": "passed"
+    },
+    {
+      "check": "D235_F10_V01 median-of-frame RI100",
+      "status": "passed"
+    },
+    {
+      "check": "D235_F10_V01 median-of-frame RI500",
+      "status": "passed"
+    },
+    {
+      "check": "D285_F01_V01 pixel and offset nominal skeleton",
+      "status": "passed"
+    },
+    {
+      "check": "D285_F01_V01 missing centers not zero-filled",
+      "status": "passed"
+    },
+    {
+      "check": "D285_F01_V01 median-of-frame RI100",
+      "status": "passed"
+    },
+    {
+      "check": "D285_F01_V01 median-of-frame RI500",
+      "status": "passed"
+    },
+    {
+      "check": "D285_F03_V01 pixel and offset nominal skeleton",
+      "status": "passed"
+    },
+    {
+      "check": "D285_F03_V01 missing centers not zero-filled",
+      "status": "passed"
+    },
+    {
+      "check": "D285_F03_V01 median-of-frame RI100",
+      "status": "passed"
+    },
+    {
+      "check": "D285_F03_V01 median-of-frame RI500",
+      "status": "passed"
+    },
+    {
+      "check": "D285_F05_V01 pixel and offset nominal skeleton",
+      "status": "passed"
+    },
+    {
+      "check": "D285_F05_V01 missing centers not zero-filled",
+      "status": "passed"
+    },
+    {
+      "check": "D285_F05_V01 median-of-frame RI100",
+      "status": "passed"
+    },
+    {
+      "check": "D285_F05_V01 median-of-frame RI500",
+      "status": "passed"
+    },
+    {
+      "check": "D285_F07_V01 pixel and offset nominal skeleton",
+      "status": "passed"
+    },
+    {
+      "check": "D285_F07_V01 missing centers not zero-filled",
+      "status": "passed"
+    },
+    {
+      "check": "D285_F07_V01 median-of-frame RI100",
+      "status": "passed"
+    },
+    {
+      "check": "D285_F07_V01 median-of-frame RI500",
+      "status": "passed"
+    },
+    {
+      "check": "D285_F10_V01 pixel and offset nominal skeleton",
+      "status": "passed"
+    },
+    {
+      "check": "D285_F10_V01 missing centers not zero-filled",
+      "status": "passed"
+    },
+    {
+      "check": "D285_F10_V01 median-of-frame RI100",
+      "status": "passed"
+    },
+    {
+      "check": "D285_F10_V01 median-of-frame RI500",
+      "status": "passed"
+    },
+    {
+      "check": "independent final production map and conditional A checks",
+      "status": "passed",
+      "cell_checks": 720,
+      "representative_volumes": 3
+    },
+    {
+      "check": "detrend_support_controls.csv.gz all compared signals share support",
+      "status": "passed"
+    },
+    {
+      "check": "detrend_support_positions.csv.gz all compared signals share support",
+      "status": "passed"
+    },
+    {
+      "check": "independent 45-frame integrations",
+      "status": "passed",
+      "checks": 23760,
+      "max_relative_error": 6.948527016971464e-16,
+      "zero_reference_checks": 0,
+      "fixed_frames": 45
+    },
+    {
+      "check": "statistical_validation.json",
+      "status": "passed"
+    },
+    {
+      "check": "pixel_validation.json",
+      "status": "passed"
+    },
+    {
+      "check": "table_validation.json",
+      "status": "passed"
+    },
+    {
+      "check": "controls_validation.json",
+      "status": "passed"
+    },
+    {
+      "check": "conditional_validation.json",
+      "status": "passed"
+    },
+    {
+      "check": "all conditional triggers resolved",
+      "status": "passed"
+    },
+    {
+      "check": "all fixed and triggered images reviewed",
+      "status": "passed"
+    },
+    {
+      "check": "all inputs and historical results unchanged",
+      "status": "passed",
+      "files": 401
+    },
+    {
+      "check": "frozen contract unchanged",
+      "status": "passed"
+    }
+  ],
+  "all_required_modules_complete": true,
+  "nominal_frames": 7500,
+  "valid_frames": 7018,
+  "original_invalid_frames": 482,
+  "scientific_independent_validation": false,
+  "numerical_independent_implementations": true,
+  "anatomical_localization_truth": "unresolved; explicit result, not computational blocker",
+  "p_values": false,
+  "D500_arrays_read": 0,
+  "sign_and_undefined_results_preserved": true,
+  "local_output_review_pending": true
+}

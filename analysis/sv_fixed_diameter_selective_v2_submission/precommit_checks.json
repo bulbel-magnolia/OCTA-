@@ -1,0 +1,60 @@
+{
+  "status": "passed_precommit_inventory_only",
+  "scientific_analysis_rerun": false,
+  "results_regenerated": false,
+  "nominal_positions": 7500,
+  "valid_frames": 7018,
+  "volumes": 15,
+  "D500_arrays_read": 0,
+  "existing_scientific_checks": 102,
+  "existing_scientific_validation_status": "passed",
+  "validation_files": {
+    "conditional_validation.json": {
+      "status": "passed",
+      "sha256": "97eb17e17e92badb5e494b467a46a5e82939939e4aa67b6cd23bcad38938e714"
+    },
+    "controls_validation.json": {
+      "status": "passed",
+      "sha256": "21839eb539b374bcf70a843d36dfb4aa579bf97bb9e80cc966d5060ba30d2e70"
+    },
+    "delivery_validation.json": {
+      "status": "passed",
+      "sha256": "9d607bb0c5ae236d6ab416aa6c1284010940b6939db04599668169b57c8162e0"
+    },
+    "figure_validation.json": {
+      "status": "passed",
+      "sha256": "208deeedf44c43a73298d0458be2b9bd87a1f716d50fea993d07f45f050a0124"
+    },
+    "pixel_validation.json": {
+      "status": "passed",
+      "sha256": "8c46617009dcda21472d0a81a745846c7b48aaa923628167051c501b45a3cdba"
+    },
+    "report_validation.json": {
+      "status": "passed",
+      "sha256": "3791173ac270f32fdcc55da2d2184257292f0fad33bcabc51a08bfad16dbc12b"
+    },
+    "statistical_validation.json": {
+      "status": "passed",
+      "sha256": "a0f4ddf9e36fa48b365a1e840aa4cde2963bf9df4a1043287863b9f535fb62e8"
+    },
+    "table_validation.json": {
+      "status": "passed",
+      "sha256": "f4eb95a636db9e51ce50225f660c6357e827f7ee5909cfa8e890413c134b930a"
+    },
+    "validation.json": {
+      "status": "passed",
+      "sha256": "dd9c18a0716eb8fa01d17334053341cccfb74131558c221a7dac0a5ff2b85b7a"
+    }
+  },
+  "existing_input_and_output_identities_unchanged": 705,
+  "initial_head": "d6d1d8300d7b026fac2d3daecaec2a18503c11ed",
+  "fast_forward_base": "c35ddca31dd269f66c3fcfd953fe14b3ebe4090f",
+  "fast_forward_change": "Existing remote commit only adds analysis/sv_data_quality_qc_v1/SCIENTIFIC_INTERPRETATION.md; no existing input/result was modified",
+  "selected_original_files": 270,
+  "largest_selected_bytes": 12178273,
+  "selected_bytes": 162177042,
+  "blocked_by_file_size": [],
+  "existing_status_records_preserved": "Original run_status/provenance remain historical records, including local-review and no-commit fields; this separate submission record documents later user authorization",
+  "dependency_directory": "analysis/sv_physical_diameter_geometry_v2: fixed-D scalar inputs, geometry and identities used directly by selective-v2 scripts; no retained arrays",
+  "excluded_archives": "See excluded_uncommitted_files.csv; no exclusions by sign, scan, flow or map cell"
+}

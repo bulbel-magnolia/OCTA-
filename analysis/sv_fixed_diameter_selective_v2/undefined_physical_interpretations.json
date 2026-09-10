@@ -1,0 +1,10 @@
+{
+  "instrument_setting_consistency": "not verified across scans; raw recorded units retained",
+  "slow_axis_um_per_frame": "not recorded; no conversion",
+  "independent_lower_wall": "not resolved by fixed retained structural panels; geometry prior only",
+  "PSF": "not recorded",
+  "noise_floor": "not calibrated",
+  "independent_speckle_count": "not inferred from Neff",
+  "detection_depth": "not defined by local robust Z",
+  "causal_effect": "not identified by coefficient subtraction"
+}

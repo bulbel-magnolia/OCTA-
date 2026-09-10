@@ -1,0 +1,24 @@
+scan_id,diameter_um,flow_mm_s,grid_scope,prior_valid_frames,new_analysis_role,nominal_frames,decision_basis,selection_timing
+D128_F01_V01,128,1,common_grid,486,primary_three_diameters,500,retain common flows,post_hoc_after_previous_results_review
+D128_F03_V01,128,3,common_grid,468,primary_three_diameters,500,retain common flows,post_hoc_after_previous_results_review
+D128_F05_V01,128,5,common_grid,491,primary_three_diameters,500,retain common flows,post_hoc_after_previous_results_review
+D128_F07_V01,128,7,common_grid,493,primary_three_diameters,500,retain common flows,post_hoc_after_previous_results_review
+D128_F10_V01,128,10,common_grid,484,primary_three_diameters,500,retain common flows,post_hoc_after_previous_results_review
+D235_F01_V01,235,1,common_grid,448,primary_three_diameters,500,retain common flows,post_hoc_after_previous_results_review
+D235_F03_V01,235,3,common_grid,448,primary_three_diameters,500,retain common flows,post_hoc_after_previous_results_review
+D235_F05_V01,235,5,common_grid,424,primary_three_diameters,500,retain common flows,post_hoc_after_previous_results_review
+D235_F07_V01,235,7,common_grid,444,primary_three_diameters,500,retain common flows,post_hoc_after_previous_results_review
+D235_F10_V01,235,10,common_grid,461,primary_three_diameters,500,retain common flows,post_hoc_after_previous_results_review
+D285_F01_V01,285,1,common_grid,453,primary_three_diameters,500,retain common flows,post_hoc_after_previous_results_review
+D285_F03_V01,285,3,common_grid,474,primary_three_diameters,500,retain common flows,post_hoc_after_previous_results_review
+D285_F05_V01,285,5,common_grid,492,primary_three_diameters,500,retain common flows,post_hoc_after_previous_results_review
+D285_F07_V01,285,7,common_grid,458,primary_three_diameters,500,retain common flows,post_hoc_after_previous_results_review
+D285_F10_V01,285,10,common_grid,494,primary_three_diameters,500,retain common flows,post_hoc_after_previous_results_review
+D500_F01_V01,500,1,common_grid,500,excluded_from_future_scientific_analysis,500,user decision after image/QC review; upper signal concentration and lower deep detectability,post_hoc_after_previous_results_review
+D500_F02_V01,500,2,d500_extension,493,excluded_from_future_scientific_analysis,500,user decision after image/QC review; upper signal concentration and lower deep detectability,post_hoc_after_previous_results_review
+D500_F03_V01,500,3,common_grid,490,excluded_from_future_scientific_analysis,500,user decision after image/QC review; upper signal concentration and lower deep detectability,post_hoc_after_previous_results_review
+D500_F05_V01,500,5,common_grid,471,excluded_from_future_scientific_analysis,500,user decision after image/QC review; upper signal concentration and lower deep detectability,post_hoc_after_previous_results_review
+D500_F07_V01,500,7,common_grid,477,excluded_from_future_scientific_analysis,500,user decision after image/QC review; upper signal concentration and lower deep detectability,post_hoc_after_previous_results_review
+D500_F09_V01,500,9,d500_extension,482,excluded_from_future_scientific_analysis,500,user decision after image/QC review; upper signal concentration and lower deep detectability,post_hoc_after_previous_results_review
+D500_F10_V01,500,10,common_grid,500,excluded_from_future_scientific_analysis,500,user decision after image/QC review; upper signal concentration and lower deep detectability,post_hoc_after_previous_results_review
+D500_F12_V01,500,12,d500_extension,500,excluded_from_future_scientific_analysis,500,user decision after image/QC review; upper signal concentration and lower deep detectability,post_hoc_after_previous_results_review

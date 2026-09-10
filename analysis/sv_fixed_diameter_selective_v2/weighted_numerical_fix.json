@@ -1,0 +1,194 @@
+{
+  "failure": "NumPy sequential cumulative mass versus Python 3.12 compensated sum disagreed near half weight",
+  "evidence": "weighted_discrepancy_diagnosis.csv",
+  "fix": "Exact binary rational integer arithmetic when floating error bound overlaps half boundary; independent Fraction reference",
+  "definition_changed": false,
+  "threshold_relaxed": false,
+  "formal_signal_changed": false,
+  "preserved_failed_checkpoints": [
+    {
+      "source": "framewise_local_background_qc_D128_F01_V01.csv.gz",
+      "preserved_as": "failed_weighted_roundoff_checkpoints\\framewise_local_background_qc_D128_F01_V01.csv.gz"
+    },
+    {
+      "source": "framewise_local_background_qc_D128_F03_V01.csv.gz",
+      "preserved_as": "failed_weighted_roundoff_checkpoints\\framewise_local_background_qc_D128_F03_V01.csv.gz"
+    },
+    {
+      "source": "framewise_local_background_qc_D128_F05_V01.csv.gz",
+      "preserved_as": "failed_weighted_roundoff_checkpoints\\framewise_local_background_qc_D128_F05_V01.csv.gz"
+    },
+    {
+      "source": "framewise_local_background_qc_D128_F07_V01.csv.gz",
+      "preserved_as": "failed_weighted_roundoff_checkpoints\\framewise_local_background_qc_D128_F07_V01.csv.gz"
+    },
+    {
+      "source": "framewise_local_background_qc_D128_F10_V01.csv.gz",
+      "preserved_as": "failed_weighted_roundoff_checkpoints\\framewise_local_background_qc_D128_F10_V01.csv.gz"
+    },
+    {
+      "source": "framewise_local_background_qc_D235_F01_V01.csv.gz",
+      "preserved_as": "failed_weighted_roundoff_checkpoints\\framewise_local_background_qc_D235_F01_V01.csv.gz"
+    },
+    {
+      "source": "framewise_local_background_qc_D235_F03_V01.csv.gz",
+      "preserved_as": "failed_weighted_roundoff_checkpoints\\framewise_local_background_qc_D235_F03_V01.csv.gz"
+    },
+    {
+      "source": "framewise_local_background_qc_D235_F05_V01.csv.gz",
+      "preserved_as": "failed_weighted_roundoff_checkpoints\\framewise_local_background_qc_D235_F05_V01.csv.gz"
+    },
+    {
+      "source": "framewise_local_background_qc_D235_F07_V01.csv.gz",
+      "preserved_as": "failed_weighted_roundoff_checkpoints\\framewise_local_background_qc_D235_F07_V01.csv.gz"
+    },
+    {
+      "source": "framewise_local_background_qc_D235_F10_V01.csv.gz",
+      "preserved_as": "failed_weighted_roundoff_checkpoints\\framewise_local_background_qc_D235_F10_V01.csv.gz"
+    },
+    {
+      "source": "framewise_local_background_qc_D285_F01_V01.csv.gz",
+      "preserved_as": "failed_weighted_roundoff_checkpoints\\framewise_local_background_qc_D285_F01_V01.csv.gz"
+    },
+    {
+      "source": "position_integrals_D128_F01_V01.csv.gz",
+      "preserved_as": "failed_weighted_roundoff_checkpoints\\position_integrals_D128_F01_V01.csv.gz"
+    },
+    {
+      "source": "position_integrals_D128_F03_V01.csv.gz",
+      "preserved_as": "failed_weighted_roundoff_checkpoints\\position_integrals_D128_F03_V01.csv.gz"
+    },
+    {
+      "source": "position_integrals_D128_F05_V01.csv.gz",
+      "preserved_as": "failed_weighted_roundoff_checkpoints\\position_integrals_D128_F05_V01.csv.gz"
+    },
+    {
+      "source": "position_integrals_D128_F07_V01.csv.gz",
+      "preserved_as": "failed_weighted_roundoff_checkpoints\\position_integrals_D128_F07_V01.csv.gz"
+    },
+    {
+      "source": "position_integrals_D128_F10_V01.csv.gz",
+      "preserved_as": "failed_weighted_roundoff_checkpoints\\position_integrals_D128_F10_V01.csv.gz"
+    },
+    {
+      "source": "position_integrals_D235_F01_V01.csv.gz",
+      "preserved_as": "failed_weighted_roundoff_checkpoints\\position_integrals_D235_F01_V01.csv.gz"
+    },
+    {
+      "source": "position_integrals_D235_F03_V01.csv.gz",
+      "preserved_as": "failed_weighted_roundoff_checkpoints\\position_integrals_D235_F03_V01.csv.gz"
+    },
+    {
+      "source": "position_integrals_D235_F05_V01.csv.gz",
+      "preserved_as": "failed_weighted_roundoff_checkpoints\\position_integrals_D235_F05_V01.csv.gz"
+    },
+    {
+      "source": "position_integrals_D235_F07_V01.csv.gz",
+      "preserved_as": "failed_weighted_roundoff_checkpoints\\position_integrals_D235_F07_V01.csv.gz"
+    },
+    {
+      "source": "position_integrals_D235_F10_V01.csv.gz",
+      "preserved_as": "failed_weighted_roundoff_checkpoints\\position_integrals_D235_F10_V01.csv.gz"
+    },
+    {
+      "source": "position_integrals_D285_F01_V01.csv.gz",
+      "preserved_as": "failed_weighted_roundoff_checkpoints\\position_integrals_D285_F01_V01.csv.gz"
+    },
+    {
+      "source": "geometry_support_D128_F01_V01.csv.gz",
+      "preserved_as": "failed_weighted_roundoff_checkpoints\\geometry_support_D128_F01_V01.csv.gz"
+    },
+    {
+      "source": "geometry_support_D128_F03_V01.csv.gz",
+      "preserved_as": "failed_weighted_roundoff_checkpoints\\geometry_support_D128_F03_V01.csv.gz"
+    },
+    {
+      "source": "geometry_support_D128_F05_V01.csv.gz",
+      "preserved_as": "failed_weighted_roundoff_checkpoints\\geometry_support_D128_F05_V01.csv.gz"
+    },
+    {
+      "source": "geometry_support_D128_F07_V01.csv.gz",
+      "preserved_as": "failed_weighted_roundoff_checkpoints\\geometry_support_D128_F07_V01.csv.gz"
+    },
+    {
+      "source": "geometry_support_D128_F10_V01.csv.gz",
+      "preserved_as": "failed_weighted_roundoff_checkpoints\\geometry_support_D128_F10_V01.csv.gz"
+    },
+    {
+      "source": "geometry_support_D235_F01_V01.csv.gz",
+      "preserved_as": "failed_weighted_roundoff_checkpoints\\geometry_support_D235_F01_V01.csv.gz"
+    },
+    {
+      "source": "geometry_support_D235_F03_V01.csv.gz",
+      "preserved_as": "failed_weighted_roundoff_checkpoints\\geometry_support_D235_F03_V01.csv.gz"
+    },
+    {
+      "source": "geometry_support_D235_F05_V01.csv.gz",
+      "preserved_as": "failed_weighted_roundoff_checkpoints\\geometry_support_D235_F05_V01.csv.gz"
+    },
+    {
+      "source": "geometry_support_D235_F07_V01.csv.gz",
+      "preserved_as": "failed_weighted_roundoff_checkpoints\\geometry_support_D235_F07_V01.csv.gz"
+    },
+    {
+      "source": "geometry_support_D235_F10_V01.csv.gz",
+      "preserved_as": "failed_weighted_roundoff_checkpoints\\geometry_support_D235_F10_V01.csv.gz"
+    },
+    {
+      "source": "geometry_support_D285_F01_V01.csv.gz",
+      "preserved_as": "failed_weighted_roundoff_checkpoints\\geometry_support_D285_F01_V01.csv.gz"
+    },
+    {
+      "source": "shared_pixel_support_D128_F01_V01.csv.gz",
+      "preserved_as": "failed_weighted_roundoff_checkpoints\\shared_pixel_support_D128_F01_V01.csv.gz"
+    },
+    {
+      "source": "shared_pixel_support_D128_F03_V01.csv.gz",
+      "preserved_as": "failed_weighted_roundoff_checkpoints\\shared_pixel_support_D128_F03_V01.csv.gz"
+    },
+    {
+      "source": "shared_pixel_support_D128_F05_V01.csv.gz",
+      "preserved_as": "failed_weighted_roundoff_checkpoints\\shared_pixel_support_D128_F05_V01.csv.gz"
+    },
+    {
+      "source": "shared_pixel_support_D128_F07_V01.csv.gz",
+      "preserved_as": "failed_weighted_roundoff_checkpoints\\shared_pixel_support_D128_F07_V01.csv.gz"
+    },
+    {
+      "source": "shared_pixel_support_D128_F10_V01.csv.gz",
+      "preserved_as": "failed_weighted_roundoff_checkpoints\\shared_pixel_support_D128_F10_V01.csv.gz"
+    },
+    {
+      "source": "shared_pixel_support_D235_F01_V01.csv.gz",
+      "preserved_as": "failed_weighted_roundoff_checkpoints\\shared_pixel_support_D235_F01_V01.csv.gz"
+    },
+    {
+      "source": "shared_pixel_support_D235_F03_V01.csv.gz",
+      "preserved_as": "failed_weighted_roundoff_checkpoints\\shared_pixel_support_D235_F03_V01.csv.gz"
+    },
+    {
+      "source": "shared_pixel_support_D235_F05_V01.csv.gz",
+      "preserved_as": "failed_weighted_roundoff_checkpoints\\shared_pixel_support_D235_F05_V01.csv.gz"
+    },
+    {
+      "source": "shared_pixel_support_D235_F07_V01.csv.gz",
+      "preserved_as": "failed_weighted_roundoff_checkpoints\\shared_pixel_support_D235_F07_V01.csv.gz"
+    },
+    {
+      "source": "shared_pixel_support_D235_F10_V01.csv.gz",
+      "preserved_as": "failed_weighted_roundoff_checkpoints\\shared_pixel_support_D235_F10_V01.csv.gz"
+    },
+    {
+      "source": "shared_pixel_support_D285_F01_V01.csv.gz",
+      "preserved_as": "failed_weighted_roundoff_checkpoints\\shared_pixel_support_D285_F01_V01.csv.gz"
+    },
+    {
+      "source": "localization",
+      "preserved_as": "failed_weighted_roundoff_checkpoints\\localization"
+    }
+  ],
+  "rerun_scope": "pixel statistics and independent 45-frame checks; table statistics retained",
+  "status": "corrected_replay_passed",
+  "independent_exact_weighted_validation": "all 45 fixed frames and synthetic cases passed",
+  "synthetic_test_correction": "symmetric [0.1,0.2,0.1,0.2] case expected midpoint corrected to 2.5 before replay"
+}

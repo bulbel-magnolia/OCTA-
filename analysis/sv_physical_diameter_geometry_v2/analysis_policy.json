@@ -1,0 +1,30 @@
+{
+  "version": "physical_diameter_geometry_v2",
+  "decision_date": "2026-09-10",
+  "user_geometry_approval": "好的，我们就改进为这种方案吧",
+  "user_d500_approval": "D500 不再进入后续科学分析，但保留数据及排除记录",
+  "primary_diameters_um": [
+    128,
+    235,
+    285
+  ],
+  "common_flows_mm_s": [
+    1,
+    3,
+    5,
+    7,
+    10
+  ],
+  "excluded_diameters_um": [
+    500
+  ],
+  "excluded_volumes": 8,
+  "exclusion_timing": "post-hoc after image/QC inspection; not preregistered and not instrument failure certification",
+  "old_data_and_results": "retain; do not overwrite or delete",
+  "source": "physical D x D ellipse in pixel coordinates; same frozen X4 and z_top",
+  "tail": "physical D lateral width; begins z_top+D/dz; guard 0; no cone; raw SV",
+  "original_X1": "retain as original_apparent_width_um only; never relabel apparent width as physical D",
+  "invalid_geometry": "preserve original missing frames; fixed D does not recover missing top/center",
+  "new_coupling": "not computed in this geometry/input migration; old coupling not relabeled as new",
+  "old_qc": "belongs to old X1 geometry; not relabeled as QC for new ROI"
+}

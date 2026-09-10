@@ -1,0 +1,10 @@
+{
+  "status": "passed",
+  "structural_volumes": 15,
+  "structural_rows": 7500,
+  "structural_valid_arrays": 7018,
+  "structural_integral_checks": 405,
+  "structural_correlations": 450,
+  "B_pairs": 4,
+  "B_visual_review": "complete_with_unresolved_anatomical_boundary"
+}

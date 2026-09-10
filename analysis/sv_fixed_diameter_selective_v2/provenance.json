@@ -1,0 +1,41 @@
+{
+  "starting_head": "d6d1d8300d7b026fac2d3daecaec2a18503c11ed",
+  "branch": "analysis/sv-diameter-stage2",
+  "starting_worktree_status": "?? analysis/ACTIVE_ANALYSIS_POLICY.json\n?? analysis/sv_fixed_diameter_selective_v2/\n?? analysis/sv_physical_diameter_geometry_v2/\n",
+  "contract_sha256": "4ebc6f58c0949ca351229b30e8447777272348c7a1e582eb0c39d211f5ba0197",
+  "software": {
+    "python": "3.12.10",
+    "numpy": "2.4.4",
+    "pandas": "2.3.3",
+    "scipy": "1.17.1"
+  },
+  "input_manifest_sha256": "69b7bd7d63e04c691a44d13353183514f4fba9a792e9373269c7a6ce631d5d76",
+  "analysis_guard": "D:/research-skills/skills/analysis-guard/SKILL.md",
+  "authorization": "current user requests complete, definition-consistent, traceable v2 answers; attachment supplies analysis specification, not independent authority",
+  "ending_head": "d6d1d8300d7b026fac2d3daecaec2a18503c11ed",
+  "ending_worktree_status": "?? analysis/ACTIVE_ANALYSIS_POLICY.json\n?? analysis/sv_fixed_diameter_selective_v2/\n?? analysis/sv_physical_diameter_geometry_v2/\n",
+  "completed_utc": "2026-09-10T04:14:40.027060+00:00",
+  "final_script_sha256": {
+    "analyze_controls.py": "d39763db86f2b882aedc712c69d44819e05a4940d03d790274e7dbc922c7e716",
+    "analyze_tables.py": "f20f932e13cb88269b4c0e4028ee342133daeef61150eb90854a0a5dcb5aaa3a",
+    "build_report.py": "3ea2744a6a19da74a51bc6585a815847eae69a189dce645fff96843a0cda2507",
+    "common.py": "52d6ba75c7ea7fee110c794cfff66e7e7a52984a2fc5f5991f0d2c43eba037a0",
+    "conditional_structural.py": "28f1f35c63b2507c8f04b0166cb9a66ba65a7f1439dfecb759dad82b861a792c",
+    "diagnose_weighted.py": "b10e0b594448f25b112bfcf44ab5701a79358829dd138c7f22371b6c70609a78",
+    "extract_pixels.py": "2eaf52f9bd75a0173a2b9d931d6332cc5cd223c818bf1f17b75283c42f286ae0",
+    "finalize_delivery.py": "73a15f8c9e0e8a0a2159c71cee3e8f1a90daec116992adef24776c56924df081",
+    "finish_visual_review.py": "37cfad30412acd560226b862e1bebc69630220de53bbd0eec33bf87f90497e2f",
+    "initialize.py": "daa31521c896744438841eb392d4704d9d3c208101812cc0a33667fd028a6518",
+    "inspect_facts.py": "7bdebde8e1c24053dbfff73e4b8f28a61c932a636035ad37ad70f7437a9d9e91",
+    "make_figures.py": "353b40594d315f5c800e1b041db1e612aa05b728a2f54327b4ed791c662fe4ea",
+    "preserve_failed_checkpoints.py": "f34712da257030402d009fdb64a628b96a2a4707cbc01399a71e735aaaf60833",
+    "record_visual_review.py": "f0c90752dbb2b5c8cf0573152c764b7d3a23ddd1ce3d97a2fb53e1a9babb8762",
+    "render_localization.py": "c683af7689037a644c1f811dcfa29ae6f2a9c825324fcabe9eac17c2e9b13d4a",
+    "summarize_results.py": "260b0479fb01bf3d32ad632f883712da87a43be9954a26b694f0b7aa60aeaa73",
+    "validate_delivery.py": "65b5eba43e3cba0acb8cad06f6a10177992820db20669209b0ebd4fef539de03",
+    "verify_statistics.py": "aa476824f9fe44ba75a017602a218236f06c2d53a92ee15a520c3637dac51013"
+  },
+  "input_and_historical_hash_check": "401 files unchanged; see validation.json and input_hashes_after.csv",
+  "numerical_fix": "weighted_numerical_fix.json; failed checkpoints are diagnostic archives excluded from scientific results",
+  "delivery_scope": "local outputs only; no commit, push or publication"
+}

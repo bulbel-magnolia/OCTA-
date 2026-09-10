@@ -1,0 +1,5 @@
+# Preserve sealed analysis file bytes so the existing SHA256 manifests remain valid.
+/ACTIVE_ANALYSIS_POLICY.json -text
+/sv_fixed_diameter_selective_v2/** -text
+/sv_physical_diameter_geometry_v2/** -text
+/sv_fixed_diameter_selective_v2_submission/** -text
