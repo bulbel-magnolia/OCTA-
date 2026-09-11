@@ -1,0 +1,13 @@
+{
+  "status": "analysis_complete_validated",
+  "stageA": "success",
+  "stageB": "success",
+  "stageA_volumes": 15,
+  "stageB_volumes": 15,
+  "validation": "passed",
+  "visual_review": "passed",
+  "blocked": [],
+  "missing": [],
+  "scope_complete": true,
+  "no_extension_planned": true
+}

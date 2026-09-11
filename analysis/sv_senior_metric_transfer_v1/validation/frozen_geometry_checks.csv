@@ -1,0 +1,3 @@
+stage,n_nominal,n_original_valid,n_original_invalid,frozen_values_exact,passed
+stageA,7500,7018,482,True,True
+stageB,7500,7018,482,True,True

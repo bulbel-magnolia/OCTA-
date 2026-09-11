@@ -1,0 +1,14 @@
+{
+  "recorded_utc": "2026-09-11T12:49:53.857142+00:00",
+  "reason": "Late source-loader audit: both senior tracking_core.load_flow_volume and tailq.io.load_flow cast incoming Flow to float32 before localization/features. Add this unchanged original dtype behavior.",
+  "original_plan_and_trend_definitions_unchanged": true,
+  "stageA_reused": true,
+  "metric_input": "unchanged retained SV_raw float64; no dtype change for endpoint measurement",
+  "stageB_localization_input": "float32 in-memory working copy as original loader; no saved replacement raw arrays",
+  "parameter_tuning": false,
+  "previous_outputs": "validation\\stageB_before_loader_dtype_correction_DIAGNOSTIC_ONLY",
+  "additional_audit": [
+    "run_single_scan._make_features emits vessel_presence_prediction; _make_metrics expects assessability_class. Adapter uses original prediction field directly; class threshold unchanged.",
+    "Formal freeze does not add tracking qc_valid as a separate exclusion; it uses frozen assessability class plus primary metric validity."
+  ]
+}

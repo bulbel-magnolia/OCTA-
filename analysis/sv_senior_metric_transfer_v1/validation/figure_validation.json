@@ -1,0 +1,35 @@
+{
+  "status": "passed",
+  "figures": [
+    {
+      "png": "figures\\definition_direction_comparison.png",
+      "pdf": "figures\\definition_direction_comparison.pdf",
+      "png_sha256": "bbf431ade6058fdff0942625a929a34944aa0fb64a983915abe0d326bdf7849a",
+      "pdf_sha256": "dd2cac3008365560f7bb956721683b0b6b713fdf684aea9c7e16142a9aa98df2",
+      "width_px": 2420,
+      "height_px": 1452,
+      "pdf_pages": 1,
+      "visual_review": "passed: titles/axes/units/five-flow legends readable; final Stage B visually inspected; direction-only comparison confirmed"
+    },
+    {
+      "png": "figures\\senior_style_sv_metrics.png",
+      "pdf": "figures\\senior_style_sv_metrics.pdf",
+      "png_sha256": "bcf0f58280a01d916b9fc9d525778003e21c1754ccb21adddcd09256c4936539",
+      "pdf_sha256": "174aafccb1bac8a32de9bcaf01d76d37c4c41792c91b85b5ef9ce4eb81b43e0c",
+      "width_px": 3080,
+      "height_px": 1056,
+      "pdf_pages": 1,
+      "visual_review": "passed: titles/axes/units/five-flow legends readable; final Stage B visually inspected; direction-only comparison confirmed"
+    },
+    {
+      "png": "figures\\senior_style_sv_metrics_stageB.png",
+      "pdf": "figures\\senior_style_sv_metrics_stageB.pdf",
+      "png_sha256": "7983d84945d922acb5a30215555eb4c1715b595982dd4ed8b1c0aa525f93933e",
+      "pdf_sha256": "d72f06bf3354f379935040b1f823a5a1007845139f60ca17be216621b5a30287",
+      "width_px": 3080,
+      "height_px": 1056,
+      "pdf_pages": 1,
+      "visual_review": "passed: titles/axes/units/five-flow legends readable; final Stage B visually inspected; direction-only comparison confirmed"
+    }
+  ]
+}

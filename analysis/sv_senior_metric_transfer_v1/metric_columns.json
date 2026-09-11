@@ -1,0 +1,20 @@
+{
+  "coordinates": "0-based; every end field exclusive; frozen fields are copied verbatim",
+  "metric_units": {
+    "raw_AUC_200": "SV instrument units * um",
+    "vessel_core_P95": "SV instrument units",
+    "normalized_AUC_um": "um",
+    "normalized_AUC": "um; exact alias"
+  },
+  "support_counts": {
+    "n_metric_assessable": "count of metric-only lateral/localization assessability flag, independent of Stage B full body score",
+    "n_primary_eligible": "metric-only assessability AND (Stage B only) full assessability",
+    "n_auc_defined": "primary-eligible AND AUC defined",
+    "n_denominator_defined": "primary-eligible AND denominator defined",
+    "n_normalized_defined": "primary-eligible AND numerator/denominator defined",
+    "n_denominator_pooled": "primary-eligible AND AUC defined AND denominator defined",
+    "n_*_defined_all_positions": "metric mathematical validity before full-process score selection"
+  },
+  "pooling": "framewise endpoint median, never ratio of separate scan medians",
+  "zero": "valid zero AUC is retained; invalid numeric endpoints are NaN with reason"
+}

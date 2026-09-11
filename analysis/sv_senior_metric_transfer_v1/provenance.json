@@ -1,0 +1,35 @@
+{
+  "base_commit": "2fd6cb6e8e0cc23b293e77f312983c058df0564e",
+  "branch": "analysis/sv-senior-metric-transfer-v1",
+  "baseline_fetch": "GitHub connector verified remote branch; standard Git network failed; official REST git objects fetched and byte-level git SHA1 verified; no baseline history rewrite",
+  "analysis_plan_sha256": "2e077199039b9e83054352546ac60fcbba29d7aa425cb3b97e84aedddcb45d48",
+  "contract_sha256": "6f713a05d2e2ef5e87d23883f15c8ba401f208d3481b18cf24235721b43f5556",
+  "input_manifest_sha256": "423199e04497f8938851e4f71aa5aea9be75ff38e08d8f12e3196b1be3f1d723",
+  "initial_untracked": [
+    "analysis/sv_fixed_diameter_selective_v2/failed_weighted_roundoff_checkpoints/",
+    "review_delivery/"
+  ],
+  "authorization": "user attached task sections I-XV; local analysis and final commit/push explicitly authorized",
+  "software": {
+    "python": "3.12.10",
+    "numpy": "2.4.4",
+    "pandas": "2.3.3",
+    "scipy": "1.17.1",
+    "matplotlib": "3.10.8",
+    "h5py": "3.16.0"
+  },
+  "analysis_script_sha256": "8eb3e3b946bc30951a0e70209e5d9695c9f516ddb38c2563a395c8e6d4f98a4f",
+  "completed_metrics_utc": "2026-09-11T12:52:55.536613+00:00",
+  "initial_contract_sha256": "b127ded17f0cc9deaa55bdd78ad5a9a3cbe80607ec6cc722843306101ef8f1fe",
+  "contract_history": "analysis_plan.source_hash is the immutable pre-execution contract SHA; final contract adds documented source-loader/schema fidelity facts, no trend/metric parameter changes.",
+  "loader_fidelity_correction": "validation/loader_fidelity_correction.json",
+  "final_script_sha256": {
+    "correct_stageB_loader_fidelity.py": "3486ab7315b7b5918ed8187a45f2ce38f3f0a4eac044df79384b2afa53571f23",
+    "finalize_delivery.py": "9f5946498e967f3d11aa201e973580ba8ef86e2bfda5c7a33853c7e618b9e007",
+    "run_transfer.py": "8eb3e3b946bc30951a0e70209e5d9695c9f516ddb38c2563a395c8e6d4f98a4f",
+    "validate_compare_report.py": "14dcc1669efa2fb326df12e4becd3acba7b137e65ea5d44314f62a7337887f41"
+  },
+  "finalized_utc": "2026-09-11T12:55:27.120072+00:00",
+  "publication_scope": "user authorized new branch only; existing frozen outputs unchanged; no merge or force push",
+  "diagnostic_archive": "validation/stageB_before_loader_dtype_correction_DIAGNOSTIC_ONLY; excluded from final metrics and figures"
+}

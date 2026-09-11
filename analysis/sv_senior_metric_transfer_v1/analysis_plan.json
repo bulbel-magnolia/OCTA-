@@ -1,0 +1,56 @@
+{
+  "version": "sv_senior_metric_transfer_v1",
+  "frozen_utc": "2026-09-11T12:36:17.533618+00:00",
+  "base_commit": "2fd6cb6e8e0cc23b293e77f312983c058df0564e",
+  "signal": "SV_raw=var(abs(IMG),1,3); N denominator; retained arrays only",
+  "diameters_um": [
+    128,
+    235,
+    285
+  ],
+  "flows_mm_s": [
+    1,
+    3,
+    5,
+    7,
+    10
+  ],
+  "nominal_positions": 7500,
+  "original_valid": 7018,
+  "original_invalid": 482,
+  "dx_um": 12.7,
+  "dz_um": 6.7,
+  "stages": [
+    "STAGE_A_METRIC_TRANSFER",
+    "STAGE_B_FULL_SENIOR_PROCESS_TRANSFER if source, complete identities, and scale guards permit"
+  ],
+  "trend_diagnostics": {
+    "raw_AUC_200": "D128 < D235 > D285",
+    "vessel_core_P95": "D128 < D235 < D285",
+    "normalized_AUC_um": "D128 > D235 > D285"
+  },
+  "strict_inequalities": true,
+  "undefined_trend": "not assessable; retain in 5-flow denominator and state number evaluable",
+  "contrasts": [
+    [
+      128,
+      235
+    ],
+    [
+      235,
+      285
+    ],
+    [
+      128,
+      285
+    ]
+  ],
+  "percent_difference": "100*(later-earlier)/earlier; earlier==0 -> NaN with reason",
+  "source_hash": "b127ded17f0cc9deaa55bdd78ad5a9a3cbe80607ec6cc722843306101ef8f1fe",
+  "fixed_frames": "reuse 45 preselected geometry-v2 independent integration spotchecks; no outcome selection",
+  "no_inference": true,
+  "independence": "one scan per diameter x flow; frames are spatial positions; flows are conditions, not replicates",
+  "provenance_boundaries": "same data, history-informed, not blind/preregistered/independent validation; D128 differs from senior D185; qualitative shape only; no mechanism attribution",
+  "comparisons": "current v2 directions/rank only, no cross-unit magnitude differences; A/B native and metric-specific common support",
+  "authorized_git": "commit specified new output + necessary scripts; push new branch, no merge/force/history rewrite"
+}

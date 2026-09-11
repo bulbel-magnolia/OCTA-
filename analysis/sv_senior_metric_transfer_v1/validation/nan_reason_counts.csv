@@ -1,0 +1,12 @@
+stage,metric,reason,n,n_missing
+stageA,raw_AUC_200,ok,7018,0
+stageA,raw_AUC_200,original_geometry_invalid,482,482
+stageA,vessel_core_P95,ok,7018,0
+stageA,vessel_core_P95,original_geometry_invalid,482,482
+stageA,normalized_AUC_um,ok,7018,0
+stageA,normalized_AUC_um,original_geometry_invalid,482,482
+stageB,raw_AUC_200,ok,7500,0
+stageB,vessel_core_P95,denominator_nonpositive,1,1
+stageB,vessel_core_P95,ok,7499,0
+stageB,normalized_AUC_um,denominator_nonpositive,1,1
+stageB,normalized_AUC_um,ok,7499,0

@@ -1,0 +1,207 @@
+{
+  "version": "senior_code_audited_v1",
+  "audited_utc": "2026-09-11T12:36:17.533618+00:00",
+  "authoritative_entry": "python/run_single_scan.py -> formal_9scan_freeze._frame_metrics / _interval_result",
+  "sources": [
+    {
+      "original_path": "C:\\Users\\zby\\Desktop\\2026血管三维重建项目\\算法差异分析\\师兄方法\\Bscan_tail_auto_quantification_for_junior_20260903(1)\\python\\tailq\\__init__.py",
+      "snapshot_path": "senior_source\\python\\tailq\\__init__.py",
+      "sha256": "0678d7bfc411e59cc8ca91ff6cbf35aa3e2a0e6b5b74f19971c9458526d7fbb5"
+    },
+    {
+      "original_path": "C:\\Users\\zby\\Desktop\\2026血管三维重建项目\\算法差异分析\\师兄方法\\Bscan_tail_auto_quantification_for_junior_20260903(1)\\python\\tailq\\io.py",
+      "snapshot_path": "senior_source\\python\\tailq\\io.py",
+      "sha256": "019f3fd271272b856437e4588b5c720316493407fafd20ed96a77ad5deccf2a7"
+    },
+    {
+      "original_path": "C:\\Users\\zby\\Desktop\\2026血管三维重建项目\\算法差异分析\\师兄方法\\Bscan_tail_auto_quantification_for_junior_20260903(1)\\python\\tailq\\metrics.py",
+      "snapshot_path": "senior_source\\python\\tailq\\metrics.py",
+      "sha256": "8f7a1643a982ea75c697a39b62b623a69c4ee999019142e9d7fd04d8c1862354"
+    },
+    {
+      "original_path": "C:\\Users\\zby\\Desktop\\2026血管三维重建项目\\算法差异分析\\师兄方法\\Bscan_tail_auto_quantification_for_junior_20260903(1)\\python\\13_formal_9scan\\formal_9scan_freeze.py",
+      "snapshot_path": "senior_source\\python\\13_formal_9scan\\formal_9scan_freeze.py",
+      "sha256": "9e260c30be1985e443e35422f4c4a7cdd4f80a5d02a669bdfebfe3eae4523dde"
+    },
+    {
+      "original_path": "C:\\Users\\zby\\Desktop\\2026血管三维重建项目\\算法差异分析\\师兄方法\\Bscan_tail_auto_quantification_for_junior_20260903(1)\\python\\10_xroi_refinement\\develop_xroi_assessability.py",
+      "snapshot_path": "senior_source\\python\\10_xroi_refinement\\develop_xroi_assessability.py",
+      "sha256": "47ea9d3a24292c5c6274d456b4a26ff58bab818b49f18edcbcf1ff0fd8365c2d"
+    },
+    {
+      "original_path": "C:\\Users\\zby\\Desktop\\2026血管三维重建项目\\算法差异分析\\师兄方法\\Bscan_tail_auto_quantification_for_junior_20260903(1)\\python\\09_pixel_annotation\\generate_pixel_annotation_package.py",
+      "snapshot_path": "senior_source\\python\\09_pixel_annotation\\generate_pixel_annotation_package.py",
+      "sha256": "17aa66aca91dab1dd7bf58d45c3e1cfcc71c96bf612ce241f0d963aea099eb7a"
+    },
+    {
+      "original_path": "C:\\Users\\zby\\Desktop\\2026血管三维重建项目\\算法差异分析\\师兄方法\\Bscan_tail_auto_quantification_for_junior_20260903(1)\\python\\06_blinded_qc\\generate_blinded_qc.py",
+      "snapshot_path": "senior_source\\python\\06_blinded_qc\\generate_blinded_qc.py",
+      "sha256": "90debdcc9f8279e74c61e1e7acde31b0f2d8573e47ea337cc70c4fc81b18c917"
+    },
+    {
+      "original_path": "C:\\Users\\zby\\Desktop\\2026血管三维重建项目\\算法差异分析\\师兄方法\\Bscan_tail_auto_quantification_for_junior_20260903(1)\\python\\02_track_vessel\\tracking_core.py",
+      "snapshot_path": "senior_source\\python\\02_track_vessel\\tracking_core.py",
+      "sha256": "214cd12f5af958eb5ad3875e20226d85d5abe5f7f5a3735eac490dbdff9c3292"
+    },
+    {
+      "original_path": "C:\\Users\\zby\\Desktop\\2026血管三维重建项目\\算法差异分析\\师兄方法\\Bscan_tail_auto_quantification_for_junior_20260903(1)\\python\\run_single_scan.py",
+      "snapshot_path": "senior_source\\python\\run_single_scan.py",
+      "sha256": "e25ee231986fd9079bd4ea931575a353e642e18aa76e91269078d8329f2f1cca"
+    },
+    {
+      "original_path": "C:\\Users\\zby\\Desktop\\2026血管三维重建项目\\算法差异分析\\师兄方法\\Bscan_tail_auto_quantification_for_junior_20260903(1)\\config\\example_config.json",
+      "snapshot_path": "senior_source\\config\\example_config.json",
+      "sha256": "371d137a77cb6754ef8deb6f6addca5ea5c39044e8ce499cbc872075eec98901"
+    },
+    {
+      "original_path": "C:\\Users\\zby\\Desktop\\2026血管三维重建项目\\算法差异分析\\师兄方法\\Bscan_tail_auto_quantification_for_junior_20260903(1)\\docs\\METHOD_PARAMETERS.md",
+      "snapshot_path": "senior_source\\docs\\METHOD_PARAMETERS.md",
+      "sha256": "d00a5aa7e292fe369b38a0c593924cf5094f9a3790a7be839ba90670aab7067b"
+    },
+    {
+      "original_path": "C:\\Users\\zby\\Desktop\\2026血管三维重建项目\\算法差异分析\\师兄方法\\Bscan_tail_auto_quantification_for_junior_20260903(1)\\matlab\\export_p_bld_ed_volume.m",
+      "snapshot_path": "senior_source\\matlab\\export_p_bld_ed_volume.m",
+      "sha256": "2a3e6f61826d9ac733fcd9542aca53872317ca4b6b63b626b601896e120dd7ec"
+    }
+  ],
+  "coordinate_system": "Python zero-based pixel centers; all ROI/end bounds exclusive. Frozen z_top may be half-integer; int(round(z_top)) is applied only in new fields.",
+  "rounding": "Python round ties-to-even; width=max(1,round(D/dx)); central=max(3,round(width*0.4)); bg=max(1,round(width/3)); gap=max(1,round(width/4)); center=round(X4); centered start=center-width//2, stop=start+width",
+  "background": "vessel bounds centered with integer vessel width; left=[vessel_left-gap-bg,vessel_left-gap); right=[vessel_right+gap,vessel_right+gap+bg); concatenate both sides then numpy.median(axis=1); minimum combined background pixels=6; no clipping/shifting",
+  "profile": "numpy.median of central raw SV pixels at each depth, converted to float64; ordinary median, not nanmedian",
+  "excess": "numpy.maximum(P(z)-B(z),0.0); any NaN propagates",
+  "lower": "round(z_top)+max(1,round(D/6.7)); operational prior, not measured lower wall",
+  "guard_px": 2,
+  "auc": {
+    "nominal_window_um": [
+      0,
+      200
+    ],
+    "window_helper": "max(1,int(round(um/6.7)))",
+    "offset_start_px": 1,
+    "offset_stop_exclusive_px": 30,
+    "n_pixels": 29,
+    "integrated_depth_um": 194.3,
+    "formula": "6.7 * sum(E[tail_start+1:tail_start+30])",
+    "implementation": "formal_9scan_freeze._interval_result calls _window_pixels for BOTH endpoints; not trapz",
+    "unit": "SV instrument units * um",
+    "complete": "0 <= start < stop <= n_z and every P/B/E sample finite; NaN otherwise"
+  },
+  "denominator": {
+    "interval": "[round(z_top)+ceil(0.10*round(D/6.7)), round(z_top)+floor(0.45*round(D/6.7))+1)",
+    "implementation": "numpy.quantile(values,0.95), default linear interpolation",
+    "valid": "full core interval; finite quantile > 1e-12; no finite-only filtering; invalid output NaN with reason; retain candidate separately",
+    "unit": "SV instrument units"
+  },
+  "normalized": {
+    "formula": "raw_AUC_200 / vessel_core_P95 (NO epsilon addition in formal runner)",
+    "unit": "um",
+    "valid": "numerator and denominator valid"
+  },
+  "stageA_assessability": "original_geometry_valid AND finite frozen localization AND complete lateral ROI with >=6 bg pixels; metric validity separately evaluates AUC and core. No body score, tracking quality, or re-localization at Stage A.",
+  "pooling": "Formal raw primary uses assessable AND valid AUC, then pooled median over finite frame values. Normalized uses that support AND valid P95. Denominator summary uses primary raw support AND valid P95. Stage A substitutes metric-assessability for original full-process body score to isolate definitions.",
+  "tracking": {
+    "config": {
+      "upper_edge_alphas": [
+        0.1,
+        0.15,
+        0.2
+      ],
+      "primary_alpha": 0.15,
+      "axial_um_per_px": 6.7,
+      "lateral_um_per_px": 12.7,
+      "primary_guard_px": 2,
+      "primary_window_um": 300.0,
+      "x_search_fraction": [
+        0.1,
+        0.9
+      ],
+      "z_search_px": [
+        150,
+        330
+      ],
+      "localization_depth_sigma_px": 1.2,
+      "localization_slow_sigma_frames": 2.0,
+      "x_core_depth_fraction_of_diameter": 0.4,
+      "x_viterbi_max_jump_px": 8,
+      "x_viterbi_jump_penalty": 0.1,
+      "z_viterbi_max_jump_px": 8,
+      "z_viterbi_jump_penalty": 0.12,
+      "x_seed_min_robust_snr": 3.0,
+      "x_seed_max_path_residual_px": 10.0,
+      "confidence_revision_version": "local_x_and_z_components_v1",
+      "x_confidence_core_radius_fraction_of_diameter": 0.5,
+      "x_confidence_flank_width_fraction_of_diameter": 0.75,
+      "x_confidence_trajectory_change_multiplier": 2.0,
+      "x_confidence_min_trajectory_pad_px": 2,
+      "x_confidence_min_flank_points": 6,
+      "x_confidence_min_robust_snr": 3.0,
+      "x_confidence_alignment_tolerance_fraction_of_diameter": 0.35,
+      "x_confidence_min_alignment_tolerance_px": 3.0,
+      "confidence_full_score_multiple": 2.0,
+      "upper_edge_noise_multiplier": 3.0,
+      "upper_edge_min_component_px": 3,
+      "peak_min_snr": 3.0,
+      "central_width_fraction_of_lateral_diameter": 0.3333333333333333,
+      "central_min_width_px": 3,
+      "background_side_gap_px": 6,
+      "background_side_width_px": 16,
+      "background_min_total_width_px": 16,
+      "background_depth_trend_sigma_px": 8.0,
+      "trajectory_median_window_frames": 15,
+      "trajectory_gaussian_sigma_frames": 3.0,
+      "trajectory_outlier_min_px": 3.0,
+      "trajectory_outlier_mad_multiplier": 3.0,
+      "trajectory_min_seed_frames": 8,
+      "trajectory_min_seed_fraction": 0.05,
+      "max_model_assisted_gap_frames": 75,
+      "qc_overlay_frames": 12,
+      "input_dataset_candidates": [
+        "p_bld_ed",
+        "p_bld_ed_sparse"
+      ],
+      "expected_z_px": 351,
+      "expected_x_px": 500,
+      "expected_frames": 500
+    },
+    "algorithm": "lateral Gaussian-smoothed raw image, depth-window max scores, robust per-frame standardization, Viterbi path, median15 + Gaussian3 smoothing; lateral seed >=3 SNR; minimum max(8,ceil(.05*n)) seeds. Central odd-width ~D/3 tracking profiles, fixed gap6/width16 backgrounds. Axial smoothed excess/noise standardized Viterbi. alpha=.15 component threshold max(.15*peak,3*MAD-residual sigma), minimum component3; trajectory interpolation + median15 + Gaussian3; 3 outlier passes, max(3px,3MAD), support distance75.",
+    "x4": "local_body_features: Q75 body slab columns, far-column median background, capped Q90 positive-excess weighted centroid; sequential isolated three-frame correction, jump>2 and neighboring difference<=2; no global x argmax for X4",
+    "assessability": "score=.35*clip((CNR-2)/6)+.20*continuity+.20*width_consistency+.15*axial_completeness+.10*clip((neighbor_CNR-2)/6); >=.60 assessable, >=.40 uncertain; primary assessable only. Wrapper/freeze applies this class + raw validity, not an added qc_valid veto.",
+    "local_body": "body z=[round(z_upper),min(nz,round(z_upper)+round(D/dz))); local x window around Viterbi from x_local_window_half_width_px; background excludes max(3,lateral_width//2+2) around anchor, fallback all if <5; 1.5 robust-sigma run threshold; body width / expected width and above-row-background completeness",
+    "stageB_mode": "primary alpha .15 only; do not execute alpha/guard/coupling sensitivity; original 7500-position frozen columns retained; full 500 raw frames required for each scan"
+  },
+  "scale_parameters": [
+    {
+      "parameter": "MATLAB Thr=10^(85/20)",
+      "classification": "OMAG reconstruction-specific absolute amplitude",
+      "action": "NOT TRANSFERRED; no reconstruction or OMAG export executed"
+    },
+    {
+      "parameter": "metrics epsilon=1e-12",
+      "classification": "numerical positive-denominator guard in signal units",
+      "action": "preserved; count invalid candidates; never tune"
+    },
+    {
+      "parameter": "local_body sigma floor=1e-6; centroid sum<=1e-12",
+      "classification": "signal-unit numerical degeneracy protection, not a calibrated OMAG detection threshold",
+      "action": "preserved; Stage B scale gate requires no positive nondegenerate floor activation; zero-signal degeneracy remains invalid per code"
+    },
+    {
+      "parameter": "tracking float32 eps / float64 eps and fallback sigma=1",
+      "classification": "signal-unit numerical degeneracy safeguards",
+      "action": "preserved; gate checks positive score/noise scales and finite availability; no rescaling"
+    },
+    {
+      "parameter": "SNR>=3, alpha=.15, assessability .60/.40, geometric search and continuity",
+      "classification": "relative statistic or geometric, directly transferable",
+      "action": "preserved"
+    }
+  ],
+  "omag_absolute_detection_thresholds_in_tracking": "None found beyond explicit numerical degeneracy guards. No log1p or absolute SV rescaling used.",
+  "documentation_discrepancies": [
+    "Formal freeze nominal 0-200 endpoint excludes first pixel: 29 pixels (194.3 um), while develop._auc and compute_scan_auc_decomposition use offset zero (30 pixels,201 um). Formal runner wins.",
+    "metrics.py docstrings say central third; formal config overrides to .40.",
+    "generic metrics.py normalized values add epsilon; formal freeze divides by denominator exactly.",
+    "formal freeze/runner use full assessability class; Stage A intentionally defers body-score migration to Stage B.",
+    "Frozen SV geometry uses half-integer z_top; senior integer rounding changes new z_upper only."
+  ]
+}
