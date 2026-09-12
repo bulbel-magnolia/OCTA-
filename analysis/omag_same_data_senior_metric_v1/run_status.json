@@ -1,0 +1,8 @@
+{
+  "status": "COMPLETE_VALIDATED",
+  "common_preprocessing_gate": "PASS",
+  "omag_fixed_checks": "PASS",
+  "completed_volumes": 15,
+  "blocked": [],
+  "missing": []
+}

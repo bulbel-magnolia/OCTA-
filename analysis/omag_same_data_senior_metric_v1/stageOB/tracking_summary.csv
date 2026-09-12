@@ -1,0 +1,16 @@
+scan_id,n_assessable,n_uncertain,n_not_assessable,n_tracking_qc_valid,median_abs_dx,median_abs_dz,n_original_sigma_floor,loader_dtype,metric_dtype,alpha,assessability_threshold
+D128_F01_V01,500,0,0,500,0.33290601726478997,0.5,0,float32,float64 original raw; same frozen SV adapter,0.15,0.6
+D128_F03_V01,500,0,0,500,0.3180453635253997,0.5,0,float32,float64 original raw; same frozen SV adapter,0.15,0.6
+D128_F05_V01,500,0,0,500,0.3325173624292006,0.5,0,float32,float64 original raw; same frozen SV adapter,0.15,0.6
+D128_F07_V01,500,0,0,500,0.3540065049939187,0.5,0,float32,float64 original raw; same frozen SV adapter,0.15,0.6
+D128_F10_V01,500,0,0,500,0.3118974621879147,0.5,0,float32,float64 original raw; same frozen SV adapter,0.15,0.6
+D235_F01_V01,500,0,0,500,0.26575006281260016,0.5,0,float32,float64 original raw; same frozen SV adapter,0.15,0.6
+D235_F03_V01,500,0,0,500,0.24980677116116112,0.5,0,float32,float64 original raw; same frozen SV adapter,0.15,0.6
+D235_F05_V01,500,0,0,500,0.27119237048393074,0.5,0,float32,float64 original raw; same frozen SV adapter,0.15,0.6
+D235_F07_V01,500,0,0,500,0.25003714046717107,0.5,0,float32,float64 original raw; same frozen SV adapter,0.15,0.6
+D235_F10_V01,500,0,0,500,0.2878915584068693,0.5,0,float32,float64 original raw; same frozen SV adapter,0.15,0.6
+D285_F01_V01,500,0,0,500,0.2732412652894993,0.5,0,float32,float64 original raw; same frozen SV adapter,0.15,0.6
+D285_F03_V01,500,0,0,500,0.27246923583790306,0.5,0,float32,float64 original raw; same frozen SV adapter,0.15,0.6
+D285_F05_V01,500,0,0,500,0.27236865299745716,0.5,0,float32,float64 original raw; same frozen SV adapter,0.15,0.6
+D285_F07_V01,500,0,0,500,0.2803815835438712,1.5,0,float32,float64 original raw; same frozen SV adapter,0.15,0.6
+D285_F10_V01,500,0,0,500,0.26034235211525925,0.5,0,float32,float64 original raw; same frozen SV adapter,0.15,0.6

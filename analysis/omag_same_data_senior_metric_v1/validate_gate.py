@@ -1,0 +1,21 @@
+"""Predeclared pixelwise gate; no adaptive thresholds."""
+from prepare import *
+def arrsha(a):return hashlib.sha256(np.ascontiguousarray(a).tobytes()).hexdigest()
+def comparison(a,b):
+ err=abs(a-b);passed=a.shape==b.shape and np.isfinite(a).all() and np.isfinite(b).all() and np.allclose(a,b,rtol=1e-10,atol=1e-6)
+ return dict(shape=str(a.shape),finite=bool(np.isfinite(a).all() and np.isfinite(b).all()),rebuilt_dtype=str(a.dtype),retained_dtype=str(b.dtype),storage_dtype_difference=a.dtype!=b.dtype,max_abs_error=float(err.max()),max_rel_error=float(np.max(err/np.maximum(abs(b),np.finfo(float).tiny))),median_abs_error=float(np.median(err)),rebuilt_sha256=arrsha(a),retained_sha256=arrsha(b),bitwise_equal=bool(np.array_equal(a,b)),float32_cast_equal=bool(np.array_equal(a.astype('float32'),b.astype('float32'))),passed=bool(passed))
+def main():
+ plan=json.loads((O/'analysis_plan.json').read_text(encoding='utf-8'));prov=json.loads((O/'provenance.json').read_text(encoding='utf-8'));assert sha(O/'analysis_plan.json')==prov['analysis_plan_sha256']
+ jobs=json.loads((O/'intermediate_local/jobs.json').read_text(encoding='utf-8'));svrows=[];orows=[]
+ for job in jobs:
+  m=loadmat(job['output_path'],simplify_cells=True);ref=loadmat(job['reference_path']);base={k:job[k] for k in ['scan_id','frame_index']}
+  svrows.append({**base,**comparison(m['sv_rebuilt'],ref['sv_retained']), 'independent_complex_max_error':float(m['complex_max_error'])})
+  cc=comparison(m['omag_rebuilt'],ref['omag_retained']);ind=comparison(m['omag_independent'],m['omag_rebuilt']);orows.append({**base,**cc,'independent_reader_passed':ind['passed'],'independent_reader_max_abs_error':ind['max_abs_error']})
+ csv('validation/common_preprocessing_validation.csv',svrows);csv('validation/fixed_frame_omag_checks.csv',orows);csv('omag_reconstruction/fixed_frame_reconstruction_checks.csv',orows)
+ gate=all(r['passed'] and r['independent_complex_max_error']==0 for r in svrows);om=all(r['passed'] and r['independent_reader_passed'] for r in orows)
+ contract=json.loads((O/'reconstruction_contract.json').read_text(encoding='utf-8'));contract['matlab_environment']=json.loads((O/'intermediate_local/matlab_environment.json').read_text(encoding='utf-8'));js('reconstruction_contract.json',contract)
+ js('run_status.json',dict(status='IDENTITY_PASS_READY_FOR_FULL_OMAG' if gate and om else 'COMMON_PREPROCESSING_IDENTITY_FAILED',common_preprocessing_gate='PASS' if gate else 'FAIL',omag_fixed_checks='PASS' if om else 'FAIL',n_fixed_frames=len(jobs)))
+ (O/'common_preprocessing_audit.md').write_text('# Common preprocessing identity audit\n\n'+f"Gate: {'PASS' if gate else 'FAIL'}. Fixed raw frames: {len(jobs)}. OMAG independent/reuse checks: {'PASS' if om else 'FAIL'}.\n\n"+'The raw reader follows the frozen senior exporter: three repeats, double FFT, crop 50:400, Nsub=10, Colshift=false, phase arg 1, configuration Thr=85 dB, median shift true. An independent call to the retained-SV common reader gives the same complex IMG. On that IMG, var(abs(IMG),1,3) is compared pixelwise with retained SV. Tolerances were frozen in analysis_plan.json before reconstruction (rtol 1e-10, atol 1e-6). No parameter search occurred. See validation CSVs for full errors, dtypes and array hashes.\n\nThe retained SV exporter already computes second-output OMAG NumEV=2 on exactly this IMG, without filtering. All retained files must additionally pass their frozen SHA and metadata checks before reuse. Raw OMAG remains float64, preserving the retained signal with no storage quantization; full-pipeline localization casts to float32 exactly as the senior loader and previous SV-B adapter. Metrics use original raw precision, matching SV-A/SV-B comparison precision.\n\nconfig.ini contains an unrelated display crop setting; both audited computational readers explicitly use 50:400. Actual dependency paths and hashes, including iniset and config, are recorded in reconstruction_contract.json. The independent reader shares the audited mathematical dependencies and differs in raw-file reader code; it is a computational reproducibility check, not an independent acquisition.\n',encoding='utf-8')
+ print('COMMON PREPROCESSING',gate,'OMAG',om,'maximum SV error',max(r['max_abs_error'] for r in svrows),flush=True)
+ assert gate and om,'COMMON_PREPROCESSING_IDENTITY_FAILED'
+if __name__=='__main__':main()

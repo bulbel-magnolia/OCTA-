@@ -1,0 +1,16 @@
+scan_id,nominal_frames,verified_retained_files,independently_raw_rebuilt_fixed_frames,source_raw_sha256,common_preprocessing_gate,reuse_provenance,status
+D128_F01_V01,500,500,3,ac8af862695d65c416ffd5503c04c2b9eb868fc822871d1057151b56235dcbd0,PASS,same-IMG export_sv_omag_frame; omag_num_ev=2; every retained file SHA and per-frame preprocessing metadata checked,PASS
+D128_F03_V01,500,500,3,e989a8257a7fafda8d6e9ad2b1fef0c94807ae323683bc6e918c88bc2cce38f3,PASS,same-IMG export_sv_omag_frame; omag_num_ev=2; every retained file SHA and per-frame preprocessing metadata checked,PASS
+D128_F05_V01,500,500,3,e4739d3b26e250fa1159b0fa28b7a9a962626f0cc9239b7cd8bd74aa662ba0d2,PASS,same-IMG export_sv_omag_frame; omag_num_ev=2; every retained file SHA and per-frame preprocessing metadata checked,PASS
+D128_F07_V01,500,500,3,96b8d8f7b1ec9341013d635a98e75554e7e5595ff5194d5f996808fa1207bdd4,PASS,same-IMG export_sv_omag_frame; omag_num_ev=2; every retained file SHA and per-frame preprocessing metadata checked,PASS
+D128_F10_V01,500,500,3,f7e0c352514c236a4f5ccf4a811e421222a108ecbaeaf400fc5b0ea57a4e3fa5,PASS,same-IMG export_sv_omag_frame; omag_num_ev=2; every retained file SHA and per-frame preprocessing metadata checked,PASS
+D235_F01_V01,500,500,3,08e9734543e59ba1a3782dc120cdee68086535efb15168a22cb6646f8200186a,PASS,same-IMG export_sv_omag_frame; omag_num_ev=2; every retained file SHA and per-frame preprocessing metadata checked,PASS
+D235_F03_V01,500,500,3,7b69d50a0cde64fde1ae87f8af41db49ed6ba3dd4f359775dab2fb70f779d6d9,PASS,same-IMG export_sv_omag_frame; omag_num_ev=2; every retained file SHA and per-frame preprocessing metadata checked,PASS
+D235_F05_V01,500,500,3,5368ef2787df07363b5ff0ea91e29ab5b996fb49b173a09484dae663f89374bc,PASS,same-IMG export_sv_omag_frame; omag_num_ev=2; every retained file SHA and per-frame preprocessing metadata checked,PASS
+D235_F07_V01,500,500,3,58e51eb1999f3b8acc17aeddf7b5771d69655376158cbd8fa5243a5465ceed33,PASS,same-IMG export_sv_omag_frame; omag_num_ev=2; every retained file SHA and per-frame preprocessing metadata checked,PASS
+D235_F10_V01,500,500,3,d586fceb7bb58c1bc5644fbae9f8e5575acd82dd640602400c561482c260efd4,PASS,same-IMG export_sv_omag_frame; omag_num_ev=2; every retained file SHA and per-frame preprocessing metadata checked,PASS
+D285_F01_V01,500,500,3,580b26e6bc676217c8092868dbcc352392b472a5f31f20725f579d7e875c3639,PASS,same-IMG export_sv_omag_frame; omag_num_ev=2; every retained file SHA and per-frame preprocessing metadata checked,PASS
+D285_F03_V01,500,500,3,f977eb755cb8d237417d66a87e33f95ee6168df7a0d35fd1c469b94f276c2433,PASS,same-IMG export_sv_omag_frame; omag_num_ev=2; every retained file SHA and per-frame preprocessing metadata checked,PASS
+D285_F05_V01,500,500,3,4457befa1309470b5f0b8547e46f98f4712381a9f481871fb9a2dd3d8d379e07,PASS,same-IMG export_sv_omag_frame; omag_num_ev=2; every retained file SHA and per-frame preprocessing metadata checked,PASS
+D285_F07_V01,500,500,3,d996d4ae5db91bec2ecebaa186a95de39caa19efc02e4bd4a659874b213aa78e,PASS,same-IMG export_sv_omag_frame; omag_num_ev=2; every retained file SHA and per-frame preprocessing metadata checked,PASS
+D285_F10_V01,500,500,3,2cef8ab88761e783190f0531e3084f46076beaba3ae6e80329ed0294dc03d385,PASS,same-IMG export_sv_omag_frame; omag_num_ev=2; every retained file SHA and per-frame preprocessing metadata checked,PASS

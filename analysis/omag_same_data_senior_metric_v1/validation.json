@@ -1,0 +1,32 @@
+{
+  "status": "PASS",
+  "raw_identity_volumes": 15,
+  "raw_sha_before_after_unchanged": 15,
+  "common_preprocessing_frames": 45,
+  "independent_omag_frames": 45,
+  "retained_omag_files_sha_metadata_verified": 7500,
+  "nominal_positions_per_stage": 7500,
+  "original_geometry_valid": 7018,
+  "original_invalid_preserved": 482,
+  "independent_metric_OA": 45,
+  "independent_metric_OB": 45,
+  "independent_scan_medians": 90,
+  "frozen_files_unchanged": 495,
+  "independent_common_support_checks": 135,
+  "trend_counts": {
+    "OA": {
+      "raw_AUC_200": 0,
+      "vessel_core_P95": 5,
+      "normalized_AUC_um": 5
+    },
+    "OB": {
+      "raw_AUC_200": 0,
+      "vessel_core_P95": 5,
+      "normalized_AUC_um": 5
+    }
+  },
+  "required_artifacts_present": 34,
+  "final_array_sha_shape_finite_checks": 15,
+  "dependency_equivalence_checks": 6,
+  "d128_original_raw_anchor_checks": 5
+}

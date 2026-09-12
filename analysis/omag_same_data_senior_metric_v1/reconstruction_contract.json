@@ -1,0 +1,84 @@
+{
+  "dependencies": [
+    {
+      "name": "iniset.m",
+      "source_path": "C:\\Users\\zby\\Desktop\\2026血管三维重建项目\\算法差异分析\\师兄方法\\Bscan_tail_auto_quantification_for_junior_20260903(1)\\matlab\\iniset.m",
+      "actual_path": "C:\\Users\\zby\\Desktop\\2026血管三维重建项目\\算法差异分析\\_worktrees\\OCTA-\\sv-diameter-stage2\\analysis\\omag_same_data_senior_metric_v1\\reconstruction_source\\iniset.m",
+      "sha256": "4e208696cf6fb60d6d3703f57a19eea4e7941d40aaec7c0fe6c07af619aa0f58",
+      "retained_export_dependency_path": "C:\\Users\\zby\\Desktop\\2026血管三维重建项目\\算法差异分析\\_worktrees\\OCTA-\\sv-diameter-stage2\\matlab\\iniset.m",
+      "retained_export_dependency_sha256": "23ddb3166eb6357f390ea51617c0db2b0251db909ca5e20de503e9f72c599957",
+      "text_equal_ignoring_line_endings": false
+    },
+    {
+      "name": "ini2struct.m",
+      "source_path": "C:\\Users\\zby\\Desktop\\2026血管三维重建项目\\算法差异分析\\师兄方法\\Bscan_tail_auto_quantification_for_junior_20260903(1)\\matlab\\ini2struct.m",
+      "actual_path": "C:\\Users\\zby\\Desktop\\2026血管三维重建项目\\算法差异分析\\_worktrees\\OCTA-\\sv-diameter-stage2\\analysis\\omag_same_data_senior_metric_v1\\reconstruction_source\\ini2struct.m",
+      "sha256": "7e0c828d39c64c182e8aa80c8a765bb087491e374f30dd916c0b4fd49a5486e6",
+      "retained_export_dependency_path": "C:\\Users\\zby\\Desktop\\2026血管三维重建项目\\算法差异分析\\_worktrees\\OCTA-\\sv-diameter-stage2\\matlab\\ini2struct.m",
+      "retained_export_dependency_sha256": "68559b6f9404e1b629c4e8a39998a9d412e937da42b8feec32f635c54feae8ff",
+      "text_equal_ignoring_line_endings": false
+    },
+    {
+      "name": "OCTA_F_SubPixReg.m",
+      "source_path": "C:\\Users\\zby\\Desktop\\2026血管三维重建项目\\算法差异分析\\师兄方法\\Bscan_tail_auto_quantification_for_junior_20260903(1)\\matlab\\OCTA_F_SubPixReg.m",
+      "actual_path": "C:\\Users\\zby\\Desktop\\2026血管三维重建项目\\算法差异分析\\_worktrees\\OCTA-\\sv-diameter-stage2\\analysis\\omag_same_data_senior_metric_v1\\reconstruction_source\\OCTA_F_SubPixReg.m",
+      "sha256": "9e61d04dd331c917f56d4058b016515fc7c50139d6ea5ad19468aaedcfe8494c",
+      "retained_export_dependency_path": "C:\\Users\\zby\\Desktop\\2026血管三维重建项目\\算法差异分析\\_worktrees\\OCTA-\\sv-diameter-stage2\\matlab\\OCTA_F_SubPixReg.m",
+      "retained_export_dependency_sha256": "f0b6337e0f3b3923954f24223a6821a897098badfc56d2e1dec3a0ae4c3aaaa8",
+      "text_equal_ignoring_line_endings": false
+    },
+    {
+      "name": "SSOCT_F_PhCompV3.m",
+      "source_path": "C:\\Users\\zby\\Desktop\\2026血管三维重建项目\\算法差异分析\\师兄方法\\Bscan_tail_auto_quantification_for_junior_20260903(1)\\matlab\\SSOCT_F_PhCompV3.m",
+      "actual_path": "C:\\Users\\zby\\Desktop\\2026血管三维重建项目\\算法差异分析\\_worktrees\\OCTA-\\sv-diameter-stage2\\analysis\\omag_same_data_senior_metric_v1\\reconstruction_source\\SSOCT_F_PhCompV3.m",
+      "sha256": "47243ba11c359f46208c5f317584e2b4e69271fe0f5986f2ace492ac398abc55",
+      "retained_export_dependency_path": "C:\\Users\\zby\\Desktop\\2026血管三维重建项目\\算法差异分析\\_worktrees\\OCTA-\\sv-diameter-stage2\\matlab\\SSOCT_F_PhCompV3.m",
+      "retained_export_dependency_sha256": "b23f58a06f6dba02edd1811a28a4b642f8a4ac37fe8bc92a3963b3ef980b7c41",
+      "text_equal_ignoring_line_endings": false
+    },
+    {
+      "name": "OCTA_F_ED_Clutter_EigFeed.m",
+      "source_path": "C:\\Users\\zby\\Desktop\\2026血管三维重建项目\\算法差异分析\\师兄方法\\Bscan_tail_auto_quantification_for_junior_20260903(1)\\matlab\\OCTA_F_ED_Clutter_EigFeed.m",
+      "actual_path": "C:\\Users\\zby\\Desktop\\2026血管三维重建项目\\算法差异分析\\_worktrees\\OCTA-\\sv-diameter-stage2\\analysis\\omag_same_data_senior_metric_v1\\reconstruction_source\\OCTA_F_ED_Clutter_EigFeed.m",
+      "sha256": "a44d799974eab931639ced961f52c544875686593713cfc613f84aa647c9a866",
+      "retained_export_dependency_path": "C:\\Users\\zby\\Desktop\\2026血管三维重建项目\\算法差异分析\\_worktrees\\OCTA-\\sv-diameter-stage2\\matlab\\OCTA_F_ED_Clutter_EigFeed.m",
+      "retained_export_dependency_sha256": "1fbbbe2bdcf68e8193cd4eb56b9446375d49d050ad481938a5bb9326e3060598",
+      "text_equal_ignoring_line_endings": false
+    },
+    {
+      "name": "config.ini",
+      "source_path": "C:\\Users\\zby\\Desktop\\2026血管三维重建项目\\算法差异分析\\师兄方法\\Bscan_tail_auto_quantification_for_junior_20260903(1)\\matlab\\config.ini",
+      "actual_path": "C:\\Users\\zby\\Desktop\\2026血管三维重建项目\\算法差异分析\\_worktrees\\OCTA-\\sv-diameter-stage2\\analysis\\omag_same_data_senior_metric_v1\\reconstruction_source\\config.ini",
+      "sha256": "00d15c61b84e6e7786a90a4e4d56eff2d13c2783a66f932ff6d1730b5325615e",
+      "retained_export_dependency_path": "C:\\Users\\zby\\Desktop\\2026血管三维重建项目\\算法差异分析\\_worktrees\\OCTA-\\sv-diameter-stage2\\matlab\\config.ini",
+      "retained_export_dependency_sha256": "d4741f3bfe984b15a8373be8c0f66a126e9bb31c3e92d6abb9a1b0fd41230e4e",
+      "text_equal_ignoring_line_endings": false
+    }
+  ],
+  "Thr_dB": 85,
+  "Thr_linear": 17782.794100389227,
+  "crop_matlab": [
+    50,
+    400
+  ],
+  "Nsub": 10,
+  "Colshift": false,
+  "NumEV": 2,
+  "doMedianShift": true,
+  "repeats": 3,
+  "phase_second_arg": 1,
+  "signal": "second output OCTA_F_ED_Clutter_EigFeed(IMG,2), raw linear unfiltered",
+  "axis_order": "z,x,frame",
+  "sv_formula": "var(abs(IMG),1,3)",
+  "plan_sha256": "bceb668d1e536175ce6ce7b29fd6e1c64808efec22089f33cf6951f46a870d30",
+  "metric_contract_sha256": "6f713a05d2e2ef5e87d23883f15c8ba401f208d3481b18cf24235721b43f5556",
+  "matlab_environment": {
+    "matlab_version": "9.14.0.2206163 (R2023a)",
+    "release": "2023a",
+    "computer": "PCWIN64",
+    "iniset": "C:\\Users\\zby\\Desktop\\2026血管三维重建项目\\算法差异分析\\_worktrees\\OCTA-\\sv-diameter-stage2\\analysis\\omag_same_data_senior_metric_v1\\reconstruction_source\\iniset.m",
+    "subpix": "C:\\Users\\zby\\Desktop\\2026血管三维重建项目\\算法差异分析\\_worktrees\\OCTA-\\sv-diameter-stage2\\analysis\\omag_same_data_senior_metric_v1\\reconstruction_source\\OCTA_F_SubPixReg.m",
+    "phase": "C:\\Users\\zby\\Desktop\\2026血管三维重建项目\\算法差异分析\\_worktrees\\OCTA-\\sv-diameter-stage2\\analysis\\omag_same_data_senior_metric_v1\\reconstruction_source\\SSOCT_F_PhCompV3.m",
+    "eigfeed": "C:\\Users\\zby\\Desktop\\2026血管三维重建项目\\算法差异分析\\_worktrees\\OCTA-\\sv-diameter-stage2\\analysis\\omag_same_data_senior_metric_v1\\reconstruction_source\\OCTA_F_ED_Clutter_EigFeed.m"
+  }
+}

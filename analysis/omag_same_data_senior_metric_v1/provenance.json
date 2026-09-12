@@ -1,0 +1,70 @@
+{
+  "baseline_commit": "b365c276c20a16d22ac51afd891b8d924819db86",
+  "analysis_plan_sha256": "bceb668d1e536175ce6ce7b29fd6e1c64808efec22089f33cf6951f46a870d30",
+  "raw_manifest_sha256": "150bd09b75a78ba1d16c636a5f24d9ed13e0b70537129411f1881ca997847a89",
+  "python": "3.12.10",
+  "numpy": "2.4.4",
+  "metric_source_sha256": "8eb3e3b946bc30951a0e70209e5d9695c9f516ddb38c2563a395c8e6d4f98a4f",
+  "frozen_input_manifest_sha256": "1776632a6390f2792b41896147bdc380d5dfe879cdacccff166de1470e52de9b",
+  "pre_environment_reconstruction_contract_sha256": "4b35235f9d23956dc8e53a25cf4d2319440bb2480165ba1cba634c50df09d66c",
+  "reconstruction_contract_sha256": "40c4ddafa02eb897f42bbe4213d6dd1e1ca550ffccbab7d3484852bee6412fa7",
+  "completed_utc": "2026-09-12T15:18:31.991450+00:00",
+  "software": {
+    "python": "3.12.10",
+    "numpy": "2.4.4",
+    "pandas": "2.3.3",
+    "scipy": "1.17.1",
+    "matplotlib": "3.10.8",
+    "os": "Windows-11-10.0.26200-SP0"
+  },
+  "source_scripts": [
+    {
+      "path": "compare_report.py",
+      "sha256": "f70dafcf2ad1cddf9c3c3e9dea942e7a085890eaa415393ecd1457daa982e888"
+    },
+    {
+      "path": "finalize.py",
+      "sha256": "9362cb0604ef881613594e4dddc6801a7a051f1861787ea0975aba2a70b6c5ee"
+    },
+    {
+      "path": "prepare.py",
+      "sha256": "17181a99db43da6d26b55db28451e579e8d965adcfb52faf9c26a1bd8f3cfdee"
+    },
+    {
+      "path": "run_omag.py",
+      "sha256": "4764e4e9e9df60221b624aa3e32ce8aace52d5a580face1183897181cc3a04dc"
+    },
+    {
+      "path": "validate_gate.py",
+      "sha256": "7b68d809a2ace10101a3ddbfa127e2a4df3c7486a891f36ca57fb96dcea15bac"
+    },
+    {
+      "path": "rebuild_fixed.m",
+      "sha256": "2c279c9d06a311f2cd3fa37dcfeca69ab369a59d934374bacccd348e7cf3a959"
+    }
+  ],
+  "source_anchor_manifests": [
+    {
+      "path": "data\\diameter_stage_v1\\volume_manifest.csv",
+      "sha256": "960a58d4e7233c53db781c05f84b790ada163a0d8b136ed46708ee65ee902f81"
+    },
+    {
+      "path": "results\\formal_sv_d128_v21_full2500_run001\\input_sha256.csv",
+      "sha256": "60f35d2bf9016cdc9a85a8730ec99b0afee4261887998ecc53de10a2169b983c"
+    },
+    {
+      "path": "analysis\\sv_senior_metric_transfer_v1\\senior_method_contract.json",
+      "sha256": "6f713a05d2e2ef5e87d23883f15c8ba401f208d3481b18cf24235721b43f5556"
+    },
+    {
+      "path": "analysis\\sv_senior_metric_transfer_v1\\validation\\array_identity_on_read.csv.gz",
+      "sha256": "20ae6498444fc5be2e4f67f2ec7a751749c3b45faf1c85bb6eca9f1b2b73e73f"
+    }
+  ],
+  "git": {
+    "branch": "analysis/omag-same-data-senior-metric-v1",
+    "base_commit": "b365c276c20a16d22ac51afd891b8d924819db86",
+    "remote_baseline_verified": true
+  },
+  "large_arrays_excluded_from_git": true
+}

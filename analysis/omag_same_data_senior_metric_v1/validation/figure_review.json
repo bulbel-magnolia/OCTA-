@@ -1,0 +1,20 @@
+{
+  "status": "PASS",
+  "figures_reviewed": [
+    "omag_senior_metrics_stageOA",
+    "sv_vs_omag_same_geometry",
+    "sv_vs_omag_full_pipeline",
+    "omag_localization_coverage_qc"
+  ],
+  "formats": [
+    "PNG",
+    "PDF"
+  ],
+  "checks": [
+    "labels and units readable",
+    "relative SV/OMAG panels share y range per metric",
+    "no cross-algorithm absolute units on common axis",
+    "coverage and coordinate QC present"
+  ],
+  "scientific_tables_unchanged_after_presentation_adjustment": true
+}
